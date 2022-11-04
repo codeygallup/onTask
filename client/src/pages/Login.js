@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Auth from "../utils/auth";
-import { LOGIN_USER } from "../utils/mutations";
+import { LOGIN } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
   });
 
   // eslint-disable-next-line
-  const [loginUser, { error }] = useMutation(LOGIN_USER);
+  const [loginUser, { error }] = useMutation(LOGIN);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
