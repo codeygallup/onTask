@@ -20,17 +20,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
     try {
-      const { data } = await loginUser({
-        variables: { ...formData },
+      const userData = await loginUser({
+        variables: { email: formData.email, password: formData.password },
       });
-      Auth.login(data.login.token);
+      const token = userData.data.login.token;
+      Auth.login(token);
     } catch (err) {
       console.error(err);
     }
@@ -39,31 +34,24 @@ const Login = () => {
       email: "",
       password: "",
     });
-    
   };
 
   return (
     <form className="login text-center" onSubmit={handleSubmit}>
       <h3 className="mb-5">Login</h3>
       <label className="mx-3">Email:</label>
-      <input
-      name="email"
-        type="email"
-        onChange={handleFormChange}
-        value={formData.email}
-        required
-      />
+      <input name="email" type="email" onChange={handleFormChange} />
       <label className="mx-3">Password:</label>
       <input
-      name="password"
+        name="password"
         type="password"
         onChange={handleFormChange}
-        value={formData.password}
         className="mb-4"
-        required
       />
       <br />
-      <button type="submit" className="btn">Login</button>
+      <button type="submit" className="btn">
+        Login
+      </button>
     </form>
   );
 };
