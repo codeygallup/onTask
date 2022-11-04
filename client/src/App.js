@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import './App.css'
 
 import Home from "./pages/Home";
 import Navbar from "./components/navbar";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
-import Project from './pages/Project';
+// import Project from './pages/Project';
 
 const client = new ApolloClient({
   uri: "/graphql",
@@ -21,14 +22,14 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="App">
           <Routes>
             {/* <div className="pages"> */}
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/projects" element={<Project />} />
+            {/* <Route path="/projects" element={<Project />} /> */}
             {/* <Route 
               path="*"
               element={<NotFound />}

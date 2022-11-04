@@ -1,25 +1,25 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
-const Navbar = () => {
-  return (
-    <header>
-      <div className="container">
-        <Link to="/">
-          <h1>On Task</h1>
-        </Link>
-        <nav>
-          <div>
-            <Link to="/login"> Login </Link>
-            <Link to="/signup"> Sign Up </Link>
-            <Link to="/project"> Projects </Link>
-          </div>
-        </nav>
-      </div>
-    </header>
-  );
-};
+// const Navbar = () => {
+//   return (
+//     <header>
+//       <div className="container">
+//         <Link to="/">
+//           <h1>On Task</h1>
+//         </Link>
+//         <nav>
+//           <div>
+//             <Link to="/login"> Login </Link>
+//             <Link to="/signup"> Sign Up </Link>
+//             <Link to="/project"> Projects </Link>
+//           </div>
+//         </nav>
+//       </div>
+//     </header>
+//   );
+// };
 
-export default Navbar;
+// export default Navbar;
 
 // import React, { useState } from "react";
 // import { Link } from "react-router-dom";

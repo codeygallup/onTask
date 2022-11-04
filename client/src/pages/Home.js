@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
+import Auth from "../utils/auth";
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_USER, {
@@ -32,12 +33,20 @@ const Home = () => {
       </div>
       <div className="card-footer text-center m-3">
         <h2>Ready to create a new project?</h2>
-        <Link to="/login">
-          <button className="btn btn-lg btn-warning">Login</button>
-        </Link>
-        <Link to="/signup">
-          <button className="btn btn-lg btn-warning">Signup</button>
-        </Link>
+        {!Auth.loggedIn() ? (
+          <>
+            <Link className="mx-4" to="/login">
+              <button className="btn btn-lg btn-warning">Login</button>
+            </Link>
+            <Link className="mx-4" to="/signup">
+              <button className="btn btn-lg btn-warning">Signup</button>
+            </Link>
+          </>
+        ) : (
+          <Link to="/addProject">
+            <button>Add Project</button>
+          </Link>
+        )}
       </div>
     </div>
   );

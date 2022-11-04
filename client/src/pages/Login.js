@@ -5,26 +5,28 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(e);
     console.log(email, password);
   };
 
   return (
-    <form className="login" onSubmit={handleSubmit}>
-      <h3>Login</h3>
-      <label>Email:</label>
+    <form className="login text-center" onSubmit={handleSubmit}>
+      <h3 className="mb-5">Login</h3>
+      <label className="mx-3">Email:</label>
       <input
         type="email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
       />
-      <label>Password:</label>
+      <label className="mx-3">Password:</label>
       <input
         type="password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        className="mb-4"
       />
-      <button>Login</button>
+      <br />
+      <button className="btn">Login</button>
     </form>
   );
 };

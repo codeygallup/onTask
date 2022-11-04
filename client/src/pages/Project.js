@@ -18,9 +18,7 @@ const ProjectPage = () => {
     loading: oneLoading,
     data: oneData,
     error: oneError,
-  } = useQuery(ONE_PROJECTS, {
-    variables: { id: projectId },
-  });
+  } = useQuery(ONE_PROJECTS);
 
   const [addProject, { addError }] = useMutation(ADD_PROJECT)
 
@@ -34,3 +32,5 @@ const ProjectPage = () => {
     </>
   )
 };
+
+export default ProjectPage
