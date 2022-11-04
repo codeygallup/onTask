@@ -10,6 +10,7 @@ const Signup = () => {
     password: "",
   });
 
+  // eslint-disable-next-line
   const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleFormChange = (e) => {
@@ -70,7 +71,7 @@ const Signup = () => {
         className="mb-4"
       />
       <br />
-      <button className="btn">Sign Up</button>
+      <button type="submit" className="btn">Sign Up</button>
     </form>
   );
 };
