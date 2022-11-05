@@ -49,9 +49,18 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addProject: async (parent, { input }) => {
-      const projectData = await Project.create({ input }) 
-      return projectData
+    addProject: async (parent, { input }, context) => {
+      if (context.user) {
+        const project = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { projects: input } },
+          { new: true }
+        );
+        return project;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to add a project"
+      );
     },
     updateProject: async (parent, { projectId, projectInput }) => {
       const projectUpdate = await Project.findByIdAndUpdate(
@@ -60,9 +69,18 @@ const resolvers = {
       );
       return projectUpdate;
     },
-    removeProject: async (parent, { projectId }) => {
-        const projectDelete = await Project.findOneAndDelete({ projectId })
+    removeProject: async (parent, { projectId }, context) => {
+      if (context.user) {
+        const projectDelete = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { projects: projectId } },
+          { new: true }
+        );
         return projectDelete;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to remove a project"
+      );
     },
   },
 };

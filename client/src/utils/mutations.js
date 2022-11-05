@@ -33,7 +33,6 @@ export const ADD_PROJECT = gql`
       title
       description
       complete
-      user
     }
   }
 `;
@@ -45,7 +44,6 @@ export const UPDATE_PROJECT = gql`
       title
       description
       complete
-      user
     }
   }
 `;
