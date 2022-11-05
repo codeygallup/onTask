@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { QUERY_USER } from "../utils/queries";
+import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_USER, {
+  const { loading, data } = useQuery(GET_ME, {
     fetchPolicy: "no-cache",
   });
 
