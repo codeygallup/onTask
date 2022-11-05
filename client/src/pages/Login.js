@@ -19,13 +19,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(formData)
-    console.log(e)
-    const { data } = await loginUser({
-      variables: { ...formData },
-    });
-    Auth.login(data.login.token);
+    
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     try {
+      const { data } = await loginUser({
+        variables: { ...formData },
+      });
+      Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
     }
@@ -34,7 +39,6 @@ const Login = () => {
       email: "",
       password: "",
     });
-    
   };
 
   return (

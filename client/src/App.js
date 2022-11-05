@@ -10,25 +10,23 @@ import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 // import Project from './pages/Project';
 
-const httpLink = createHttpLink({
-  uri: "/graphql"
+const http = createHttpLink({
+  uri: "/graphql",
 });
 
-// Sets authentication into context
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : ""
-    }
-  }
-});
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+})
 
-// Instantiates the client object and the cache object with some specific options
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  link: authLink.concat(http),
+  cache: new InMemoryCache(),
 });
 
 function App() {

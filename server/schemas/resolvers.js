@@ -9,7 +9,7 @@ const resolvers = {
         const myData = await User.findOne({ _id: context.user._id })
         return myData;
       }
-      throw new AuthenticationError("Log in to see your saved books");
+      throw new AuthenticationError("Log in");
     },
     allProjects: async (parent, args, context) => {
       if (context.user) {
@@ -29,15 +29,15 @@ const resolvers = {
   Mutation: {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-     
+
       if (!user) {
-        throw new AuthenticationError("Invalid email or password");
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Invalid email or password");
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const token = signToken(user);
