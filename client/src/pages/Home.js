@@ -5,10 +5,10 @@ import Auth from "../utils/auth";
 
 const Home = () => {
 
-  // const { loading, data } = useQuery(GET_ME);
-  // const user = data?.me || {}
+  const { loading, data } = useQuery(GET_ME);
+  const user = data?.me || {}
 
-  // const projectList = data?.projects || [];
+  const projectList = data?.projects || [];
 
   return (
     <div className="container-fluid bg-white card-rounded w-75 border">
@@ -18,7 +18,7 @@ const Home = () => {
           <button className="btn" onClick={Auth.logout}>Logout</button>
         ) : null }
       </div>
-      {/* <div className="card-body text-center">
+      <div className="card-body text-center">
         <h2>Project List</h2>
          {loading ? (
           <div>Loading...</div>
@@ -33,7 +33,7 @@ const Home = () => {
             })}
           </ul>
         )}
-      </div> */}
+      </div>
       <div className="card-footer text-center m-3">
         <h2>Ready to create a new project?</h2>
         {!Auth.loggedIn() ? (

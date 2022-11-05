@@ -13,6 +13,7 @@ import SignUp from "./pages/Signup";
 const http = createHttpLink({
   uri: "/graphql",
 });
+console.log("🚀 ~ file: App.js ~ line 16 ~ http", http)
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -23,11 +24,13 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 })
+console.log("🚀 ~ file: App.js ~ line 27 ~ authLink ~ authLink", authLink)
 
 const client = new ApolloClient({
   link: authLink.concat(http),
   cache: new InMemoryCache(),
 });
+console.log("🚀 ~ file: App.js ~ line 33 ~ client", client)
 
 function App() {
   useEffect(() => {
