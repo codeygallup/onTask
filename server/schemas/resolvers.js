@@ -38,7 +38,7 @@ const resolvers = {
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
-      }
+      };
 
       const token = signToken(user);
 
@@ -49,13 +49,9 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addProject: async (parent, { input }, context) => {
+    addProject: async (parent, { title, description }, context) => {
       if (context.user) {
-        const project = await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $push: { projects: input } },
-          { new: true }
-        );
+        const project = await Project.create({ title, description })
         return project;
       }
       throw new AuthenticationError(
@@ -69,18 +65,10 @@ const resolvers = {
       );
       return projectUpdate;
     },
-    removeProject: async (parent, { projectId }, context) => {
-      if (context.user) {
-        const projectDelete = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { projects: projectId } },
-          { new: true }
-        );
-        return projectDelete;
-      }
-      throw new AuthenticationError(
-        "You need to be logged in to remove a project"
-      );
+    removeProject: async (parent, args) => {
+      const { projectId } = args
+      const projectDelete = await Project.findByIdAndDelete(projectId)
+      return projectDelete
     },
   },
 };
