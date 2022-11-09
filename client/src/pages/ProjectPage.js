@@ -37,7 +37,7 @@ function ProjectPage() {
       {!project.complete ? (
         <div className="App-header mx-5">NOT FINISHED</div>
       ) : (
-        <h2>Finished. Ready to delete?</h2>
+        <h2 className="App-header mx-5">Finished. Ready to delete?</h2>
       )}
       <div className="text-center">
         <h1>{project.title}</h1>
@@ -45,6 +45,9 @@ function ProjectPage() {
         <button className="btn" onClick={(e) => handleDelete(e, project._id)}>
           Delete
         </button>
+        <Link className="mx-4" to={`/project/${project._id}/update`}>
+        <button className="btn">Edit</button>
+        </Link>
       </div>
     </>
   );

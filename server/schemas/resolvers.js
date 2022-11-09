@@ -55,10 +55,9 @@ const resolvers = {
         "You need to be logged in to add a project"
       );
     },
-    updateProject: async (parent, { projectId, projectInput }) => {
+    updateProject: async (parent, { projectId, title, description }) => {
       const projectUpdate = await Project.findByIdAndUpdate(
-        { projectId, projectInput },
-        { new: true }
+        { projectId, title, description }
       );
       return projectUpdate;
     },

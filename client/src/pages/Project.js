@@ -21,11 +21,11 @@ const Project = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = Auth.loggedIn() ? Auth.getToken() : null
+    // const token = Auth.loggedIn() ? Auth.getToken() : null
 
-    if (!token) {
-      return false
-    }
+    // if (!token) {
+    //   return false
+    // }
 
     try {
       const { data } = await addProject({
