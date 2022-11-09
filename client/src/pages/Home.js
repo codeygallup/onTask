@@ -20,23 +20,6 @@ const Home = () => {
   const { loading: projectLoading, data: projectData } = useQuery(ALL_PROJECTS)
   const projectArr = projectData?.allProjects || [];
 
-  const [removeProject, { loading: removeLoading, data: removeData }] = useMutation(REMOVE_PROJECT)
-
-  console.log(projectArr)
-
-  const handleDelete = async (e, projectId) => {
-    e.preventDefault()
-    
-    try {
-      await removeProject({
-        variables: { projectId }
-      })
-      window.location.reload()
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   return (
     <div className="container-fluid bg-white card-rounded w-75 border text-center">
       <div className="card-header bg-dark">
@@ -59,7 +42,6 @@ const Home = () => {
                 // <div key={project._id} className="card mx-4 text-center">
                 // <h1>{project.title}</h1>
                 // <p>{project.description}</p>
-                // <button onClick={(e) => handleDelete(e, project._id)}>Delete</button>
                 // </div>
               );
             })}
