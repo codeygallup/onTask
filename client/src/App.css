@@ -39,3 +39,11 @@
     transform: rotate(360deg);
   }
 }
+
+.projectList {
+  list-style: none;
+}
+
+.logout {
+  color: #35968f;
+}

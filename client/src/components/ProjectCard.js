@@ -1,10 +1,11 @@
-// import React from "react";
-// import { useMutation, useQuery } from "@apollo/client";
+import React from "react";
+import { useMutation, useQuery } from "@apollo/client";
 // import { UPDATE_PROJECT, REMOVE_PROJECT } from "../utils/mutations";
-// import { GET_ME } from "../utils/queries";
+import { ONE_PROJECT } from "../utils/queries";
 
-// const ProjectCard = (props) => {
-//   const { loading, data } = useQuery(GET_ME);
+const ProjectCard = (props) => {
+  const { loading, data } = useQuery(ONE_PROJECT);
+  console.log(data)
 //   const user = data?.me || {};
 
 //   const handleRemoveProject = async (projectId) => {
@@ -51,5 +52,10 @@
 //     return <h2>LOADING...</h2>;
 //   }
 
-//   return <></>;
-// };
+console.log(props)
+  return (
+    <h1>Hello</h1>
+  )
+};
+
+export default ProjectCard

@@ -18,12 +18,9 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in");
     },
-    oneProject: async (parent, { _id }, context) => {
-      if (context.user) {
+    oneProject: async (parent, { _id }) => {
         const projectData = await Project.findOne({ _id });
         return projectData;
-      }
-      throw new AuthenticationError("You need to be logged in");
     },
   },
   Mutation: {

@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import Project from './pages/Project';
+// import ProjectCard from './pages/ProjectCard'
+import ProjectPage from './pages/ProjectPage'
 
 const http = createHttpLink({
   uri: "/graphql",
@@ -45,7 +47,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/project" element={<Project />} />
-            {/* <Route path="/projects" element={<Project />} /> */}
+            <Route path="/project/:id" element={<ProjectPage />} />
             {/* <Route 
               path="*"
               element={<NotFound />}
