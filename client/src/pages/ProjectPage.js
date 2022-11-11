@@ -7,12 +7,13 @@ import { REMOVE_PROJECT } from "../utils/mutations";
 function ProjectPage() {
   let { id } = useParams();
 
-  const { loading, data } = useQuery(ONE_PROJECT, {
+  const { data } = useQuery(ONE_PROJECT, {
     variables: { id: id },
   });
 
   const project = data?.oneProject || [];
 
+  // eslint-disable-next-line
   const [removeProject, { loading: removeLoading, data: removeData }] =
     useMutation(REMOVE_PROJECT);
 
@@ -42,12 +43,12 @@ function ProjectPage() {
       <div className="text-center">
         <h1>{project.title}</h1>
         <p>{project.description}</p>
-        <button className="btn" onClick={(e) => handleDelete(e, project._id)}>
-          Delete
-        </button>
         <Link className="mx-4" to={`/project/${project._id}/update`}>
         <button className="btn">Edit</button>
         </Link>
+        <button className="btn" onClick={(e) => handleDelete(e, project._id)}>
+          Delete
+        </button>
       </div>
     </>
   );

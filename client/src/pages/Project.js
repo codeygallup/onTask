@@ -1,8 +1,6 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
-import { ALL_PROJECTS, ONE_PROJECTS } from "../utils/queries";
 import { ADD_PROJECT } from "../utils/mutations";
-import Auth from "../utils/auth";
 
 const Project = () => {
   const [project, setProject] = useState({
@@ -11,6 +9,7 @@ const Project = () => {
     complete: false,
   });
 
+  // eslint-disable-next-line
   const [addProject, { error }] = useMutation(ADD_PROJECT);
 
   const handleFormChange = (e) => {
@@ -21,16 +20,11 @@ const Project = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const token = Auth.loggedIn() ? Auth.getToken() : null
-
-    // if (!token) {
-    //   return false
-    // }
-
     try {
-      const { data } = await addProject({
+      await addProject({
         variables: { ...project },
       });
+      window.location.replace('/')
     } catch (err) {
       console.error(err);
     }
@@ -41,7 +35,6 @@ const Project = () => {
       complete: false,
     });
 
-    // window.location.replace('/')
   };
 
   return (
