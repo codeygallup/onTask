@@ -41,7 +41,7 @@ const Project = () => {
       complete: false,
     });
 
-    window.location.replace('/')
+    // window.location.replace('/')
   };
 
   return (

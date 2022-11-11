@@ -22,6 +22,13 @@ const resolvers = {
         const projectData = await Project.findOne({ _id });
         return projectData;
     },
+    userProjects: async (parent, args, context) => {
+      if (context.user) {
+        const userProjectData = await Project.find({ projectUser: context.user._id })
+        return userProjectData
+      }
+      throw new AuthenticationError("You need to be logged in");
+    }
   },
   Mutation: {
     login: async (parent, { email, password }) => {
@@ -48,7 +55,7 @@ const resolvers = {
     },
     addProject: async (parent, { title, description }, context) => {
       if (context.user) {
-        const project = await Project.create({ title, description })
+        const project = await Project.create({ projectUser: context.user._id, title, description })
         return project;
       }
       throw new AuthenticationError(

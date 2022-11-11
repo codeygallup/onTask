@@ -18,7 +18,7 @@
   
   .border {
     border-style: dashed;
-    margin-left: 100px;;
+    /* margin-left: 100px;; */
   }
 
   button:hover {
@@ -451,6 +451,10 @@
   /* HEIGHT / WIDTH UTILS */
   .w-100 {
     width: 100%;
+  }
+
+  .w-95 {
+    width: 95%;
   }
   
   .w-75 {

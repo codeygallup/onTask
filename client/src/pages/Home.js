@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_ME, ALL_PROJECTS } from "../utils/queries";
+import { GET_ME, ALL_PROJECTS, USER_PROJECTS } from "../utils/queries";
 import { REMOVE_PROJECT } from '../utils/mutations';
 import Auth from "../utils/auth";
 
@@ -20,8 +20,12 @@ const Home = () => {
   const { loading: projectLoading, data: projectData } = useQuery(ALL_PROJECTS)
   const projectArr = projectData?.allProjects || [];
 
+  const { loading: userLoading, data: userData } = useQuery(USER_PROJECTS)
+  const userArr = userData?.userProjects || []
+  console.log(userArr)
+
   return (
-    <div className="container-fluid bg-white card-rounded w-75 border text-center">
+    <div className="container-fluid w-95 border text-center">
       <div className="card-header bg-dark">
         <h1>Welcome to OnTask App!</h1>
         {Auth.loggedIn() ? (
@@ -33,16 +37,12 @@ const Home = () => {
          {meLoading ? (
           <div>Loading...</div>
         ) : (
-          <ul className="square">
-            {projectArr.map((project) => {
+          <ul className="square text-center">
+            {userArr.map((project) => {
               return (
-                <li className="projectList" key={project._id}>
+                <h4 className="projectList pr-4" key={project._id}>
                   <Link to={`/project/${project._id}`}>{project.title}</Link>
-                </li>
-                // <div key={project._id} className="card mx-4 text-center">
-                // <h1>{project.title}</h1>
-                // <p>{project.description}</p>
-                // </div>
+                </h4>
               );
             })}
           </ul>

@@ -11,6 +11,11 @@ const projectSchema = new Schema({
   },
   complete: {
     type: Boolean
+  },
+  projectUser: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 
