@@ -38,6 +38,7 @@ function ProjectUpdate() {
         } catch (err) {
             console.error(err)
         }
+        window.location.replace('/')
     }
     return (
         <>

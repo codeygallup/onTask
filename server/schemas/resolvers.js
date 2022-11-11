@@ -56,7 +56,7 @@ const resolvers = {
       );
     },
     updateProject: async (parent, { projectId, title, description }) => {
-      const projectUpdate = await Project.findByIdAndUpdate(
+      const projectUpdate = await Project.findOneAndUpdate(
         { projectId, title, description }
       );
       return projectUpdate;
