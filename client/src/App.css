@@ -53,3 +53,9 @@
 .logout:hover {
   border-color: #35968f;
 }
+
+.return {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+}

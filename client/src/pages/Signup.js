@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
+import { Link } from 'react-router-dom'
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -44,35 +45,42 @@ const Signup = () => {
   };
 
   return (
-    <form className="signup text-center" onSubmit={handleSubmit}>
-      <h3 className="mb-4">Sign Up</h3>
-      <label className="mx-3">Username:</label>
-      <input
-        type="text"
-        name='username'
-        onChange={handleFormChange}
-        value={formData.username}
-        required
-      />
-      <label className="mx-3">Email:</label>
-      <input
-        type="email"
-        name="email"
-        onChange={handleFormChange}
-        value={formData.email}
-        required
-      />
-      <label className="mx-3">Password:</label>
-      <input
-        type="password"
-        name="password"
-        onChange={handleFormChange}
-        value={formData.password}
-        className="mb-4"
-      />
-      <br />
-      <button type="submit" className="btn">Sign Up</button>
-    </form>
+    <>
+      <Link to="/">
+        <button className="btn return">Home</button>
+      </Link>
+      <form className="signup text-center" onSubmit={handleSubmit}>
+        <h3 className="mb-4">Sign Up</h3>
+        <label className="mx-3">Username:</label>
+        <input
+          type="text"
+          name="username"
+          onChange={handleFormChange}
+          value={formData.username}
+          required
+        />
+        <label className="mx-3">Email:</label>
+        <input
+          type="email"
+          name="email"
+          onChange={handleFormChange}
+          value={formData.email}
+          required
+        />
+        <label className="mx-3">Password:</label>
+        <input
+          type="password"
+          name="password"
+          onChange={handleFormChange}
+          value={formData.password}
+          className="mb-4"
+        />
+        <br />
+        <button type="submit" className="btn">
+          Sign Up
+        </button>
+      </form>
+    </>
   );
 };
 

@@ -1,12 +1,12 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
 import { ONE_PROJECT } from "../utils/queries";
 
 function ProjectUpdate() {
   let { id } = useParams();
-  console.log("🚀 ~ file: ProjectUpdate.js ~ line 9 ~ ProjectUpdate ~ id", id)
+  console.log("🚀 ~ file: ProjectUpdate.js ~ line 9 ~ ProjectUpdate ~ id", id);
 
   const { loading, data } = useQuery(ONE_PROJECT, {
     variables: { id: id },
@@ -42,6 +42,9 @@ function ProjectUpdate() {
   };
   return (
     <>
+      <Link to="/">
+        <button className="btn return">Home</button>
+      </Link>
       <form className="login text-center" onSubmit={handleSubmit}>
         <h3 className="mb-5">Update Project</h3>
         <label className="mx-3">Title:</label>

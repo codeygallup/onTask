@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Auth from "../utils/auth";
 import { LOGIN } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -18,8 +19,8 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();
@@ -42,28 +43,35 @@ const Login = () => {
   };
 
   return (
-    <form className="login text-center" onSubmit={handleSubmit}>
-      <h3 className="mb-5">Login</h3>
-      <label className="mx-3">Email:</label>
-      <input
-      name="email"
-        type="email"
-        onChange={handleFormChange}
-        value={formData.email}
-        required
-      />
-      <label className="mx-3">Password:</label>
-      <input
-      name="password"
-        type="password"
-        onChange={handleFormChange}
-        value={formData.password}
-        className="mb-4"
-        required
-      />
-      <br />
-      <button type="submit" className="btn">Login</button>
-    </form>
+    <>
+      <Link to="/">
+        <button className="btn return">Home</button>
+      </Link>
+      <form className="login text-center" onSubmit={handleSubmit}>
+        <h3 className="mb-5">Login</h3>
+        <label className="mx-3">Email:</label>
+        <input
+          name="email"
+          type="email"
+          onChange={handleFormChange}
+          value={formData.email}
+          required
+        />
+        <label className="mx-3">Password:</label>
+        <input
+          name="password"
+          type="password"
+          onChange={handleFormChange}
+          value={formData.password}
+          className="mb-4"
+          required
+        />
+        <br />
+        <button type="submit" className="btn">
+          Login
+        </button>
+      </form>
+    </>
   );
 };
 
