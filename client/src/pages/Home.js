@@ -38,15 +38,15 @@ const Home = () => {
         {!Auth.loggedIn() ? (
           <>
             <Link className="mx-4" to="/login">
-              <button className="btn btn-lg btn-warning">Login</button>
+              <button className="btn btn-lg btn-dark">Login</button>
             </Link>
             <Link className="mx-4" to="/signup">
-              <button className="btn btn-lg btn-warning">Signup</button>
+              <button className="btn btn-lg btn-dark">Signup</button>
             </Link>
           </>
         ) : (
           <Link to="/project">
-            <button className="btn">Add Project</button>
+            <button className="btn btn-dark">Add Project</button>
           </Link>
         )}
       </div>

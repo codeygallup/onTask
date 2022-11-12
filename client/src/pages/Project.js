@@ -39,29 +39,32 @@ const Project = () => {
 
   return (
     <>
-      <>
-        <Link to="/">
+      <Link to="/">
         <button className="btn return">Home</button>
-        </Link>
-      </>
-      <form className="login text-center" onSubmit={handleSubmit}>
+      </Link>
+      <form className="text-center projectForm" onSubmit={handleSubmit}>
         <h3 className="mb-5">Add New Project</h3>
         <label className="mx-3">Title:</label>
+        <br />
         <input
           name="title"
           type="text"
           onChange={handleFormChange}
           value={project.title}
+          className="inputBox"
           required
         />
+        <br />
         <label className="mx-3">Description:</label>
-        <input
+        <br />
+        <textarea
           name="description"
           type="text"
           onChange={handleFormChange}
           value={project.description}
-          className="mb-4"
+          className="inputBox"
           required
+          rows="15"
         />
         <br />
         <button type="submit" className="btn">

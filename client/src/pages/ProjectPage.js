@@ -33,20 +33,20 @@ function ProjectPage() {
   return (
     <>
       <Link to="/">
-        <button className="btn mr-5">Return home</button>
+        <button className="btn btn-primary return">Home</button>
       </Link>
-      {!project.complete ? (
+      {/* {!project.complete ? (
         <div className="App-header mx-5">NOT FINISHED</div>
       ) : (
         <h2 className="App-header mx-5">Finished. Ready to delete?</h2>
-      )}
-      <div className="text-center">
-        <h1>{project.title}</h1>
-        <p>{project.description}</p>
+      )} */}
+      <div className="text-center card w-95 pb-4">
+        <h1 className="card card-header">{project.title}</h1>
+        <p className="card-body">{project.description}</p>
         <Link className="mx-4" to={`/project/${project._id}/update`}>
-        <button className="btn">Edit</button>
+        <button className="btn btn-link">Edit</button>
         </Link>
-        <button className="btn" onClick={(e) => handleDelete(e, project._id)}>
+        <button className="btn btn-danger" onClick={(e) => handleDelete(e, project._id)}>
           Delete
         </button>
       </div>

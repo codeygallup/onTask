@@ -59,3 +59,16 @@
   top: 10%;
   right: 5%;
 }
+
+.projectForm {
+  border: 1px solid #282c34;
+  width: 75%;
+  padding: 3%;
+  box-shadow: 1px 1px 10px #282c34;
+}
+
+.inputBox {
+  width: 60%;
+  height: 80%;
+  margin-bottom: 2.5%;
+}

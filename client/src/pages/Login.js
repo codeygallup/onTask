@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <>
       <Link to="/">
-        <button className="btn return">Home</button>
+        <button className="btn btn-primary return">Home</button>
       </Link>
       <form className="login text-center" onSubmit={handleSubmit}>
         <h3 className="mb-5">Login</h3>
@@ -67,7 +67,7 @@ const Login = () => {
           required
         />
         <br />
-        <button type="submit" className="btn">
+        <button type="submit" className="btn btn-primary">
           Login
         </button>
       </form>

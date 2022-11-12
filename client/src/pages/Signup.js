@@ -47,7 +47,7 @@ const Signup = () => {
   return (
     <>
       <Link to="/">
-        <button className="btn return">Home</button>
+        <button className="btn btn-primary return">Home</button>
       </Link>
       <form className="signup text-center" onSubmit={handleSubmit}>
         <h3 className="mb-4">Sign Up</h3>
@@ -76,7 +76,7 @@ const Signup = () => {
           className="mb-4"
         />
         <br />
-        <button type="submit" className="btn">
+        <button type="submit" className="btn btn-primary">
           Sign Up
         </button>
       </form>

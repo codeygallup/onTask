@@ -6,7 +6,6 @@ import { ONE_PROJECT } from "../utils/queries";
 
 function ProjectUpdate() {
   let { id } = useParams();
-  console.log("🚀 ~ file: ProjectUpdate.js ~ line 9 ~ ProjectUpdate ~ id", id);
 
   const { loading, data } = useQuery(ONE_PROJECT, {
     variables: { id: id },
@@ -14,7 +13,6 @@ function ProjectUpdate() {
 
   const projectData = data?.oneProject || [];
 
-  console.log(projectData._id);
   const [project, setProject] = useState({
     projectId: id,
     title: projectData.title,
@@ -42,31 +40,36 @@ function ProjectUpdate() {
   };
   return (
     <>
+      <form className="text-center projectForm" onSubmit={handleSubmit}>
       <Link to="/">
-        <button className="btn return">Home</button>
+        <button className="btn btn-primary return">Home</button>
       </Link>
-      <form className="login text-center" onSubmit={handleSubmit}>
         <h3 className="mb-5">Update Project</h3>
         <label className="mx-3">Title:</label>
+        <br />
         <input
           name="title"
           type="text"
           onChange={handleFormChange}
           value={project.title}
+          className="inputBox"
           required
         />
+        <br />
         <label className="mx-3">Description:</label>
-        <input
+        <br />
+        <textarea
           name="description"
           type="text"
           onChange={handleFormChange}
           value={project.description}
-          className="mb-4"
+          className="inputBox"
           required
+          rows="15"
         />
         <br />
-        <button type="submit" className="btn">
-          Update
+        <button type="submit" className="btn btn-primary">
+          Add
         </button>
       </form>
     </>
