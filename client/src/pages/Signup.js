@@ -45,42 +45,42 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <Link to="/">
-        <button className="btn btn-primary return">Home</button>
-      </Link>
-      <form className="signup text-center" onSubmit={handleSubmit}>
-        <h3 className="mb-4">Sign Up</h3>
-        <label className="mx-3">Username:</label>
+    <div className="signup">
+      <form className="login-form text-center" onSubmit={handleSubmit}>
+        <h3>Sign Up</h3>
         <input
           type="text"
           name="username"
           onChange={handleFormChange}
           value={formData.username}
+          placeholder="Username"
+          className="login-input"
           required
         />
-        <label className="mx-3">Email:</label>
         <input
           type="email"
           name="email"
           onChange={handleFormChange}
           value={formData.email}
+          placeholder="Email"
+          className="login-input"
           required
         />
-        <label className="mx-3">Password:</label>
         <input
           type="password"
           name="password"
           onChange={handleFormChange}
           value={formData.password}
-          className="mb-4"
+          placeholder="Password"
+          className="login-input"
+          required
         />
-        <br />
         <button type="submit" className="btn btn-primary">
           Sign Up
         </button>
+        <p className="login-link">Already a user? <Link className="cred-link" to="/login">login here</Link></p>
       </form>
-    </>
+    </div>
   );
 };
 

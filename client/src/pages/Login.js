@@ -43,35 +43,33 @@ const Login = () => {
   };
 
   return (
-    <>
-      <Link to="/">
-        <button className="btn btn-primary return">Home</button>
-      </Link>
-      <form className="login text-center" onSubmit={handleSubmit}>
-        <h3 className="mb-5">Login</h3>
-        <label className="mx-3">Email:</label>
+    <div className="login">
+      <form className="login-form text-center" onSubmit={handleSubmit}>
+        <h3>Login</h3>
         <input
           name="email"
           type="email"
           onChange={handleFormChange}
           value={formData.email}
+          placeholder="Email"
+          className="login-input"
           required
         />
-        <label className="mx-3">Password:</label>
         <input
           name="password"
           type="password"
           onChange={handleFormChange}
           value={formData.password}
-          className="mb-4"
+          placeholder="Password"
+          className="login-input"
           required
         />
-        <br />
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary login-input">
           Login
         </button>
+        <p>To create an account <Link className="cred-link" to="/signup">click here</Link></p>
       </form>
-    </>
+    </div>
   );
 };
 

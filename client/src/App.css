@@ -72,3 +72,40 @@
   height: 80%;
   margin-bottom: 2.5%;
 }
+
+.login {
+  width: 40%;
+  padding: 5% 3% 5%;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  border: 1px solid #282c34;
+}
+
+.signup {
+  width: 40%;
+  padding: 5% 3% 10%;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  border: 1px solid #282c34;
+}
+
+.login-form {
+  width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 10%;
+}
+
+.login-input {
+  border: 0;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  height: 50px;
+  background: #edeaf7;
+  padding: 0 5%;
+}
+
+.cred-link:hover {
+  text-decoration: none;
+}
