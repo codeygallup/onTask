@@ -75,7 +75,7 @@
 
 .login {
   width: 40%;
-  padding: 5% 3% 5%;
+  padding: 5% 3% 3%;
   background: #ffffff;
   border-radius: 1.25rem;
   border: 1px solid #282c34;
@@ -83,7 +83,7 @@
 
 .signup {
   width: 40%;
-  padding: 5% 3% 10%;
+  padding: 5% 3% 5.5%;
   background: #ffffff;
   border-radius: 1.25rem;
   border: 1px solid #282c34;
@@ -108,4 +108,22 @@
 
 .cred-link:hover {
   text-decoration: none;
+}
+
+@media all and (max-width: 800px) {
+  .login {
+    width: 80%;
+    padding: 5% 3% 10%;
+    background: #ffffff;
+    border-radius: 1.25rem;
+    border: 1px solid #282c34;
+  }
+  
+  .signup {
+    width: 80%;
+    padding: 5% 3% 20%;
+    background: #ffffff;
+    border-radius: 1.25rem;
+    border: 1px solid #282c34;
+  }
 }
