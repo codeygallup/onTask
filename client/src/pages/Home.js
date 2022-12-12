@@ -8,6 +8,7 @@ const Home = () => {
 
   const { loading, data } = useQuery(USER_PROJECTS)
   const userArr = data?.userProjects || []
+  console.log(userArr.length)
  
   return (
     <div className="container-fluid w-95 border text-center">
@@ -25,7 +26,7 @@ const Home = () => {
           <div className="text-center">
             {userArr.map((project) => {
               return (
-                <p className="projectList" key={project._id}>
+                <p className={userArr.length < 10 ? "projectList" : "projectLongList"} key={project._id}>
                   <Link to={`/project/${project._id}`}>{project.title}</Link>
                 </p>
               );
