@@ -4,7 +4,7 @@
 
 ### Description
 
-Using MERN stack, an project management tool app, On Task, is created to help users keep track of their project progress and completion. Currently not running due to Herokus changes.
+Using MERN stack, a project management tool app, On Task, is created to help users keep track of their project progress and completion. Currently not running due to Heroku's changes.
 
   <p align="right"><a href="#readme-top">(Return to top)</a></p>
 
@@ -37,11 +37,15 @@ To install follow these steps.
 
 1.  Clone the repo using either HTTPS
 
-`https://github.com/Codeyg12/onTask.git`
+```
+https://github.com/Codeyg12/onTask.git
+```
 
 or SSH key
 
-`git@github.com:Codeyg12/onTask.git`
+```
+git@github.com:Codeyg12/onTask.git
+```
 
 2.  install NPM packages
 
@@ -55,7 +59,7 @@ or SSH key
 
 ### Usage
 
-To track progress for various projects
+This app currently doesn't have a working site since the Heroku plan changed but you can still see the current working product by following the steps above.
 
   <p align="right"><a href="#readme-top">(Return to top)</a></p>
 
@@ -86,6 +90,6 @@ npm test
 
 #### Links
 
-To see more of my work check my [Github](https://github.com/Codeyg12). For futher questions you can reach me at codey.gallup@gmail.com.
+To see more of my work check my [Github](https://github.com/Codeyg12). For further questions, you can reach me at codey.gallup@gmail.com.
 
   <p align="right"><a href="#readme-top">(Return to top)</a></p>
