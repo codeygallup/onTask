@@ -41,14 +41,24 @@ function ProjectPage() {
         <h2 className="App-header mx-5">Finished. Ready to delete?</h2>
       )} */}
       <div className="text-center card w-95 pb-4">
-        <h1 className="card card-header">{project.title}</h1>
+        <div className="project-header">
+          <Link to={`/project/${project._id}/update`}>
+            <button className="btn btn-link edit-btn">Edit</button>
+          </Link>
+          <h1 className="card card-header">{project.title}</h1>
+          <button
+            className="btn btn-danger"
+            onClick={(e) => handleDelete(e, project._id)}
+          >
+            Delete
+          </button>
+        </div>
         <p className="card-body">{project.description}</p>
-        <Link className="mx-4" to={`/project/${project._id}/update`}>
-        <button className="btn btn-link">Edit</button>
-        </Link>
-        <button className="btn btn-danger" onClick={(e) => handleDelete(e, project._id)}>
-          Delete
-        </button>
+        <p>Tasks:</p>
+        <div>
+          <button className="btn btn-info mx-4">Add Task</button>
+          <input type="text" className="mx-4 my-4"></input>
+        </div>
       </div>
     </>
   );
