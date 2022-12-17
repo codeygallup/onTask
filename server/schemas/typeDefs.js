@@ -25,10 +25,10 @@ const typeDefs = gql`
   }
 
   type Task {
-  _id: ID
-  taskText: String
-  complete: Boolean
-  taskProject: ID
+    _id: ID
+    taskText: String
+    complete: Boolean
+    taskProject: ID
   }
 
   type Auth {

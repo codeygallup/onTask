@@ -38,13 +38,23 @@ export const ONE_PROJECT = gql`
   }
 `;
 
-  export const USER_PROJECTS = gql`
-    query userProjects {
-     userProjects {
+export const USER_PROJECTS = gql`
+  query userProjects {
+    userProjects {
       _id
       title
       description
       complete
     }
   }
-  `;
+`;
+
+export const PROJECT_TASK = gql`
+  query projectTasks {
+    projectTasks {
+      _id
+      taskText
+      complete
+    }
+  }
+`;
