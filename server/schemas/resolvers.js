@@ -1,5 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Project } = require("../models");
+const Task = require("../models/Task");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -31,6 +32,15 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in");
     },
+    projectTasks: async (parent, args, context) => {
+      if (context.user) {
+        const projectTaskData = await Task.find({
+          taskProject: context.body.variables.projectId,
+        })
+        return projectTaskData
+      }
+      throw new AuthenticationError('You need to be logged in')
+    }
   },
   Mutation: {
     login: async (parent, { email, password }) => {
@@ -82,7 +92,7 @@ const resolvers = {
             projectUser: context.user._id,
           },
           { new: true }
-        );
+          );
         return projectUpdate;
       }
     },
@@ -91,6 +101,16 @@ const resolvers = {
       const projectDelete = await Project.findByIdAndDelete(projectId);
       return projectDelete;
     },
+    addTask: async (parent, { taskText }, context) => {
+      if (context.user) {
+        const task = await Task.create({
+          taskProject: context.body.variables.projectId,
+          taskText
+        })
+        return task
+      }
+      throw new AuthenticationError("You need to be logged in")
+    }
   },
 };
 
