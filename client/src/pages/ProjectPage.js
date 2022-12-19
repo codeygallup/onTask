@@ -1,10 +1,42 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ONE_PROJECT } from "../utils/queries";
-import { REMOVE_PROJECT } from "../utils/mutations";
+import { REMOVE_PROJECT, ADD_TASK } from "../utils/mutations";
 
 function ProjectPage() {
+  const [task, setTask] = useState({
+    taskText: " ",
+    complete: false
+  })
+
+  console.log(task)
+
+  const [addTask, { error }] = useMutation(ADD_TASK)
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target
+    setTask({ ...task, [name]: value })
+  }
+
+  const handleTask = async (e) => {
+    e.preventDefault()
+
+    try {
+      await addTask({
+        variables: { ...task },
+      })
+      window.location.reload()
+    } catch (err) {
+      console.error(err)
+    }
+
+    setTask({
+      taskText: " ",
+      complete: false
+    })
+  }
+
   let { id } = useParams();
 
   const { data } = useQuery(ONE_PROJECT, {
@@ -56,8 +88,8 @@ function ProjectPage() {
         <p className="card-body">{project.description}</p>
         <p>Tasks:</p>
         <div>
-          <button className="btn btn-info mx-4">Add Task</button>
-          <input type="text" className="mx-4 my-4"></input>
+          <button className="btn btn-info mx-4" onClick={handleTask}>Add Task</button>
+          <input name="taskText" onChange={handleFormChange} value={task.taskText} type="text" className="mx-4 my-4"></input>
         </div>
       </div>
     </>

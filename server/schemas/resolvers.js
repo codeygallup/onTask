@@ -103,6 +103,7 @@ const resolvers = {
     },
     addTask: async (parent, { taskText }, context) => {
       if (context.user) {
+        console.log(context)
         const task = await Task.create({
           taskProject: context.body.variables.projectId,
           taskText
