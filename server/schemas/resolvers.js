@@ -36,8 +36,8 @@ const resolvers = {
         const projectTaskData = await Task.find({
           taskProject: id,
         })
+        console.log("🚀 ~ file: resolvers.js:39 ~ projectTasks: ~ projectTaskData", projectTaskData)
         return projectTaskData
-
     }
   },
   Mutation: {

@@ -22,6 +22,7 @@ const typeDefs = gql`
     description: String
     complete: Boolean
     projectUser: ID
+    tasks: [Task]
   }
 
   type Task {

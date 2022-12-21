@@ -34,6 +34,11 @@ export const ONE_PROJECT = gql`
       title
       description
       complete
+      tasks {
+      _id
+      taskText
+      complete
+      }
     }
   }
 `;
