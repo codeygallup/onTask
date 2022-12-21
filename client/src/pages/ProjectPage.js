@@ -18,7 +18,7 @@ function ProjectPage() {
   const [addTask, { error }] = useMutation(ADD_TASK)
 
   const { taskData } = useQuery(PROJECT_TASK, {
-    variables: { id: id }
+    variables: { taskProject: id }
   })
 
   const taskOfProject = taskData?.projectTasks || []

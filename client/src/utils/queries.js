@@ -50,11 +50,12 @@ export const USER_PROJECTS = gql`
 `;
 
 export const PROJECT_TASK = gql`
-  query projectTasks {
-    projectTasks {
+  query projectTasks($taskProject: ID) {
+    projectTasks(taskProject: $id) {
       _id
       taskText
       complete
+      taskProject
     }
   }
 `;
