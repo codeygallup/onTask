@@ -32,11 +32,10 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in");
     },
-    projectTasks: async (parent, args, context) => {
+    projectTasks: async (parent, { id }, context) => {
       if (context.user) {
-        console.log("HELLO",context)
         const projectTaskData = await Task.find({
-          taskProject: context.body.variables.projectId,
+          taskProject: id,
         })
         return projectTaskData
       }

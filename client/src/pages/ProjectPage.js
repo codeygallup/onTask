@@ -12,7 +12,7 @@ function ProjectPage() {
     complete: false,
     taskProject: id
   })
-  
+
   console.log(task)
 
   const [addTask, { error }] = useMutation(ADD_TASK)
@@ -20,7 +20,6 @@ function ProjectPage() {
   const { taskData } = useQuery(PROJECT_TASK, {
     variables: { id: id }
   })
-  console.log("🚀 ~ file: ProjectPage.js:25 ~ ProjectPage ~ taskData", taskData)
 
   const taskOfProject = taskData?.projectTasks || []
   console.log(taskOfProject.length)
@@ -36,7 +35,7 @@ function ProjectPage() {
       await addTask({
         variables: { ...task },
       })
-      window.location.reload()
+      // window.location.reload()
     } catch (err) {
       console.error(err)
     }
