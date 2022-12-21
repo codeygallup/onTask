@@ -34,6 +34,7 @@ const resolvers = {
     },
     projectTasks: async (parent, args, context) => {
       if (context.user) {
+        console.log("HELLO",context)
         const projectTaskData = await Task.find({
           taskProject: context.body.variables.projectId,
         })
@@ -101,12 +102,11 @@ const resolvers = {
       const projectDelete = await Project.findByIdAndDelete(projectId);
       return projectDelete;
     },
-    addTask: async (parent, { taskText }, context) => {
+    addTask: async (parent, { taskText, taskProject }, context) => {
       if (context.user) {
-        console.log(context)
         const task = await Task.create({
-          taskProject: context.body.variables.projectId,
-          taskText
+          taskText,
+          taskProject
         })
         return task
       }

@@ -1,19 +1,29 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ONE_PROJECT } from "../utils/queries";
+import { ONE_PROJECT, PROJECT_TASK } from "../utils/queries";
 import { REMOVE_PROJECT, ADD_TASK } from "../utils/mutations";
 
 function ProjectPage() {
+  let { id } = useParams();
+
   const [task, setTask] = useState({
     taskText: " ",
-    complete: false
+    complete: false,
+    taskProject: id
   })
-
+  
   console.log(task)
 
   const [addTask, { error }] = useMutation(ADD_TASK)
 
+  const { taskData } = useQuery(PROJECT_TASK, {
+    variables: { id: id }
+  })
+  console.log("🚀 ~ file: ProjectPage.js:25 ~ ProjectPage ~ taskData", taskData)
+
+  const taskOfProject = taskData?.projectTasks || []
+  console.log(taskOfProject.length)
   const handleFormChange = (e) => {
     const { name, value } = e.target
     setTask({ ...task, [name]: value })
@@ -37,7 +47,6 @@ function ProjectPage() {
     })
   }
 
-  let { id } = useParams();
 
   const { data } = useQuery(ONE_PROJECT, {
     variables: { id: id },
