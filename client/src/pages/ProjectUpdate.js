@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
 import { ONE_PROJECT } from "../utils/queries";

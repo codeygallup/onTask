@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ADD_PROJECT } from "../utils/mutations";
 

@@ -15,16 +15,6 @@ export const GET_ME = gql`
   }
 `;
 
-export const ALL_PROJECTS = gql`
-  query allProjects {
-    allProjects {
-      _id
-      title
-      description
-    }
-  }
-`;
-
 export const ONE_PROJECT = gql`
   query oneProject($id: ID!) {
     oneProject(_id: $id) {

@@ -11,13 +11,6 @@ const resolvers = {
       }
       throw new AuthenticationError("Log in");
     },
-    allProjects: async (parent, args, context) => {
-      if (context.user) {
-        const projectData = await Project.find({});
-        return projectData;
-      }
-      throw new AuthenticationError("You need to be logged in");
-    },
     oneProject: async (parent, { _id }) => {
       const projectData = await Project.findOne({ _id });
       return projectData;
@@ -41,15 +34,11 @@ const resolvers = {
   Mutation: {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-
-      if (!user) {
-        throw new AuthenticationError("Incorrect credentials");
-      }
-
       const correctPw = await user.isCorrectPassword(password);
 
-      if (!correctPw) {
+      if (!user || !correctPw) {
         throw new AuthenticationError("Incorrect credentials");
+        window.alert('Invalid')
       }
 
       const token = signToken(user);

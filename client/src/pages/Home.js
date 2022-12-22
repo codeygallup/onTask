@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { USER_PROJECTS } from "../utils/queries";
@@ -8,7 +7,6 @@ const Home = () => {
 
   const { loading, data } = useQuery(USER_PROJECTS)
   const userArr = data?.userProjects || []
-  console.log(userArr)
  
   return (
     <div className="container-fluid w-95 border text-center">

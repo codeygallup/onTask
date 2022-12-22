@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
 import { REMOVE_PROJECT, ADD_TASK } from "../utils/mutations";
@@ -13,17 +13,14 @@ function ProjectPage() {
     taskProject: id
   })
 
-  console.log(task)
-
   const [addTask, { error }] = useMutation(ADD_TASK)
 
   const { data: taskData } = useQuery(PROJECT_TASKS, {
     variables: { taskProject: id }
   })
-  console.log(taskData)
 
   const taskOfProject = taskData?.projectTasks || []
-  console.log("TASK",taskOfProject)
+
   const handleFormChange = (e) => {
     const { name, value } = e.target
     setTask({ ...task, [name]: value })
@@ -76,11 +73,6 @@ function ProjectPage() {
       <Link to="/">
         <button className="btn btn-primary return">Home</button>
       </Link>
-      {/* {!project.complete ? (
-        <di className="App-header mx-5">NOT FINISHED</div>
-      ) : (
-        <h2 className="App-header mx-5">Finished. Ready to delete?</h2>
-      )} */}
       <div className="text-center card w-95 pb-4">
         <div className="project-header">
           <Link to={`/project/${project._id}/update`}>
