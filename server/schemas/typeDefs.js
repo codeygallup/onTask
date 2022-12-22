@@ -6,6 +6,7 @@ const typeDefs = gql`
     allProjects: [Project]
     oneProject(_id: ID!): Project
     userProjects(projectUser: ID): [Project]
+    projectTasks(taskProject: ID): [Task]
   }
 
   type User {
@@ -19,8 +20,15 @@ const typeDefs = gql`
     _id: ID
     title: String
     description: String
-    complete: Boolean
     projectUser: ID
+    tasks: [Task]
+  }
+
+  type Task {
+    _id: ID
+    taskText: String
+    complete: Boolean
+    taskProject: ID
   }
 
   type Auth {
@@ -34,6 +42,7 @@ const typeDefs = gql`
     addProject(projectUser: ID, title: String!, description: String!): Project
     updateProject(projectId: ID, title: String!, description: String!): Project
     removeProject(projectId: ID): Project
+    addTask(taskText: String!, taskProject: ID): Task
   }
 `;
 
