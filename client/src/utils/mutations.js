@@ -31,7 +31,6 @@ export const ADD_PROJECT = gql`
       _id
       title
       description
-      complete
     }
   }
 `;
@@ -50,7 +49,6 @@ export const UPDATE_PROJECT = gql`
       _id
       title
       description
-      complete
     }
   }
 `;
@@ -64,8 +62,8 @@ export const REMOVE_PROJECT = gql`
 `;
 
 export const ADD_TASK = gql`
-  mutation addTask($taskProject: ID, $taskText: String!) {
-    addTask(taskProject: $taskProject, taskText: $taskText) {
+  mutation addTask($taskText: String!, $taskProject: ID) {
+    addTask(taskText: $taskText, taskProject: $taskProject,) {
       _id
       taskText
       complete

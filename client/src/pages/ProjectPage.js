@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ONE_PROJECT, PROJECT_TASK } from "../utils/queries";
+import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
 import { REMOVE_PROJECT, ADD_TASK } from "../utils/mutations";
 
 function ProjectPage() {
@@ -17,12 +17,13 @@ function ProjectPage() {
 
   const [addTask, { error }] = useMutation(ADD_TASK)
 
-  const { taskData } = useQuery(PROJECT_TASK, {
+  const { data: taskData } = useQuery(PROJECT_TASKS, {
     variables: { taskProject: id }
   })
+  console.log(taskData)
 
   const taskOfProject = taskData?.projectTasks || []
-  console.log(taskOfProject.length)
+  console.log("TASK",taskOfProject)
   const handleFormChange = (e) => {
     const { name, value } = e.target
     setTask({ ...task, [name]: value })
@@ -95,6 +96,11 @@ function ProjectPage() {
         </div>
         <p className="card-body">{project.description}</p>
         <p>Tasks:</p>
+        {taskOfProject.map((task, index) => {
+          return (
+            <h1 key={index}>{task.taskText}</h1>
+          )
+        })}
         <div>
           <button className="btn btn-info mx-4" onClick={handleTask}>Add Task</button>
           <input name="taskText" onChange={handleFormChange} value={task.taskText} type="text" className="mx-4 my-4"></input>

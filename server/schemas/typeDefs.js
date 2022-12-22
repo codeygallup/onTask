@@ -20,7 +20,6 @@ const typeDefs = gql`
     _id: ID
     title: String
     description: String
-    complete: Boolean
     projectUser: ID
     tasks: [Task]
   }
@@ -43,7 +42,7 @@ const typeDefs = gql`
     addProject(projectUser: ID, title: String!, description: String!): Project
     updateProject(projectId: ID, title: String!, description: String!): Project
     removeProject(projectId: ID): Project
-    addTask(taskProject: ID, taskText: String!): Task
+    addTask(taskText: String!, taskProject: ID): Task
   }
 `;
 

@@ -10,7 +10,6 @@ export const GET_ME = gql`
         _id
         title
         description
-        complete
       }
     }
   }
@@ -22,7 +21,6 @@ export const ALL_PROJECTS = gql`
       _id
       title
       description
-      complete
     }
   }
 `;
@@ -33,11 +31,10 @@ export const ONE_PROJECT = gql`
       _id
       title
       description
-      complete
       tasks {
-      _id
-      taskText
-      complete
+        _id
+        taskText
+        complete
       }
     }
   }
@@ -49,18 +46,21 @@ export const USER_PROJECTS = gql`
       _id
       title
       description
-      complete
+      tasks {
+        _id
+        taskText
+        complete
+      }
     }
   }
 `;
 
-export const PROJECT_TASK = gql`
+export const PROJECT_TASKS = gql`
   query projectTasks($taskProject: ID) {
-    projectTasks(taskProject: $id) {
+    projectTasks(taskProject: $taskProject) {
       _id
       taskText
       complete
-      taskProject
     }
   }
 `;

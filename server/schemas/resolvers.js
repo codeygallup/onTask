@@ -1,6 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Project } = require("../models");
-const Task = require("../models/Task");
+const { User, Project, Task } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -32,11 +31,10 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in");
     },
-    projectTasks: async (parent, { id }) => {
+    projectTasks: async (parent, { taskProject }) => {
         const projectTaskData = await Task.find({
-          taskProject: id,
+          taskProject: taskProject,
         })
-        console.log("🚀 ~ file: resolvers.js:39 ~ projectTasks: ~ projectTaskData", projectTaskData)
         return projectTaskData
     }
   },
