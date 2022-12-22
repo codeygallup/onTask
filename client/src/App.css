@@ -125,18 +125,15 @@
 .task-grid div {
   display: grid;
   grid-template-columns: 1fr .8fr;
-  /* margin: 0 20%; */
 }
 
 .task-grid > div > div {
-  width: 70%;
-  justify-self: end;
+  grid-template-columns: repeat(4, 1fr);
 }
 
-/* .btn-grid {
-  display: grid;
-  grid-template-columns: repeat(2, .2fr);
-} */
+.task-grid > div > div > button:nth-child(1) {
+  grid-column: 3;
+}
 
 .task-grid button {
   margin: 0 20%;
@@ -178,4 +175,13 @@
 
 details[open] summary {
   list-style-type: "▼";
+}
+
+.blue {
+  background-color: #bab8f4;
+}
+
+.green {
+  background-color: #feafaf;
+  margin: 0 10px;
 }

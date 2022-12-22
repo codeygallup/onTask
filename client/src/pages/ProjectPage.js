@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
 import { REMOVE_PROJECT, ADD_TASK } from "../utils/mutations";
+import TaskItem from "../components/TaskItem";
 
 function ProjectPage() {
   let { id } = useParams();
@@ -33,7 +34,7 @@ function ProjectPage() {
       await addTask({
         variables: { ...task },
       });
-      // window.location.reload()
+      window.location.reload()
     } catch (err) {
       console.error(err);
     }
@@ -94,15 +95,7 @@ function ProjectPage() {
           <div className="task-grid">
             {taskOfProject.map((task) => {
               return (
-                <div key={task._id}>
-                  <p className="task">
-                    {task.taskText}
-                  </p>
-                  <div>
-                    <button className="btn btn-link">Edit</button>
-                    <button className="btn btn-danger">Complete</button>
-                  </div>
-                </div>
+                <TaskItem key={task._id} task={task} />
               );
             })}
           </div>
