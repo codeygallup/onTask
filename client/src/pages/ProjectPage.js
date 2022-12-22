@@ -36,7 +36,7 @@ function ProjectPage() {
         <button className="btn btn-primary return">Home</button>
       </Link>
       {/* {!project.complete ? (
-        <div className="App-header mx-5">NOT FINISHED</div>
+        <di className="App-header mx-5">NOT FINISHED</div>
       ) : (
         <h2 className="App-header mx-5">Finished. Ready to delete?</h2>
       )} */}
