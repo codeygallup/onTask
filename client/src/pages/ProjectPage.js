@@ -73,8 +73,9 @@ function ProjectPage() {
       <Link to="/">
         <button className="btn btn-primary return">Home</button>
       </Link>
-      <div className="text-center card w-95 pb-4">
-        <div className="project-header">
+    <div className="w-95 pb-4">
+    <div className="card">
+        <div className="project-header text-center">
           <Link to={`/project/${project._id}/update`}>
             <button className="btn btn-link edit-btn">Edit</button>
           </Link>
@@ -86,18 +87,28 @@ function ProjectPage() {
             Delete
           </button>
         </div>
-        <p className="card-body">{project.description}</p>
-        <p>Tasks:</p>
+        <details className="card-body text-center mb-4">
+          <summary className="float-right">Project description</summary>
+          <p>{project.description}</p>
+        </details>
+        <h5 className="text-center">Tasks:</h5>
+        <div className="task-grid">
         {taskOfProject.map((task, index) => {
           return (
-            <h1 key={index}>{task.taskText}</h1>
-          )
-        })}
-        <div>
-          <button className="btn btn-info mx-4" onClick={handleTask}>Add Task</button>
-          <input name="taskText" onChange={handleFormChange} value={task.taskText} type="text" className="mx-4 my-4"></input>
-        </div>
+            <>
+              <p className="task" key={index}>{task.taskText}</p>
+              <button className="btn btn-link">Edit</button>
+              <button className="btn btn-danger">Complete</button>
+            </>
+              )
+            })}
+            </div>
       </div>
+        <div className="text-center">
+          <input placeholder="Enter task..." name="taskText" onChange={handleFormChange} value={task.taskText} type="text" className="mx-4 my-4 btn" style={{marginRight: "10px"}}></input>
+          <button className="btn btn-info mx-4" onClick={handleTask}>Add Task</button>
+        </div>
+    </div>
     </>
   );
 }

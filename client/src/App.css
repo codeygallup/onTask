@@ -4,6 +4,7 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  flex-wrap: wrap;
 }
 
 .App-logo {
@@ -56,7 +57,7 @@
 
 .return {
   position: absolute;
-  top: 10%;
+  top: 2.5%;
   right: 5%;
 }
 
@@ -108,6 +109,21 @@
 
 .cred-link:hover {
   text-decoration: none;
+} 
+
+.task {
+  margin-left: 2%;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(2, .5fr);
+  row-gap: 10px;
+  margin-bottom: 2.5%;
+}
+
+.task-grid button {
+  margin: 0 20%;
 }
 
 @media all and (max-width: 800px) {
@@ -136,4 +152,14 @@
 .project-header button {
   width: 100%;
   height: 80%;
+}
+
+.float-right {
+  direction: rtl;
+  list-style-type: '▶';
+  margin-top: -.5%;
+}
+
+details[open] summary {
+  list-style-type: "▼";
 }
