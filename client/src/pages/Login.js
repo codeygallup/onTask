@@ -10,8 +10,7 @@ const Login = () => {
     password: "",
   });
 
-  // eslint-disable-next-line
-  const [loginUser, { error }] = useMutation(LOGIN);
+  const [loginUser] = useMutation(LOGIN);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;

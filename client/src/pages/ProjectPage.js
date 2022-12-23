@@ -14,7 +14,7 @@ function ProjectPage() {
     taskProject: id,
   });
 
-  const [addTask, { error }] = useMutation(ADD_TASK);
+  const [addTask] = useMutation(ADD_TASK);
 
   const { data: taskData } = useQuery(PROJECT_TASKS, {
     variables: { taskProject: id },
@@ -51,8 +51,7 @@ function ProjectPage() {
 
   const project = data?.oneProject || [];
 
-  // eslint-disable-next-line
-  const [removeProject, { loading: removeLoading, data: removeData }] =
+  const [removeProject] =
     useMutation(REMOVE_PROJECT);
 
   const handleDelete = async (e, projectId) => {

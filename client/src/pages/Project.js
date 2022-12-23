@@ -10,8 +10,7 @@ const Project = () => {
     complete: false,
   });
 
-  // eslint-disable-next-line
-  const [addProject, { error }] = useMutation(ADD_PROJECT);
+  const [addProject] = useMutation(ADD_PROJECT);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;

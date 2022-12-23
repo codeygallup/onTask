@@ -7,7 +7,7 @@ import { ONE_PROJECT } from "../utils/queries";
 function ProjectUpdate() {
   let { id } = useParams();
 
-  const { loading, data } = useQuery(ONE_PROJECT, {
+  const { data } = useQuery(ONE_PROJECT, {
     variables: { id: id },
   });
 
@@ -20,7 +20,7 @@ function ProjectUpdate() {
     complete: false,
   });
 
-  const [updateProject, { error }] = useMutation(UPDATE_PROJECT);
+  const [updateProject] = useMutation(UPDATE_PROJECT);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
