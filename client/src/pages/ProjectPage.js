@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
-import { REMOVE_PROJECT, ADD_TASK } from "../utils/mutations";
+import { REMOVE_PROJECT, ADD_TASK, REMOVE_TASK } from "../utils/mutations";
 import TaskItem from "../components/TaskItem";
 import HomeButton from "../components/HomeButton";
 
@@ -10,6 +10,8 @@ function ProjectPage() {
   let { id } = useParams();
 
   const [addTask] = useMutation(ADD_TASK);
+
+  const [removeTask] = useMutation(REMOVE_TASK);
 
   const [removeProject] = useMutation(REMOVE_PROJECT);
 
@@ -65,16 +67,18 @@ function ProjectPage() {
     }
   };
 
-  const toggleComplete = (e, id) => {
+  const taskDelete = async (e, taskId) => {
     e.preventDefault();
 
-    taskOfProject.map(task => {
-      if (task._id === id) {
-        console.log(task)
-        setTask({...task, complete: true})
-      }
-    })
-  }
+    try {
+      await removeTask({
+        variables: { taskId },
+      });
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -102,7 +106,9 @@ function ProjectPage() {
           <h5 className="text-center">Tasks:</h5>
           <div className="task-grid">
             {taskOfProject.map((task) => {
-              return <TaskItem key={task._id} task={task} toggleComplete={toggleComplete} />;
+              return (
+                <TaskItem key={task._id} task={task} taskDelete={taskDelete} />
+              );
             })}
           </div>
         </div>

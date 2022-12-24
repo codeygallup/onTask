@@ -81,8 +81,7 @@ const resolvers = {
         return projectUpdate;
       }
     },
-    removeProject: async (parent, args) => {
-      const { projectId } = args;
+    removeProject: async (parent, { projectId }) => {
       const projectDelete = await Project.findByIdAndDelete(projectId);
       return projectDelete;
     },
@@ -95,6 +94,10 @@ const resolvers = {
         return task
       }
       throw new AuthenticationError("You need to be logged in")
+    },
+    removeTask: async (parent, { taskId }) => {
+      const taskDelete = await Task.findByIdAndDelete(taskId)
+      return taskDelete
     }
   },
 };
