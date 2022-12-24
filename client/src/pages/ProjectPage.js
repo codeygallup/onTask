@@ -8,19 +8,25 @@ import TaskItem from "../components/TaskItem";
 function ProjectPage() {
   let { id } = useParams();
 
-  const [task, setTask] = useState({
-    taskText: " ",
-    complete: false,
-    taskProject: id,
-  });
-
   const [addTask] = useMutation(ADD_TASK);
+
+  const [removeProject] = useMutation(REMOVE_PROJECT);
 
   const { data: taskData } = useQuery(PROJECT_TASKS, {
     variables: { taskProject: id },
   });
-
   const taskOfProject = taskData?.projectTasks || [];
+
+  const { data } = useQuery(ONE_PROJECT, {
+    variables: { id: id },
+  });
+  const project = data?.oneProject || [];
+
+  const [task, setTask] = useState({
+    taskText: "",
+    complete: false,
+    taskProject: id,
+  });
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +40,7 @@ function ProjectPage() {
       await addTask({
         variables: { ...task },
       });
-      window.location.reload()
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -44,15 +50,6 @@ function ProjectPage() {
       complete: false,
     });
   };
-
-  const { data } = useQuery(ONE_PROJECT, {
-    variables: { id: id },
-  });
-
-  const project = data?.oneProject || [];
-
-  const [removeProject] =
-    useMutation(REMOVE_PROJECT);
 
   const handleDelete = async (e, projectId) => {
     e.preventDefault();
@@ -66,6 +63,17 @@ function ProjectPage() {
       console.error(err);
     }
   };
+
+  const toggleComplete = (e, id) => {
+    e.preventDefault();
+
+    taskOfProject.map(task => {
+      if (task._id === id) {
+        console.log(task)
+        setTask({...task, complete: true})
+      }
+    })
+  }
 
   return (
     <>
@@ -93,9 +101,7 @@ function ProjectPage() {
           <h5 className="text-center">Tasks:</h5>
           <div className="task-grid">
             {taskOfProject.map((task) => {
-              return (
-                <TaskItem key={task._id} task={task} />
-              );
+              return <TaskItem key={task._id} task={task} toggleComplete={toggleComplete} />;
             })}
           </div>
         </div>

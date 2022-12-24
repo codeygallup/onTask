@@ -7,7 +7,6 @@ const Project = () => {
   const [project, setProject] = useState({
     title: "",
     description: "",
-    complete: false,
   });
 
   const [addProject] = useMutation(ADD_PROJECT);
@@ -32,7 +31,6 @@ const Project = () => {
     setProject({
       title: "",
       description: "",
-      complete: false,
     });
   };
 

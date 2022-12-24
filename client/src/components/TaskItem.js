@@ -1,8 +1,8 @@
-export default function TaskItem({ task }) {
+export default function TaskItem({ task, toggleComplete }) {
   
-    const toggleComplete = (e, taskId) => {
-        console.log(e)
-    }
+    // const toggleComplete = (e, taskId) => {
+    //     console.log(e)
+    // }
   
 
   return (
