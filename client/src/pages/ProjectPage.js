@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
 import { REMOVE_PROJECT, ADD_TASK } from "../utils/mutations";
 import TaskItem from "../components/TaskItem";
+import HomeButton from "../components/HomeButton";
 
 function ProjectPage() {
   let { id } = useParams();
@@ -78,7 +79,7 @@ function ProjectPage() {
   return (
     <>
       <Link to="/">
-        <button className="btn btn-primary return">Home</button>
+        <HomeButton />
       </Link>
       <div className="w-95 pb-4">
         <div className="card">

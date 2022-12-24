@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
 import { ONE_PROJECT } from "../utils/queries";
+import HomeButton from "../components/HomeButton";
 
 function ProjectUpdate() {
   let { id } = useParams();
@@ -42,7 +43,7 @@ function ProjectUpdate() {
     <>
       <form className="text-center projectForm" onSubmit={handleSubmit}>
       <Link to="/">
-        <button className="btn btn-primary return">Home</button>
+        <HomeButton />
       </Link>
         <h3 className="mb-5">Update Project</h3>
         <label className="mx-3">Title:</label>

@@ -124,19 +124,12 @@
 
 .task-grid div {
   display: grid;
-  grid-template-columns: 1fr .8fr;
-}
-
-.task-grid > div > div {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.task-grid > div > div > button:nth-child(1) {
-  grid-column: 3;
+  grid-template-columns: 10fr 1fr;
 }
 
 .task-grid button {
-  margin: 0 20%;
+  /* margin: 0 30%; */
+  margin-left: 50%;
 }
 
 @media all and (max-width: 800px) {
@@ -177,11 +170,8 @@ details[open] summary {
   list-style-type: "▼";
 }
 
-.blue {
-  background-color: #bab8f4;
-}
-
-.green {
-  background-color: #feafaf;
+.task-section {
+  background-color: hsl(0, 5%, 73%);
   margin: 0 10px;
+  border-radius: 10px;
 }

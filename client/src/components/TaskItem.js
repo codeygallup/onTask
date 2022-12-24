@@ -1,20 +1,15 @@
-export default function TaskItem({ task, toggleComplete }) {
-  
-    // const toggleComplete = (e, taskId) => {
-    //     console.log(e)
-    // }
-  
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+
+export default function TaskItem({ task, taskDelete }) {
 
   return (
     <>
-      <div className={task.complete ? "blue" : "green"}>
+      <div className="task-section">
         <p className="task">{task.taskText}</p>
-        <div>
-          <button className="btn btn-link">Edit</button>
-          <button className="btn btn-danger" onClick={(e) => {toggleComplete(e, task._id)}}>
-            {!task.complete ? "Complete" : "Unfinished"}
+          <button className="btn btn-danger" onClick={(e) => {taskDelete(e, task._id)}}>
+            <FontAwesomeIcon icon={faXmark} />
           </button>
-        </div>
       </div>
     </>
   );

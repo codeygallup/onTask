@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { ADD_PROJECT } from "../utils/mutations";
+import HomeButton from "../components/HomeButton";
 
 const Project = () => {
   const [project, setProject] = useState({
@@ -37,7 +38,7 @@ const Project = () => {
   return (
     <>
       <Link to="/">
-        <button className="btn return">Home</button>
+        <HomeButton />
       </Link>
       <form className="text-center projectForm" onSubmit={handleSubmit}>
         <h3 className="mb-5">Add New Project</h3>
