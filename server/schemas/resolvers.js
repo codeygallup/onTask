@@ -6,29 +6,25 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        const myData = await User.findOne({ _id: context.user._id });
-        return myData;
+        return await User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError("Log in");
     },
     oneProject: async (parent, { _id }) => {
-      const projectData = await Project.findOne({ _id });
-      return projectData;
+      return await Project.findOne({ _id });
     },
     userProjects: async (parent, args, context) => {
       if (context.user) {
-        const userProjectData = await Project.find({
+        return await Project.find({
           projectUser: context.user._id,
         });
-        return userProjectData;
       }
       throw new AuthenticationError("You need to be logged in");
     },
     projectTasks: async (parent, { taskProject }) => {
-        const projectTaskData = await Task.find({
+        return await Task.find({
           taskProject: taskProject,
         })
-        return projectTaskData
     }
   },
   Mutation: {
@@ -52,12 +48,11 @@ const resolvers = {
     },
     addProject: async (parent, { title, description }, context) => {
       if (context.user) {
-        const project = await Project.create({
+        return await Project.create({
           projectUser: context.user._id,
           title,
           description,
         });
-        return project;
       }
       throw new AuthenticationError(
         "You need to be logged in to add a project"
@@ -69,7 +64,7 @@ const resolvers = {
       context
     ) => {
       if (context.user) {
-        const projectUpdate = await Project.findByIdAndUpdate(
+        return await Project.findByIdAndUpdate(
           projectId,
           {
             title,
@@ -78,26 +73,23 @@ const resolvers = {
           },
           { new: true }
           );
-        return projectUpdate;
       }
     },
     removeProject: async (parent, { projectId }) => {
-      const projectDelete = await Project.findByIdAndDelete(projectId);
-      return projectDelete;
+      return await Project.findByIdAndDelete(projectId);
+    
     },
     addTask: async (parent, { taskText, taskProject }, context) => {
       if (context.user) {
-        const task = await Task.create({
+        return await Task.create({
           taskText,
           taskProject
         })
-        return task
       }
       throw new AuthenticationError("You need to be logged in")
     },
     removeTask: async (parent, { taskId }) => {
-      const taskDelete = await Task.findByIdAndDelete(taskId)
-      return taskDelete
+      return await Task.findByIdAndDelete(taskId)
     }
   },
 };
