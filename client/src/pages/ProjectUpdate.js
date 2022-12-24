@@ -18,7 +18,6 @@ function ProjectUpdate() {
     projectId: id,
     title: projectData.title,
     description: projectData.description,
-    complete: false,
   });
 
   const [updateProject] = useMutation(UPDATE_PROJECT);

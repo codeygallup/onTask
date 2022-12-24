@@ -31,10 +31,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  useEffect(() => {
-    document.title = "OnTask";
-  });
-
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
@@ -46,10 +42,6 @@ function App() {
             <Route path="/project" element={<Project />} />
             <Route path="/project/:id" element={<ProjectPage />} />
             <Route path="/project/:id/update" element={<ProjectUpdate />} />
-            {/* <Route 
-              path="*"
-              element={<NotFound />}
-            /> */}
           </Routes>
         </div>
       </BrowserRouter>
