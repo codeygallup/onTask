@@ -57,7 +57,7 @@
 
 .return {
   position: absolute;
-  top: 2.5%;
+  top: 2%;
   right: 5%;
 }
 
@@ -66,6 +66,11 @@
   width: 75%;
   padding: 3%;
   box-shadow: 1px 1px 10px #282c34;
+}
+
+.project-card {
+  position: relative;
+  margin-top: 5%;
 }
 
 .inputBox {
