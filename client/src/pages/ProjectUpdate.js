@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
 import { ONE_PROJECT } from "../utils/queries";
 import HomeButton from "../components/HomeButton";
+import ProjectForm from "../components/ProjectForm";
 
 function ProjectUpdate() {
   let { id } = useParams();
@@ -22,11 +23,6 @@ function ProjectUpdate() {
 
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setProject({ ...project, [name]: value });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -40,38 +36,15 @@ function ProjectUpdate() {
   };
   return (
     <>
-      <form className="text-center projectForm" onSubmit={handleSubmit}>
       <Link to="/">
         <HomeButton />
       </Link>
-        <h3 className="mb-5">Update Project</h3>
-        <label className="mx-3">Title:</label>
-        <br />
-        <input
-          name="title"
-          type="text"
-          onChange={handleFormChange}
-          value={project.title}
-          className="inputBox"
-          required
-        />
-        <br />
-        <label className="mx-3">Description:</label>
-        <br />
-        <textarea
-          name="description"
-          type="text"
-          onChange={handleFormChange}
-          value={project.description}
-          className="inputBox"
-          required
-          rows="15"
-        />
-        <br />
-        <button type="submit" className="btn btn-primary">
-          Add
-        </button>
-      </form>
+      <ProjectForm
+        title="Update Project"
+        handleSubmit={handleSubmit}
+        project={project}
+        setProject={setProject}
+      />
     </>
   );
 }
