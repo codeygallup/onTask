@@ -65,7 +65,7 @@ const Project = () => {
           rows="15"
         />
         <br />
-        <button type="submit" className="btn">
+        <button type="submit" className="btn btn-primary">
           Add
         </button>
       </form>

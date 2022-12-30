@@ -50,6 +50,7 @@ function ProjectPage() {
     setTask({
       taskText: "",
       complete: false,
+      taskProject: id
     });
   };
 
