@@ -23,17 +23,6 @@ function ProjectUpdate() {
 
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await updateProject({
-        variables: { ...project },
-      });
-      window.location.replace("/");
-    } catch (err) {
-      console.error(err);
-    }
-  };
   return (
     <>
       <Link to="/">
@@ -41,7 +30,7 @@ function ProjectUpdate() {
       </Link>
       <ProjectForm
         title="Update Project"
-        handleSubmit={handleSubmit}
+        handleSub={updateProject}
         project={project}
         setProject={setProject}
       />

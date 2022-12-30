@@ -1,13 +1,23 @@
-export default function ProjectForm({
-  title,
-  handleSubmit,
-  project,
-  setProject,
-}) {
+export default function ProjectForm({ title, handleSub, project, setProject }) {
+  
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setProject({ ...project, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await handleSub({
+        variables: { ...project },
+      });
+      window.location.replace("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <form className="text-center projectForm" onSubmit={handleSubmit}>

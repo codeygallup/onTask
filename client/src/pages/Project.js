@@ -13,24 +13,6 @@ const Project = () => {
 
   const [addProject] = useMutation(ADD_PROJECT);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await addProject({
-        variables: { ...project },
-      });
-      window.location.replace("/");
-    } catch (err) {
-      console.error(err);
-    }
-
-    setProject({
-      title: "",
-      description: "",
-    });
-  };
-
   return (
     <>
       <Link to="/">
@@ -38,7 +20,7 @@ const Project = () => {
       </Link>
       <ProjectForm
         title="Add New Project"
-        handleSubmit={handleSubmit}
+        handleSub={addProject}
         project={project}
         setProject={setProject}
       />
