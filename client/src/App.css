@@ -84,18 +84,11 @@
 
 .login {
   width: 40%;
-  padding: 5% 3% 3%;
+  padding: 3% 3% 5%;
   background: #ffffff;
   border-radius: 1.25rem;
   border: 1px solid #282c34;
-}
-
-.signup {
-  width: 40%;
-  padding: 5% 3% 5.5%;
-  background: #ffffff;
-  border-radius: 1.25rem;
-  border: 1px solid #282c34;
+  position: absolute;
 }
 
 .login-form {
@@ -103,6 +96,12 @@
   margin: 0;
   display: grid;
   gap: 10%;
+}
+
+.login-link {
+  position: relative;
+  text-align: center;
+  bottom: -200px;
 }
 
 .login-input {

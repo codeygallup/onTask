@@ -1,8 +1,13 @@
-export default function ProjectForm({ title, handleSubmit, project, setProject }) {
-    const handleFormChange = (e) => {
-        const { name, value } = e.target;
-        setProject({ ...project, [name]: value });
-      };
+export default function ProjectForm({
+  title,
+  handleSubmit,
+  project,
+  setProject,
+}) {
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setProject({ ...project, [name]: value });
+  };
   return (
     <>
       <form className="text-center projectForm" onSubmit={handleSubmit}>
@@ -27,7 +32,7 @@ export default function ProjectForm({ title, handleSubmit, project, setProject }
           value={project.description}
           className="inputBox"
           required
-          rows="15"
+          rows="8"
         />
         <br />
         <button type="submit" className="btn btn-primary">
