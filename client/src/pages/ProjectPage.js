@@ -5,6 +5,7 @@ import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
 import { REMOVE_PROJECT, ADD_TASK, REMOVE_TASK } from "../utils/mutations";
 import TaskItem from "../components/TaskItem";
 import HomeButton from "../components/HomeButton";
+import TaskInput from "../components/TaskInput";
 
 function ProjectPage() {
   let { id } = useParams();
@@ -30,30 +31,6 @@ function ProjectPage() {
     complete: false,
     taskProject: id,
   });
-  
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setTask({ ...task, [name]: value });
-  };
-  
-  const handleTask = async (e) => {
-    e.preventDefault();
-    
-    try {
-      await addTask({
-        variables: { ...task },
-      });
-      refetch();
-    } catch (err) {
-      console.error(err);
-    }
-
-    setTask({
-      taskText: "",
-      complete: false,
-      taskProject: id,
-    });
-  };
 
   const handleDelete = async (e, projectId) => {
     e.preventDefault();
@@ -67,23 +44,6 @@ function ProjectPage() {
       console.error(err);
     }
   };
-
-  const taskDelete = async (e, taskId) => {
-    e.preventDefault();
-
-    try {
-      await removeTask({
-        variables: { taskId },
-      });
-      refetch();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  // useEffect(() => {
-    // refetch();
-  //   // eslint-disable-next-line
-  // }, [handleTask, taskDelete]);
 
   return (
     <>
@@ -110,25 +70,23 @@ function ProjectPage() {
           <div className="task-grid">
             {taskOfProject.map((task) => {
               return (
-                <TaskItem key={task._id} task={task} taskDelete={taskDelete} />
+                <TaskItem
+                  key={task._id}
+                  task={task}
+                  refetch={refetch}
+                  removeTask={removeTask}
+                />
               );
             })}
           </div>
         </div>
-        <div className="text-center">
-          <input
-            placeholder="Enter task..."
-            name="taskText"
-            onChange={handleFormChange}
-            value={task.taskText}
-            type="text"
-            className="mx-4 my-4 btn"
-            style={{ marginRight: "10px" }}
-          ></input>
-          <button className="btn btn-info mx-4" onClick={handleTask}>
-            Add Task
-          </button>
-        </div>
+        <TaskInput
+          task={task}
+          addTask={addTask}
+          setTask={setTask}
+          refetch={refetch}
+          id={id}
+        />
       </div>
     </>
   );
