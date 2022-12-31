@@ -50,7 +50,7 @@ function ProjectPage() {
     setTask({
       taskText: "",
       complete: false,
-      taskProject: id
+      taskProject: id,
     });
   };
 
@@ -85,9 +85,7 @@ function ProjectPage() {
 
   return (
     <>
-      <Link to="/" className="mb-4">
-        <HomeButton />
-      </Link>
+      <HomeButton />
       <div className="w-95 project-card">
         <div className="card">
           <div className="project-header text-center">

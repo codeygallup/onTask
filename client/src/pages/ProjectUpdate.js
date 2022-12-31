@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
 import { ONE_PROJECT } from "../utils/queries";
 import HomeButton from "../components/HomeButton";
@@ -25,9 +25,7 @@ function ProjectUpdate() {
 
   return (
     <>
-      <Link to="/">
-        <HomeButton />
-      </Link>
+      <HomeButton />
       <ProjectForm
         title="Update Project"
         handleSub={updateProject}

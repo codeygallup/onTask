@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { Link } from "react-router-dom";
 import { ADD_PROJECT } from "../utils/mutations";
 import HomeButton from "../components/HomeButton";
 import ProjectForm from "../components/ProjectForm";
@@ -15,9 +14,7 @@ const Project = () => {
 
   return (
     <>
-      <Link to="/">
-        <HomeButton />
-      </Link>
+      <HomeButton />
       <ProjectForm
         title="Add New Project"
         handleSub={addProject}
