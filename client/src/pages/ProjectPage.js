@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
@@ -30,19 +30,20 @@ function ProjectPage() {
     complete: false,
     taskProject: id,
   });
-
+  
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setTask({ ...task, [name]: value });
   };
-
+  
   const handleTask = async (e) => {
     e.preventDefault();
-
+    
     try {
       await addTask({
         variables: { ...task },
       });
+      refetch();
     } catch (err) {
       console.error(err);
     }
@@ -74,14 +75,15 @@ function ProjectPage() {
       await removeTask({
         variables: { taskId },
       });
+      refetch();
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {
-    refetch();
-    // eslint-disable-next-line
-  }, [handleTask, taskDelete]);
+  // useEffect(() => {
+    // refetch();
+  //   // eslint-disable-next-line
+  // }, [handleTask, taskDelete]);
 
   return (
     <>
