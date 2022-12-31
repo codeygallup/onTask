@@ -1,17 +1,42 @@
 import { Link } from "react-router-dom";
+import Auth from "../utils/auth";
 
 export default function LoginForm({
   title,
   formData,
   setFormData,
-  handleSubmit,
+  handleSub,
+  authData,
 }) {
+  console.log(typeof authData);
+  console.log(typeof math);
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const current = window.location.pathname;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    try {
+      const { data } = await handleSub({
+        variables: { ...formData },
+      });
+      authData === "loginUser"
+        ? Auth.login(data.loginUser.token)
+        : Auth.login(data.addUser.token);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
