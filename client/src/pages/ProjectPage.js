@@ -32,7 +32,7 @@ function ProjectPage() {
     <>
       <HomeButton />
       <div className="w-95 project-card">
-        <div className="card">
+        {/* <div className="card"> */}
           <CardHeader project={project} removeProject={removeProject} />
           <div className="task-grid">
             {taskOfProject.map((task) => {
@@ -46,7 +46,7 @@ function ProjectPage() {
               );
             })}
           </div>
-        </div>
+        {/* </div> */}
         <TaskInput
           task={task}
           addTask={addTask}
