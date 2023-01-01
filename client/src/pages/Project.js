@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_PROJECT } from "../utils/mutations";
-import HomeButton from "../components/HomeButton";
-import ProjectForm from "../components/ProjectForm";
+import { HomeButton, ProjectForm } from "../components";
 
 const Project = () => {
   const [project, setProject] = useState({

@@ -3,8 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
 import { ONE_PROJECT } from "../utils/queries";
-import HomeButton from "../components/HomeButton";
-import ProjectForm from "../components/ProjectForm";
+import { HomeButton, ProjectForm } from "../components";
 
 function ProjectUpdate() {
   let { id } = useParams();
