@@ -116,7 +116,7 @@
 
 .cred-link:hover {
   text-decoration: none;
-} 
+}
 
 .task {
   margin-left: 2%;
@@ -146,7 +146,7 @@
     border-radius: 1.25rem;
     border: 1px solid #282c34;
   }
-  
+
   .signup {
     width: 80%;
     padding: 5% 3% 20%;
@@ -158,7 +158,7 @@
 
 .project-header {
   display: grid;
-  grid-template-columns: .5fr 5fr .5fr;
+  grid-template-columns: 0.5fr 5fr 0.5fr;
 }
 
 .project-header button {
@@ -168,8 +168,8 @@
 
 .float-right {
   direction: rtl;
-  list-style-type: '▶';
-  margin-top: -.5%;
+  list-style-type: "▶";
+  margin-top: -0.5%;
 }
 
 details[open] summary {
@@ -180,4 +180,8 @@ details[open] summary {
   background-color: hsl(0, 5%, 73%);
   margin: 0 10px;
   border-radius: 10px;
+}
+
+.card-btn {
+  font-size: 1.25em;
 }

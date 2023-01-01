@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 export default function CardHeader({ project, removeProject }) {
   const handleDelete = async (e, projectId) => {
@@ -20,11 +20,13 @@ export default function CardHeader({ project, removeProject }) {
     <>
       <div className="project-header text-center">
         <Link to={`/project/${project._id}/update`}>
-          <button className="btn btn-link edit-btn">Edit</button>
+          <button className="btn btn-link card-btn">
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </button>
         </Link>
         <h1 className="card card-header">{project.title}</h1>
         <button
-          className="btn btn-danger"
+          className="btn btn-danger card-btn"
           onClick={(e) => handleDelete(e, project._id)}
         >
           <FontAwesomeIcon icon={faTrash} />
