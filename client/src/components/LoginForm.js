@@ -50,6 +50,7 @@ export default function LoginForm({
             value={formData.username}
             placeholder="Username"
             className="login-input"
+            autoFocus
             required
           />
         )}
@@ -60,6 +61,7 @@ export default function LoginForm({
           value={formData.email}
           placeholder="Email"
           className="login-input"
+          autoFocus
           required
         />
         <input

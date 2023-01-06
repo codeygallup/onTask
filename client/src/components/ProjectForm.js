@@ -30,6 +30,7 @@ export default function ProjectForm({ title, handleSub, project, setProject }) {
           onChange={handleFormChange}
           value={project.title}
           className="inputBox"
+          autoFocus
           required
         />
         <br />
