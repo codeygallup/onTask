@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { ONE_PROJECT, PROJECT_TASKS } from "../utils/queries";
 import { REMOVE_PROJECT, ADD_TASK, REMOVE_TASK } from "../utils/mutations";
 import { CardHeader, TaskInput, TaskItem, HomeButton } from "../components";
+import { TaskContext } from "../components/TaskContext";
 
 function ProjectPage() {
   let { id } = useParams();
@@ -30,29 +31,20 @@ function ProjectPage() {
 
   return (
     <>
-      <HomeButton />
-      <div className="w-95 project-card">
+      <TaskContext.Provider
+        value={{ task, setTask, removeTask, addTask, refetch, id }}
+      >
+        <HomeButton />
+        <div className="w-95 project-card">
           <CardHeader project={project} removeProject={removeProject} />
           <div className="task-grid">
             {taskOfProject.map((task) => {
-              return (
-                <TaskItem
-                  key={task._id}
-                  task={task}
-                  refetch={refetch}
-                  removeTask={removeTask}
-                />
-              );
+              return <TaskItem key={task._id} task={task} />;
             })}
           </div>
-        <TaskInput
-          task={task}
-          addTask={addTask}
-          setTask={setTask}
-          refetch={refetch}
-          id={id}
-        />
-      </div>
+          <TaskInput />
+        </div>
+      </TaskContext.Provider>
     </>
   );
 }

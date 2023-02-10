@@ -1,7 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { TaskContext } from "./TaskContext";
 
-export default function TaskItem({ task, removeTask, refetch }) {
+export default function TaskItem({ task }) {
+  const { removeTask, refetch } = useContext(TaskContext);
   const taskDelete = async (e, taskId) => {
     e.preventDefault();
 

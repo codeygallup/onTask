@@ -1,4 +1,8 @@
-export default function TaskInput({ task, addTask, setTask, refetch, id }) {
+import { useContext } from "react";
+import { TaskContext } from "./TaskContext";
+
+export default function TaskInput() {
+  let { task, addTask, setTask, refetch, id } = useContext(TaskContext);
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setTask({ ...task, [name]: value });
