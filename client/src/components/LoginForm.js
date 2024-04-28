@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import { useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function LoginForm({
   title,
@@ -129,7 +131,7 @@ export default function LoginForm({
               >
                 Password
               </label>
-              <button type="button" className="btn pb-3" onClick={handleShowPassword}>{!showPassword ? <i className="bi bi-eye"></i> : <i className="bi bi-eye-slash"></i>}</button>
+              <button type="button" className="btn pb-3" onClick={handleShowPassword}>{showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}</button>
             </div>
             <div className="d-grid">
               <button

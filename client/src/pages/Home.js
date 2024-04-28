@@ -7,6 +7,7 @@ const Home = () => {
   const { loading, data } = useQuery(USER_PROJECTS);
   const userArr = data?.userProjects || [];
 
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>
@@ -48,7 +49,11 @@ const Home = () => {
                 </Link>
               </>
             ) : (
-              <></>
+              <>
+                <Link to="/project">
+                  <button className="btn btn-dark">Add Project</button>
+                </Link>
+              </>
             )}
           </div>
         </div>
