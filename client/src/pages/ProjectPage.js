@@ -35,8 +35,10 @@ function ProjectPage() {
         value={{ task, setTask, removeTask, addTask, refetch, id }}
       >
         <HomeButton />
-        <div className="w-95 project-card">
+        <div className="d-flex justify-content-center align-items-center vh-100 ">
+        <div className="shadow rounded">
           <CardHeader project={project} removeProject={removeProject} />
+        <div className="container vw-100">
           <div className="task-grid">
             {taskOfProject.map((task) => {
               return <TaskItem key={task._id} task={task} />;
@@ -44,6 +46,8 @@ function ProjectPage() {
           </div>
           <TaskInput />
         </div>
+        </div>
+            </div>
       </TaskContext.Provider>
     </>
   );

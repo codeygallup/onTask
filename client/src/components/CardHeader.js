@@ -18,24 +18,26 @@ export default function CardHeader({ project, removeProject }) {
 
   return (
     <>
-      <div className="project-header text-center">
-        <Link to={`/project/${project._id}/update`}>
-          <button className="btn btn-link card-btn">
-            <FontAwesomeIcon icon={faPenToSquare} />
+      <div className="text-center bg-body-secondary">
+        <div className="d-flex justify-content-between align-items-center bg-body-secondary">
+          <Link to={`/project/${project._id}/update`}>
+            <button className="btn btn-link ms-2">
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </button>
+          </Link>
+          <h1>{project.title}</h1>
+          <button
+            className="btn btn-danger me-2"
+            onClick={(e) => handleDelete(e, project._id)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
           </button>
-        </Link>
-        <h1 className="card card-header">{project.title}</h1>
-        <button
-          className="btn btn-danger card-btn"
-          onClick={(e) => handleDelete(e, project._id)}
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
+        </div>
+        <details className="mb-4">
+          <summary>Project description</summary>
+          <p>{project.description}</p>
+        </details>
       </div>
-      <details className="card-body text-center mb-4">
-        <summary className="float-right">Project description</summary>
-        <p>{project.description}</p>
-      </details>
       <h5 className="text-center">Tasks:</h5>
     </>
   );
