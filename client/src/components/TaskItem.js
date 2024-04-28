@@ -20,8 +20,8 @@ export default function TaskItem({ task }) {
 
   return (
     <>
-      <div className="task-section">
-        <p className="task">{task.taskText}</p>
+      <div className="d-flex justify-content-between align-items-center my-2">
+        <p>{task.taskText}</p>
         <button
           className="btn btn-danger"
           onClick={(e) => {

@@ -36,18 +36,18 @@ function ProjectPage() {
       >
         <HomeButton />
         <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="shadow rounded">
-          <CardHeader project={project} removeProject={removeProject} />
-        <div className="container vw-100">
-          <div className="task-grid">
-            {taskOfProject.map((task) => {
-              return <TaskItem key={task._id} task={task} />;
-            })}
-          </div>
-          <TaskInput />
-        </div>
-        </div>
+          <div className="shadow rounded">
+            <CardHeader project={project} removeProject={removeProject} />
+            <div className="container vw-100">
+              <div className="task-grid">
+                {taskOfProject.map((task) => {
+                  return <TaskItem key={task._id} task={task} />;
+                })}
+              </div>
+              <TaskInput />
             </div>
+          </div>
+        </div>
       </TaskContext.Provider>
     </>
   );
