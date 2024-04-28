@@ -16,8 +16,8 @@ export default function LoginForm({
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorModal, setErrorModal] = useState(false);
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (title === "Login") {
@@ -61,13 +61,13 @@ export default function LoginForm({
   };
 
   const handleShowPassword = () => {
-    setShowPassword(prev => !prev )
-  }
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="container card shadow p-5">
+        <div className="container-sm card shadow p-4">
           <form className="mx-5" onSubmit={handleSubmit}>
             <h3 className="text-center mb-5">{title}</h3>
             {title === "Sign Up" && (
@@ -131,7 +131,17 @@ export default function LoginForm({
               >
                 Password
               </label>
-              <button type="button" className="btn pb-3" onClick={handleShowPassword}>{showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}</button>
+              <button
+                type="button"
+                className="btn pb-3"
+                onClick={handleShowPassword}
+              >
+                {showPassword ? (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                ) : (
+                  <FontAwesomeIcon icon={faEye} />
+                )}
+              </button>
             </div>
             <div className="d-grid">
               <button
@@ -144,17 +154,11 @@ export default function LoginForm({
           </form>
           {title === "Login" ? (
             <p className="text-center">
-              To create an account{" "}
-              <Link to="/signup">
-                click here
-              </Link>
+              To create an account <Link to="/signup">click here</Link>
             </p>
           ) : (
             <p className="text-center">
-              Already a user?{" "}
-              <Link to="/login">
-                login here
-              </Link>
+              Already a user? <Link to="/login">login here</Link>
             </p>
           )}
         </div>
