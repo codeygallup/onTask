@@ -29,17 +29,17 @@ export default function TaskInput() {
 
   return (
     <>
-      <div className="text-center">
+      <div className="text-center input-group my-4">
         <input
           placeholder="Enter task..."
           name="taskText"
           onChange={handleFormChange}
           value={task.taskText}
           type="text"
-          className="mx-4 my-4 btn"
-          style={{ marginRight: "10px" }}
-        ></input>
-        <button className="btn btn-info mx-4" onClick={handleTask}>
+          className="form-control"
+          style={{ marginRight: "20px" }}
+        />
+        <button className="btn btn-info" onClick={handleTask}>
           Add Task
         </button>
       </div>
