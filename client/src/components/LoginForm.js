@@ -12,8 +12,8 @@ export default function LoginForm({
   const emailRef = useRef(null);
   const usernameRef = useRef(null);
 
-  const [errorMsg, setErrorMsg] = useState("")
-  const [errorModal, setErrorModal] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("");
+  const [errorModal, setErrorModal] = useState(false);
 
   useEffect(() => {
     if (title === "Login") {
@@ -46,15 +46,15 @@ export default function LoginForm({
         : Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
-      setErrorModal(true)
-      setErrorMsg("Your email or  password is incorrect!")
+      setErrorModal(true);
+      setErrorMsg("Your email or  password is incorrect!");
     }
   };
 
   const closeModal = () => {
-    setErrorModal(false)
-    setErrorMsg("")
-  }
+    setErrorModal(false);
+    setErrorMsg("");
+  };
 
   return (
     <>
@@ -71,10 +71,17 @@ export default function LoginForm({
                   onChange={handleFormChange}
                   value={formData.username}
                   placeholder=" "
-                  className="form-control mb-2"
+                  className={`form-control mb-2 ${
+                    errorModal ? "input-error" : ""
+                  }`}
                   required
                 />
-                <label htmlFor="username">Username</label>
+                <label
+                  htmlFor="username"
+                  className={`${errorModal ? "text-danger input-error" : ""}`}
+                >
+                  Username
+                </label>
               </div>
             )}
             <div className="form-group">
@@ -86,10 +93,17 @@ export default function LoginForm({
                 onChange={handleFormChange}
                 value={formData.email}
                 placeholder=" "
-                className="form-control mb-3"
+                className={`form-control mb-2 ${
+                  errorModal ? "input-error" : ""
+                }`}
                 required
               />
-              <label htmlFor="email">Email</label>
+              <label
+                htmlFor="email"
+                className={`${errorModal ? "text-danger input-error" : ""}`}
+              >
+                Email
+              </label>
             </div>
             <div className="form-group">
               <input
@@ -98,10 +112,17 @@ export default function LoginForm({
                 onChange={handleFormChange}
                 value={formData.password}
                 placeholder=" "
-                className="form-control"
+                className={`form-control mb-2 ${
+                  errorModal ? "input-error" : ""
+                }`}
                 required
               />
-              <label htmlFor="password">Password</label>
+              <label
+                htmlFor="password"
+                className={`${errorModal ? "text-danger input-error" : ""}`}
+              >
+                Password
+              </label>
             </div>
             <div className="d-grid">
               <button
@@ -130,14 +151,25 @@ export default function LoginForm({
         </div>
       </div>
       {errorModal && (
-        <div className="modal" tabIndex="-1" role="dialog" style={{ display: "block" }}>
+        <div
+          className="modal"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+        >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content text-center">
               <div className="modal-body">
                 <p className="fs-4">{errorMsg}</p>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={closeModal}>Try Again</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={closeModal}
+                >
+                  Try Again
+                </button>
               </div>
             </div>
           </div>
