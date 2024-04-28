@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
+import { useEffect, useRef } from "react";
 
 export default function LoginForm({
   title,
@@ -8,14 +9,21 @@ export default function LoginForm({
   handleSub,
   authData,
 }) {
-  console.log(typeof authData);
-  console.log(typeof math);
+  const emailRef = useRef(null);
+  const usernameRef = useRef(null);
+
+  useEffect(() => {
+    if (title === "Login") {
+      emailRef.current.focus();
+    } else {
+      usernameRef.current.focus();
+    }
+  }, []);
+
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const current = window.location.pathname;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +43,7 @@ export default function LoginForm({
         : Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
+      alert("Email or password is incorrect");
     }
   };
 
@@ -44,16 +53,16 @@ export default function LoginForm({
         <div className="container card shadow p-5">
           <form className="mx-5" onSubmit={handleSubmit}>
             <h3 className="text-center mb-5">{title}</h3>
-            {current === "/signup" && (
+            {title === "Sign Up" && (
               <div className="form-group">
                 <input
                   type="text"
                   name="username"
+                  ref={usernameRef}
                   onChange={handleFormChange}
                   value={formData.username}
                   placeholder=" "
                   className="form-control mb-2"
-                  autoFocus
                   required
                 />
                 <label htmlFor="username">Username</label>
@@ -64,11 +73,11 @@ export default function LoginForm({
                 type="email"
                 id="email"
                 name="email"
+                ref={emailRef}
                 onChange={handleFormChange}
                 value={formData.email}
                 placeholder=" "
                 className="form-control mb-3"
-                autoFocus
                 required
               />
               <label htmlFor="email">Email</label>
@@ -90,11 +99,11 @@ export default function LoginForm({
                 type="submit"
                 className="btn btn-primary my-4 text-center"
               >
-                {current === "/login" ? "Login" : "Signup"}
+                Log in
               </button>
             </div>
           </form>
-          {current === "/login" ? (
+          {title === "Login" ? (
             <p className="text-center">
               To create an account{" "}
               <Link className="cred-link" to="/signup">
