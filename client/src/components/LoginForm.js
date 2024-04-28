@@ -21,7 +21,7 @@ export default function LoginForm({
     } else {
       usernameRef.current.focus();
     }
-  }, []);
+  }, [title]);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;

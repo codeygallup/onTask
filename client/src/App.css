@@ -228,3 +228,7 @@ a {
   border-color: red !important;
   animation: shake 0.5s ease-in-out;
 }
+
+.title-part {
+  font-size: 2rem;
+}
