@@ -40,58 +40,77 @@ export default function LoginForm({
 
   return (
     <>
-      <form className="login-form text-center" onSubmit={handleSubmit}>
-        <h3>{title}</h3>
-        {current === "/signup" && (
-          <input
-            type="text"
-            name="username"
-            onChange={handleFormChange}
-            value={formData.username}
-            placeholder="Username"
-            className="login-input"
-            autoFocus
-            required
-          />
-        )}
-        <input
-          name="email"
-          type="email"
-          onChange={handleFormChange}
-          value={formData.email}
-          placeholder="Email"
-          className="login-input"
-          autoFocus
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          onChange={handleFormChange}
-          value={formData.password}
-          placeholder="Password"
-          className="login-input"
-          required
-        />
-        <button type="submit" className="btn btn-primary login-input">
-          Login
-        </button>
-      </form>
-      {current === "/login" ? (
-        <p className="login-link">
-          To create an account{" "}
-          <Link className="cred-link" to="/signup">
-            click here
-          </Link>
-        </p>
-      ) : (
-        <p className="login-link">
-          Already a user?{" "}
-          <Link className="cred-link" to="/login">
-            login here
-          </Link>
-        </p>
-      )}
+      <div className="d-flex justify-content-center align-items-center vh-100 ">
+        <div className="container card shadow p-5">
+          <form className="mx-5" onSubmit={handleSubmit}>
+            <h3 className="text-center mb-5">{title}</h3>
+            {current === "/signup" && (
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="username"
+                  onChange={handleFormChange}
+                  value={formData.username}
+                  placeholder=" "
+                  className="form-control mb-2"
+                  autoFocus
+                  required
+                />
+                <label htmlFor="username">Username</label>
+              </div>
+            )}
+            <div className="form-group">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={handleFormChange}
+                value={formData.email}
+                placeholder=" "
+                className="form-control mb-3"
+                autoFocus
+                required
+              />
+              <label htmlFor="email">Email</label>
+            </div>
+            <div className="form-group">
+              <input
+                name="password"
+                type="password"
+                onChange={handleFormChange}
+                value={formData.password}
+                placeholder=" "
+                className="form-control"
+                required
+              />
+              <label htmlFor="password">Password</label>
+            </div>
+            <div className="d-grid">
+              <button
+                type="submit"
+                className="btn btn-primary my-4 text-center"
+              >
+                {current === "/login" ? "Login" : "Signup"}
+              </button>
+            </div>
+          </form>
+          {current === "/login" ? (
+            <p className="text-center">
+              To create an account{" "}
+              <Link className="cred-link" to="/signup">
+                click here
+              </Link>
+            </p>
+          ) : (
+            <p className="text-center">
+              Already a user?{" "}
+              <Link className="cred-link" to="/login">
+                login here
+              </Link>
+            </p>
+          )}
+        </div>
+      </div>
     </>
   );
 }

@@ -12,7 +12,6 @@ const Login = () => {
   const [loginUser] = useMutation(LOGIN);
 
   return (
-    <div className="login">
       <LoginForm
         title="Login"
         formData={formData}
@@ -20,7 +19,6 @@ const Login = () => {
         handleSub={loginUser}
         authData="loginUser"
       />
-    </div>
   );
 };
 
