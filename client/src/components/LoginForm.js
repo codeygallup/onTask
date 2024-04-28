@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function LoginForm({
   title,
@@ -11,6 +11,9 @@ export default function LoginForm({
 }) {
   const emailRef = useRef(null);
   const usernameRef = useRef(null);
+
+  const [errorMsg, setErrorMsg] = useState("")
+  const [errorModal, setErrorModal] = useState(false)
 
   useEffect(() => {
     if (title === "Login") {
@@ -43,9 +46,15 @@ export default function LoginForm({
         : Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
-      alert("Email or password is incorrect");
+      setErrorModal(true)
+      setErrorMsg("Your email or  password is incorrect!")
     }
   };
+
+  const closeModal = () => {
+    setErrorModal(false)
+    setErrorMsg("")
+  }
 
   return (
     <>
@@ -120,6 +129,20 @@ export default function LoginForm({
           )}
         </div>
       </div>
+      {errorModal && (
+        <div className="modal" tabIndex="-1" role="dialog" style={{ display: "block" }}>
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content text-center">
+              <div className="modal-body">
+                <p className="fs-4">{errorMsg}</p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={closeModal}>Try Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
