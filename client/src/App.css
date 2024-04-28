@@ -258,3 +258,7 @@ a {
   top: 10px;
   left: 10px;
 }
+
+a:hover, button:hover {
+  color: #1b89bc !important;
+}

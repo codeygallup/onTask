@@ -50,6 +50,22 @@ const Home = () => {
               </>
             ) : (
               <>
+                <h2 className="headdd">Project List</h2>
+                <hr />
+                <div>
+                  {userArr.map((project) => {
+                    return (
+                      <p key={project._id} className="fs-2 mb-3">
+                        <Link
+                          to={`/project/${project._id}`}
+                          className="text-dark"
+                        >
+                          {project.title}
+                        </Link>
+                      </p>
+                    );
+                  })}
+                </div>
                 <Link to="/project">
                   <button className="btn btn-dark">Add Project</button>
                 </Link>
@@ -66,12 +82,7 @@ export default Home;
 
 // {
 {
-  /* <div className="card-body text-center m-3">
-  {!Auth.loggedIn() ? (
-    <>
-    </>
-  ) : (
-    <>
+  /* 
       <div className="card-body p-5">
         <div className="text-center">
           {userArr.map((project) => {
@@ -90,13 +101,7 @@ export default Home;
           })}
         </div>
       </div>
-      <h2 className="mt-4">Project List</h2>
-      <Link to="/project">
-        <button className="btn btn-dark">Add Project</button>
-      </Link>
     </>
-  )}
-</div>
-</div>  */
+  )} */
 }
 // }
