@@ -14,6 +14,8 @@ export default function LoginForm({
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorModal, setErrorModal] = useState(false);
+  const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     if (title === "Login") {
@@ -55,6 +57,10 @@ export default function LoginForm({
     setErrorModal(false);
     setErrorMsg("");
   };
+
+  const handleShowPassword = () => {
+    setShowPassword(prev => !prev )
+  }
 
   return (
     <>
@@ -105,10 +111,10 @@ export default function LoginForm({
                 Email
               </label>
             </div>
-            <div className="form-group">
+            <div className="form-group d-flex align-items-center">
               <input
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 onChange={handleFormChange}
                 value={formData.password}
                 placeholder=" "
@@ -123,6 +129,7 @@ export default function LoginForm({
               >
                 Password
               </label>
+              <button type="button" className="btn pb-3" onClick={handleShowPassword}>{!showPassword ? <i className="bi bi-eye"></i> : <i className="bi bi-eye-slash"></i>}</button>
             </div>
             <div className="d-grid">
               <button
@@ -136,14 +143,14 @@ export default function LoginForm({
           {title === "Login" ? (
             <p className="text-center">
               To create an account{" "}
-              <Link className="cred-link" to="/signup">
+              <Link to="/signup">
                 click here
               </Link>
             </p>
           ) : (
             <p className="text-center">
               Already a user?{" "}
-              <Link className="cred-link" to="/login">
+              <Link to="/login">
                 login here
               </Link>
             </p>
