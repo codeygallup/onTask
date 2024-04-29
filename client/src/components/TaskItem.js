@@ -4,7 +4,7 @@ export default function TaskItem({ task }) {
   return (
     <>
       <div className="d-flex justify-content-between align-items-center my-2">
-        <p className={`${task.complete ? "task-complete" : ""}`}>
+        <p className={`${task.complete ? "task-complete text-black-50" : ""}`}>
           {task.taskText}
         </p>
         <ButtonGroup task={task} />

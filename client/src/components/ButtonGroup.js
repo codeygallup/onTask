@@ -50,14 +50,6 @@ export default function ButtonGroup({ task }) {
       ) : (
         <div className="btn-group">
           <button
-            className="btn btn-success"
-            onClick={(e) => {
-              changeStatus(e, task._id);
-            }}
-          >
-            <FontAwesomeIcon icon={faArrowRotateLeft} />
-          </button>
-          <button
             className="btn btn-danger"
             onClick={(e) => {
               taskDelete(e, task._id);
@@ -65,6 +57,14 @@ export default function ButtonGroup({ task }) {
           >
             {/* <FontAwesomeIcon icon={faCheckDouble} /> */}
             <FontAwesomeIcon icon={faXmark} />
+          </button>
+          <button
+            className="btn btn-success"
+            onClick={(e) => {
+              changeStatus(e, task._id);
+            }}
+          >
+            <FontAwesomeIcon icon={faArrowRotateLeft} />
           </button>
         </div>
       )}
