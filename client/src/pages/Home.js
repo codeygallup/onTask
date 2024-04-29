@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100 mx-3">
-        <div className="card container-fluid border text-center shadow p-2">
+        <div className="card container border text-center shadow p-2">
           <div className="card-header d-flex align-items-center justify-content-between">
             {Auth.loggedIn() && (
               <div className="d-flex align-items-center">

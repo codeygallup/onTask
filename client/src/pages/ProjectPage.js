@@ -35,7 +35,7 @@ function ProjectPage() {
         value={{ task, setTask, removeTask, addTask, refetch, id }}
       >
         <HomeButton />
-        <div className="d-flex justify-content-center align-items-center vh-100 ">
+        <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="shadow rounded">
             <CardHeader project={project} removeProject={removeProject} />
             <div className="container vw-100">

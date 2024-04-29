@@ -18,10 +18,10 @@ export default function CardHeader({ project, removeProject }) {
 
   return (
     <>
-      <div className="text-center bg-body-secondary">
+      <div className="text-center bg-body-secondary pt-1">
         <div className="d-flex justify-content-between align-items-center bg-body-secondary">
           <Link to={`/project/${project._id}/update`}>
-            <button className="btn btn-link ms-2">
+            <button className="btn bg-info text-light ms-2">
               <FontAwesomeIcon icon={faPenToSquare} />
             </button>
           </Link>
