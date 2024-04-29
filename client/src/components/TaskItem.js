@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function TaskItem({ task }) {
-  console.log(task);
   let { removeTask, updateComplete, refetch } = useContext(TaskContext);
   const taskDelete = async (e, taskId) => {
     e.preventDefault();
