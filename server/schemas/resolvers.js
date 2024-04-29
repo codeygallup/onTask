@@ -22,10 +22,10 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in");
     },
     projectTasks: async (parent, { taskProject }) => {
-        return await Task.find({
-          taskProject: taskProject,
-        })
-    }
+      return await Task.find({
+        taskProject: taskProject,
+      });
+    },
   },
   Mutation: {
     loginUser: async (parent, { email, password }) => {
@@ -34,7 +34,7 @@ const resolvers = {
 
       if (!user || !correctPw) {
         throw new AuthenticationError("Incorrect credentials");
-        window.alert('Invalid')
+        window.alert("Invalid");
       }
 
       const token = signToken(user);
@@ -72,25 +72,39 @@ const resolvers = {
             projectUser: context.user._id,
           },
           { new: true }
-          );
+        );
       }
     },
     removeProject: async (parent, { projectId }) => {
       return await Project.findByIdAndDelete(projectId);
-    
     },
     addTask: async (parent, { taskText, taskProject }, context) => {
       if (context.user) {
         return await Task.create({
           taskText,
-          taskProject
-        })
+          taskProject,
+        });
       }
-      throw new AuthenticationError("You need to be logged in")
+      throw new AuthenticationError("You need to be logged in");
     },
     removeTask: async (parent, { taskId }) => {
-      return await Task.findByIdAndDelete(taskId)
-    }
+      return await Task.findByIdAndDelete(taskId);
+    },
+    updateComplete: async (parent, { taskId }, context) => {
+      if (context.user) {
+        try {
+          const task = await Task.findById(taskId);
+          if (!task) {
+            throw new Error("Task not found");
+          }
+          task.complete = !task.complete;
+          await task.save();
+          return task;
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
   },
 };
 

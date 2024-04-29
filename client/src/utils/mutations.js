@@ -78,3 +78,11 @@ export const REMOVE_TASK = gql`
     }
   }
 `;
+
+export const UPDATE_COMPLETE = gql`
+  mutation updateComplete($taskId: ID) {
+    updateComplete(taskId: $taskId) {
+      _id
+    }
+  }
+`;

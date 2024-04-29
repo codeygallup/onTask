@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function TaskItem({ task }) {
   console.log(task);
-  let { removeTask, refetch } = useContext(TaskContext);
+  let { removeTask, updateComplete, refetch } = useContext(TaskContext);
   const taskDelete = async (e, taskId) => {
     e.preventDefault();
 
@@ -18,6 +18,19 @@ export default function TaskItem({ task }) {
       console.log(err);
     }
   };
+
+  const changeStatus = async (e, taskId) => {
+    e.preventDefault()
+
+    try {
+      await updateComplete({
+        variables: { taskId },
+      })
+      refetch()
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <>
@@ -34,10 +47,10 @@ export default function TaskItem({ task }) {
         <button
           className="btn btn-danger"
           onClick={(e) => {
-            taskDelete(e, task._id);
+            changeStatus(e, task._id);
           }}
         >
-          <FontAwesomeIcon icon={faXmark} />
+          <FontAwesomeIcon icon={faCheck} />
         </button>
       </div>
     </>
