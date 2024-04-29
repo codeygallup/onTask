@@ -263,3 +263,27 @@ a {
 a:hover, button:hover {
   color: #1b89bc !important;
 }
+
+@keyframes strike {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.task-complete {
+  position: relative;
+}
+
+.task-complete::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0; 
+  height: 2px;
+  background: black;
+  animation: strike .5s linear forwards;
+}

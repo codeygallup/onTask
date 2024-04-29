@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function TaskItem({ task }) {
+
   let { removeTask, updateComplete, refetch } = useContext(TaskContext);
   const taskDelete = async (e, taskId) => {
     e.preventDefault();
@@ -19,22 +20,28 @@ export default function TaskItem({ task }) {
   };
 
   const changeStatus = async (e, taskId) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       await updateComplete({
         variables: { taskId },
-      })
-      refetch()
+      });
+      refetch();
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <>
       <div className="d-flex justify-content-between align-items-center my-2">
-        <p>{task.taskText}</p>
+        <p
+          className={`${
+            task.complete ? "task-complete" : ""
+          }`}
+        >
+          {task.taskText}
+        </p>
         <button
           className="btn btn-danger"
           onClick={(e) => {
