@@ -7,6 +7,7 @@ const taskSchema = new Schema({
   },
   complete: {
     type: Boolean,
+    default: false,
   },
   taskProject: {
     type: Schema.Types.ObjectId,

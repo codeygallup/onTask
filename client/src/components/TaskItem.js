@@ -31,6 +31,14 @@ export default function TaskItem({ task }) {
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>
+        <button
+          className="btn btn-danger"
+          onClick={(e) => {
+            taskDelete(e, task._id);
+          }}
+        >
+          <FontAwesomeIcon icon={faXmark} />
+        </button>
       </div>
     </>
   );
