@@ -29,20 +29,22 @@ export default function TaskInput() {
 
   return (
     <>
-      <div className="text-center input-group my-4">
-        <input
-          placeholder="Enter task..."
-          name="taskText"
-          onChange={handleFormChange}
-          value={task.taskText}
-          type="text"
-          className="form-control"
-          style={{ marginRight: "20px" }}
-        />
-        <button className="btn btn-info" onClick={handleTask}>
-          Add Task
-        </button>
-      </div>
+      <form onSubmit={handleTask}>
+        <div className="text-center input-group my-4">
+          <input
+            placeholder="Enter task..."
+            name="taskText"
+            onChange={handleFormChange}
+            value={task.taskText}
+            type="text"
+            className="form-control"
+            style={{ marginRight: "20px" }}
+          />
+          <button className="btn btn-info" type="submit">
+            Add Task
+          </button>
+        </div>
+      </form>
     </>
   );
 }
