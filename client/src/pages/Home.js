@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { USER_PROJECTS } from "../utils/queries";
 import Auth from "../utils/auth";
 import { BounceLoader, FadeLoader, MoonLoader, PuffLoader, RingLoader, ScaleLoader } from "react-spinners";
+import { useState } from "react";
 
 const Home = () => {
   const { loading, data } = useQuery(USER_PROJECTS);

@@ -34,7 +34,6 @@ const resolvers = {
 
       if (!user || !correctPw) {
         throw new AuthenticationError("Incorrect credentials");
-        window.alert("Invalid");
       }
 
       const token = signToken(user);
