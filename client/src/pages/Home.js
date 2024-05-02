@@ -2,20 +2,18 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { USER_PROJECTS } from "../utils/queries";
 import Auth from "../utils/auth";
-import { BounceLoader, FadeLoader, MoonLoader, PuffLoader, RingLoader, ScaleLoader } from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 
 const Home = () => {
   const { loading, data } = useQuery(USER_PROJECTS);
   const userArr = data?.userProjects || [];
 
-  if (loading) return (<div className="d-flex justify-content-evenly align-items-center vh-100">
-              {/* <BounceLoader size={135} color="#1b89bc" />
-              <FadeLoader height={50} width={10} color="#1b89bc" />
-              <RingLoader speedMultiplier={.8} size={125} color="#1b89bc" />
-              <PuffLoader size={125} speedMultiplier={.8} color="#1b89bc" />
-              <MoonLoader size={100} color="#1b89bc" speedMultiplier={.6} /> */}
-              <ScaleLoader height={100} width={15} color="#1b89bc" /> 
-  </div>);
+  if (loading)
+    return (
+      <div className="d-flex justify-content-evenly align-items-center vh-100">
+        <ScaleLoader height={100} width={15} color="#1b89bc" />
+      </div>
+    );
 
   return (
     <>
