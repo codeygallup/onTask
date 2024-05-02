@@ -16,7 +16,6 @@ export default function LoginForm({
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorModal, setErrorModal] = useState(false);
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -67,7 +66,7 @@ export default function LoginForm({
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="container-sm card shadow p-4">
+        <div className="container card shadow p-4" style={{ maxWidth: '750px' }}>
           <form className="mx-5" onSubmit={handleSubmit}>
             <h3 className="text-center mb-5">{title}</h3>
             {title === "Sign Up" && (
@@ -124,7 +123,7 @@ export default function LoginForm({
                   errorModal ? "input-error" : ""
                 }`}
                 required
-              />
+              ></input>
               <label
                 htmlFor="password"
                 className={`${errorModal ? "text-danger input-error" : ""}`}
@@ -135,7 +134,7 @@ export default function LoginForm({
                 type="button"
                 className="btn pb-3"
                 onClick={handleShowPassword}
-              >
+                >
                 {showPassword ? (
                   <FontAwesomeIcon icon={faEyeSlash} />
                 ) : (
@@ -152,6 +151,7 @@ export default function LoginForm({
               </button>
             </div>
           </form>
+          <div className="mt-4">
           {title === "Login" ? (
             <p className="text-center">
               To create an account <Link to="/signup">click here</Link>
@@ -161,6 +161,7 @@ export default function LoginForm({
               Already a user? <Link to="/login">login here</Link>
             </p>
           )}
+          </div>
         </div>
       </div>
       {errorModal && (

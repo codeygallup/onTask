@@ -287,3 +287,7 @@ a:hover, button:hover {
   background: black;
   animation: strike .5s linear forwards;
 }
+
+/* .container {
+  max-width: 950px;
+} */
