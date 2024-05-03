@@ -56,7 +56,7 @@ const Home = () => {
               </>
             ) : (
               <>
-                <h2 className="headdd">Project List</h2>
+                <h2>Project List</h2>
                 <hr />
                 <div>
                   {userArr.map((project) => {

@@ -291,3 +291,7 @@ a:hover, button:hover {
 /* .container {
   max-width: 950px;
 } */
+
+select {
+  border: none;
+}

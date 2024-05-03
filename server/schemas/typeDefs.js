@@ -6,6 +6,8 @@ const typeDefs = gql`
     oneProject(_id: ID!): Project
     userProjects(projectUser: ID): [Project]
     projectTasks(taskProject: ID): [Task]
+    completeProjectTasks(taskProject: ID): [Task]
+    incompleteProjectTasks(taskProject: ID): [Task]
   }
 
   type User {

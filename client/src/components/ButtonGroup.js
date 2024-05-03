@@ -9,9 +9,17 @@ import { useContext, useState } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function ButtonGroup({ task }) {
-  const [deleteModal, setDeleteModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  let { removeTask, updateComplete, refetch } = useContext(TaskContext);
+  let {
+    removeTask,
+    updateComplete,
+    refetch,
+    incompleteRefetch,
+    completeRefetch,
+    setSelectedOption,
+    selectedOption,
+  } = useContext(TaskContext);
 
   const taskDelete = async (e, taskId) => {
     e.preventDefault();
@@ -20,7 +28,8 @@ export default function ButtonGroup({ task }) {
       await removeTask({
         variables: { taskId },
       });
-      refetch();
+      await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
+      await setSelectedOption(selectedOption);
     } catch (err) {
       console.log(err);
     }
@@ -33,18 +42,19 @@ export default function ButtonGroup({ task }) {
       await updateComplete({
         variables: { taskId },
       });
-      refetch();
+      await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
+      await setSelectedOption(selectedOption);
     } catch (err) {
       console.log(err);
     }
   };
 
   const openModal = () => {
-    setDeleteModal(true)
-  }
+    setDeleteModal(true);
+  };
 
   const closeModal = (e, id) => {
-    taskDelete(e, id)
+    taskDelete(e, id);
     setDeleteModal(false);
   };
 
@@ -72,7 +82,7 @@ export default function ButtonGroup({ task }) {
           <button
             className="btn btn-danger"
             onClick={() => {
-              openModal(task._id)
+              openModal(task._id);
             }}
           >
             {/* <FontAwesomeIcon icon={faCheckDouble} /> */}
@@ -80,7 +90,7 @@ export default function ButtonGroup({ task }) {
           </button>
         </div>
       )}
-        {deleteModal && (
+      {deleteModal && (
         <div
           className="modal"
           tabIndex="-1"
@@ -90,7 +100,9 @@ export default function ButtonGroup({ task }) {
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content text-center">
               <div className="modal-body">
-                <p className="fs-4">Are you sure you want to delete this task?</p>
+                <p className="fs-4">
+                  Are you sure you want to delete this task?
+                </p>
               </div>
               <div className="modal-footer">
                 <button
@@ -104,7 +116,7 @@ export default function ButtonGroup({ task }) {
                   type="button"
                   className="btn btn-danger"
                   onClick={(e) => {
-                    closeModal(e, task._id)
+                    closeModal(e, task._id);
                   }}
                 >
                   Confirm

@@ -2,7 +2,17 @@ import { useContext } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function TaskInput() {
-  let { task, addTask, setTask, refetch, id } = useContext(TaskContext);
+  let {
+    task,
+    addTask,
+    setTask,
+    refetch,
+    completeRefetch,
+    incompleteRefetch,
+    setSelectedOption,
+    selectedOption,
+    id,
+  } = useContext(TaskContext);
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setTask({ ...task, [name]: value });
@@ -15,7 +25,8 @@ export default function TaskInput() {
       await addTask({
         variables: { ...task },
       });
-      refetch();
+      await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
+      await setSelectedOption(selectedOption);
     } catch (err) {
       console.error(err);
     }

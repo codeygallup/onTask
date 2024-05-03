@@ -38,7 +38,6 @@ export default function CardHeader({ project, removeProject }) {
           <p>{project.description}</p>
         </details>
       </div>
-      <h5 className="text-center">Tasks:</h5>
     </>
   );
 }
