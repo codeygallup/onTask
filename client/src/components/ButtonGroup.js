@@ -31,7 +31,7 @@ export default function ButtonGroup({ task }) {
       await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
       await setSelectedOption(selectedOption);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -45,7 +45,7 @@ export default function ButtonGroup({ task }) {
       await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
       await setSelectedOption(selectedOption);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
