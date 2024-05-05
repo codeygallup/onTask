@@ -71,6 +71,10 @@ function ProjectPage() {
     }
   }, [selectedOption, allTasks, completedTasks, incompletedTasks]);
 
+  // useEffect(() => {
+  //   setTasks(allTasks);
+  // }, [allTasks, completedTasks, incompletedTasks]);
+
   const { data } = useQuery(ONE_PROJECT, {
     variables: { id: id },
   });
