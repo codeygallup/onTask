@@ -187,6 +187,7 @@ details[open] summary {
 } */
 
 * {
+  /* outline: red 1px solid; */
   box-sizing: border-box;
   margin: 0;
   padding: 0;

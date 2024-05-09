@@ -66,7 +66,10 @@ export default function LoginForm({
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="container card shadow p-4" style={{ maxWidth: '750px' }}>
+        <div
+          className="container card shadow p-4"
+          style={{ maxWidth: "750px" }}
+        >
           <form className="mx-5" onSubmit={handleSubmit}>
             <h3 className="text-center mb-5">{title}</h3>
             {title === "Sign Up" && (
@@ -112,36 +115,48 @@ export default function LoginForm({
                 Email
               </label>
             </div>
-            <div className="form-group d-flex align-items-center">
-              <input
-                name="password"
-                type={showPassword ? "text" : "password"}
-                onChange={handleFormChange}
-                value={formData.password}
-                placeholder=" "
-                className={`form-control mb-2 ${
-                  errorModal ? "input-error" : ""
-                }`}
-                required
-              ></input>
-              <label
-                htmlFor="password"
-                className={`${errorModal ? "text-danger input-error" : ""}`}
-              >
-                Password
-              </label>
+            <div className="form-group d-flex align-items-center flex-wrap">
+              <div className="flex-grow-1">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={handleFormChange}
+                  value={formData.password}
+                  placeholder=" "
+                  className={`form-control mb-2 ${
+                    errorModal ? "input-error" : ""
+                  }`}
+                  required
+                />
+                <label
+                  htmlFor="password"
+                  className={`${errorModal ? "text-danger input-error" : ""}`}
+                >
+                  Password
+                </label>
+              </div>
               <button
                 type="button"
                 className="btn pb-3"
                 onClick={handleShowPassword}
-                >
+              >
                 {showPassword ? (
                   <FontAwesomeIcon icon={faEyeSlash} />
                 ) : (
                   <FontAwesomeIcon icon={faEye} />
                 )}
               </button>
+              {title === "Login" && (
+                <div className="w-100">
+                  <div>
+                    <p className="mb-0 float-end">
+                      <Link to="/recover"> Forgot password?</Link>
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
+
             <div className="d-grid">
               <button
                 type="submit"
@@ -151,16 +166,16 @@ export default function LoginForm({
               </button>
             </div>
           </form>
-          <div className="mt-4">
-          {title === "Login" ? (
-            <p className="text-center">
-              To create an account <Link to="/signup">click here</Link>
-            </p>
-          ) : (
-            <p className="text-center">
-              Already a user? <Link to="/login">login here</Link>
-            </p>
-          )}
+          <div className="mt-3">
+            {title === "Login" ? (
+              <p className="text-center">
+                To create an account <Link to="/signup">click here</Link>
+              </p>
+            ) : (
+              <p className="text-center">
+                Already a user? <Link to="/login">login here</Link>
+              </p>
+            )}
           </div>
         </div>
       </div>
