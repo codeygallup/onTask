@@ -21,6 +21,7 @@ import Project from "./pages/Project";
 import ProjectPage from "./pages/ProjectPage";
 import ProjectUpdate from "./pages/ProjectUpdate";
 import Recover from "./pages/Recover";
+import Reset from "./pages/Reset";
 
 const http = createHttpLink({
   uri: "/graphql",
@@ -57,6 +58,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/recover" element={<Recover />} />
+            <Route path="/reset" element={<Reset />} />
             <Route element={<PrivateRoutes />}>
               <Route path="/project" element={<Project />} />
               <Route path="/project/:id" element={<ProjectPage />} />

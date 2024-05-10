@@ -1,12 +1,15 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Project, Task } = require("../models");
 const { signToken } = require("../utils/auth");
+const passwordRecover = require("../utils/passwordRecovery");
+const bcrypt = require("bcrypt");
 
 const resolvers = {
   Query: {
     me: async (_, args, context) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id });
+  
       }
       throw new AuthenticationError("Log in");
     },
@@ -111,6 +114,53 @@ const resolvers = {
           console.error(err);
         }
       }
+    },
+    requestPasswordRecovery: async (_, { email }) => {
+      // Find user by email
+      const user = await User.findOne({ email });
+      
+      if (!user) {
+        throw new Error('User not found');
+      }
+    
+      // Generate recovery token and update user
+      const userRecoveryToken = await user.generateRecoveryToken();
+      user.recoveryToken = userRecoveryToken;
+      user.recoveryTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
+      await user.save();
+    
+      // Send recovery email
+      passwordRecover(email, userRecoveryToken);
+    
+      // Return an object with the token and user
+      return {
+        token: userRecoveryToken, // Return the recovery token
+        user: user // Return the user object
+      };
+    },
+    resetPassword: async (_, { email, token, newPassword }) => {
+      // Find user by email
+      const user = await User.findOne({ email });
+    
+      if (!user) {
+        throw new Error('User not found');
+      }
+    
+      // Validate recovery token
+      if (user.recoveryToken !== token || user.recoveryTokenExpiry < Date.now()) {
+        throw new Error('Invalid or expired token');
+      }
+    
+      user.password = newPassword
+
+      user.recoveryToken = null;
+      user.recoveryTokenExpiry = null;
+      await user.save();
+    
+      return {
+        success: true,
+        message: 'Password reset successful',
+      };
     },
   },
 };

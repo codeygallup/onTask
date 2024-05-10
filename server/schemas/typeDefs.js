@@ -46,6 +46,8 @@ const typeDefs = gql`
     addTask(taskText: String!, taskProject: ID): Task
     removeTask(taskId: ID): Task
     updateComplete(taskId: ID): Task
+    requestPasswordRecovery(email: String!): Auth
+    resetPassword(email: String!, token: String!, newPassword: String!): Auth
   }
 `;
 
