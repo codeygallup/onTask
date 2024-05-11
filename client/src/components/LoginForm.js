@@ -63,9 +63,11 @@ export default function LoginForm({
     setShowPassword((prev) => !prev);
   };
 
+  console.log(window.innerWidth);
+
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center vh-100 ">
+      <div className="d-flex justify-content-center align-items-center vh-100 mx-4">
         <div
           className="container card shadow p-4"
           style={{ maxWidth: "750px" }}
