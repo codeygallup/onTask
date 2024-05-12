@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { RESET_PASSWORD, VALIDATE_PIN } from "../utils/mutations";
 import { useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Reset = () => {
   const { user } = useParams();
@@ -16,7 +18,8 @@ const Reset = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [pin, setPin] = useState("");
   const [validatedPin, setValidatedPin] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
+  
   const [resetPassword] = useMutation(RESET_PASSWORD);
   const [validatePIN] = useMutation(VALIDATE_PIN);
 
@@ -24,6 +27,9 @@ const Reset = () => {
   // useEffect(() => {
   //   setToken(recoverToken || "");
   // }, [recoverToken]);
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleValidatePIN = async (e) => {
     e.preventDefault();
@@ -62,11 +68,12 @@ const Reset = () => {
               className="mx-5"
               onSubmit={validatedPin ? handleSubmitPassword : handleValidatePIN}
             >
-              <h3 className="text-center mb-3">Changing password for {user}</h3>
+              <h3 className="text-center mb-5">Changing password for {user}</h3>
               {validatedPin ? (
-                <div className="form-group">
+                 <div className="form-group d-flex align-items-center flex-wrap">
+                 <div className="flex-grow-1">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
                     placeholder=" "
@@ -76,6 +83,18 @@ const Reset = () => {
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                   <label htmlFor="password">Password</label>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn pb-3"
+                    onClick={handleShowPassword}
+                  >
+                    {showPassword ? (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEye} />
+                    )}
+                  </button>
                 </div>
               ) : (
                 <>
