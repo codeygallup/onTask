@@ -16,7 +16,6 @@ const Recover = () => {
         variables: { email },
       });
       const userId = data.requestPasswordRecovery.user._id;
-      //   console.log(data.requestPasswordRecovery.user._id);
       window.location.assign(`/reset/${userId}`);
       //   setSuccessMessage(data.requestPasswordRecovery.message);
     } catch (error) {

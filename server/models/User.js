@@ -23,8 +23,6 @@ const userSchema = new Schema(
     },
     resetPIN: String,
     resetPINExpiry: Date,
-    // recoveryToken: String,
-    // recoveryTokenExpiry: Date,
     projects: [Project.schema],
   },
   {
@@ -46,13 +44,6 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
-
-// userSchema.methods.generateRecoveryToken = function () {
-//   const recoveryToken = crypto.randomBytes(20).toString("hex");
-//   this.recoveryToken = recoveryToken;
-//   this.recoveryTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
-//   return recoveryToken;
-// };
 
 const User = model("User", userSchema);
 

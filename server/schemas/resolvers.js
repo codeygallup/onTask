@@ -125,10 +125,7 @@ const resolvers = {
         throw new Error("User not found");
       }
 
-      // Generate recovery token and update user
-      // const userRecoveryToken = await user.generateRecoveryToken();
-      // user.recoveryToken = userRecoveryToken;
-      // user.recoveryTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
+      // Generate recovery pin and update user
       const resetPIN = Math.floor(100000 + Math.random() * 900000).toString();
       user.resetPIN = resetPIN;
       user.resetPINExpiry = Date.now() + 3600000; // PIN expires in 1 hour
