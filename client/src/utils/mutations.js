@@ -91,6 +91,10 @@ export const REQUEST_PASSWORD_RECOVERY = gql`
   mutation requestPasswordRecovery($email: String!) {
     requestPasswordRecovery(email: $email) {
       token
+      user {
+        _id
+        email
+      }
     }
   }
 `;

@@ -15,7 +15,9 @@ const Recover = () => {
       const { data } = await requestPasswordRecovery({
         variables: { email },
       });
-      window.location.assign(`/reset/${email}`);
+      const userId = data.requestPasswordRecovery.user._id;
+      //   console.log(data.requestPasswordRecovery.user._id);
+      window.location.assign(`/reset/${userId}`);
       //   setSuccessMessage(data.requestPasswordRecovery.message);
     } catch (error) {
       console.error("Error:", error);
@@ -40,6 +42,7 @@ const Recover = () => {
                   placeholder=" "
                   className="form-control"
                   required
+                  autoFocus
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />

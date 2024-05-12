@@ -12,6 +12,9 @@ const resolvers = {
       }
       throw new AuthenticationError("Log in");
     },
+    findUser: async (_, { _id }) => {
+      return await User.findById(_id);
+    },
     oneProject: async (_, { _id }) => {
       return await Project.findOne({ _id });
     },

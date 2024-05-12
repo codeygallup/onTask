@@ -1,32 +1,33 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { RESET_PASSWORD, VALIDATE_PIN } from "../utils/mutations";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FIND_USER } from "../utils/queries";
 
 const Reset = () => {
-  const { user } = useParams();
-  // const location = useLocation();
-  // const params = new URLSearchParams(location.search);
-  // const user = params.get("user");
-  // const recoverToken = params.get("token");
-  // const [token, setToken] = useState(recoverToken || ""); // Initialize state with token from params if available
-  const [email, setEmail] = useState(user);
+  const { id } = useParams();
+  const [email, setEmail] = useState(null);
   const [newPassword, setNewPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [pin, setPin] = useState("");
   const [validatedPin, setValidatedPin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const [resetPassword] = useMutation(RESET_PASSWORD);
   const [validatePIN] = useMutation(VALIDATE_PIN);
 
-  // Update token state when token changes in params
-  // useEffect(() => {
-  //   setToken(recoverToken || "");
-  // }, [recoverToken]);
+  const { data } = useQuery(FIND_USER, {
+    variables: { id: id },
+  });
+  const user = data?.findUser?.email;
+
+  useEffect(() => {
+    setEmail(user);
+  }, [user]);
+
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
@@ -70,19 +71,19 @@ const Reset = () => {
             >
               <h3 className="text-center mb-5">Changing password for {user}</h3>
               {validatedPin ? (
-                 <div className="form-group d-flex align-items-center flex-wrap">
-                 <div className="flex-grow-1">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    name="password"
-                    placeholder=" "
-                    className="form-control"
-                    required
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
-                  <label htmlFor="password">Password</label>
+                <div className="form-group d-flex align-items-center flex-wrap">
+                  <div className="flex-grow-1">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      name="password"
+                      placeholder=" "
+                      className="form-control"
+                      required
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    <label htmlFor="password">Password</label>
                   </div>
                   <button
                     type="button"

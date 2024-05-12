@@ -15,6 +15,15 @@ export const GET_ME = gql`
   }
 `;
 
+export const FIND_USER = gql`
+  query findUser($id: ID!) {
+    findUser(_id: $id) {
+      _id
+      email
+    }
+  }
+`;
+
 export const ONE_PROJECT = gql`
   query oneProject($id: ID!) {
     oneProject(_id: $id) {
