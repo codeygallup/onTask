@@ -134,7 +134,7 @@ function ProjectPage() {
               </select>
             </div>
             <div className="container vw-100">
-              <div className="task-grid">
+              <div className="side overflow-y-scroll">
                 {tasks.map((task) => {
                   return <TaskItem key={task._id} task={task} />;
                 })}

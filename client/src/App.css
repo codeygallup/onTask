@@ -296,3 +296,7 @@ a:hover, button:hover {
 select {
   border: none;
 }
+
+.side {
+  max-height: 25rem;
+}
