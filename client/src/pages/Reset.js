@@ -1,37 +1,50 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { RESET_PASSWORD } from "../utils/mutations";
+import { RESET_PASSWORD, VALIDATE_PIN } from "../utils/mutations";
 import { useLocation } from "react-router-dom";
 
 const Reset = () => {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const user = params.get("user");
-  const recoverToken = params.get("token");
-  const [token, setToken] = useState(recoverToken || ""); // Initialize state with token from params if available
+  const { user } = useParams();
+  // const location = useLocation();
+  // const params = new URLSearchParams(location.search);
+  // const user = params.get("user");
+  // const recoverToken = params.get("token");
+  // const [token, setToken] = useState(recoverToken || ""); // Initialize state with token from params if available
   const [email, setEmail] = useState(user);
   const [newPassword, setNewPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [pin, setPin] = useState("");
+  const [validatedPin, setValidatedPin] = useState(false);
 
   const [resetPassword] = useMutation(RESET_PASSWORD);
+  const [validatePIN] = useMutation(VALIDATE_PIN);
 
   // Update token state when token changes in params
-  useEffect(() => {
-    setToken(recoverToken || "");
-  }, [recoverToken]);
+  // useEffect(() => {
+  //   setToken(recoverToken || "");
+  // }, [recoverToken]);
+
+  const handleValidatePIN = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await validatePIN({
+        variables: { email, pin },
+      });
+      setValidatedPin(true);
+      // setSuccessMessage(data.resetPassword.message);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleSubmitPassword = async (e) => {
     e.preventDefault();
     try {
-      console.log('Email:', email);
-      console.log('Token:', token);
-      console.log('New Password:', newPassword);
       const { data } = await resetPassword({
-        variables: { email, token, newPassword },
+        variables: { email, newPassword },
       });
-      console.log('Success:', data);
-      setSuccessMessage(data.resetPassword.message);
+      // setSuccessMessage(data.resetPassword.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -40,10 +53,17 @@ const Reset = () => {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="container card shadow p-4" style={{ maxWidth: "550px" }}>
-            <>
-              <form className="mx-5" onSubmit={handleSubmitPassword}>
-                <h3 className="text-center mb-3">Changing password for {user}</h3>
+        <div
+          className="container card shadow p-4"
+          style={{ maxWidth: "550px" }}
+        >
+          <>
+            <form
+              className="mx-5"
+              onSubmit={validatedPin ? handleSubmitPassword : handleValidatePIN}
+            >
+              <h3 className="text-center mb-3">Changing password for {user}</h3>
+              {validatedPin ? (
                 <div className="form-group">
                   <input
                     type="password"
@@ -57,18 +77,36 @@ const Reset = () => {
                   />
                   <label htmlFor="password">Password</label>
                 </div>
-                <div className="d-grid">
-                  <button type="submit" className="btn btn-primary text-center">
-                    Reset Password
-                  </button>
-                </div>
-              </form>
-              <div className="mt-2">
-                <p className="text-center">
-                  Return to <Link to="/login">login here</Link>
-                </p>
+              ) : (
+                <>
+                  <div className="form-group">
+                    <input
+                      type="PIN"
+                      id="PIN"
+                      name="PIN"
+                      placeholder=" "
+                      className="form-control"
+                      required
+                      value={pin}
+                      onChange={(e) => setPin(e.target.value)}
+                    />
+                    <label htmlFor="PIN">PIN</label>
+                  </div>
+                </>
+              )}
+              <div className="d-grid">
+                <button type="submit" className="btn btn-primary text-center">
+                  {validatedPin ? "Reset Password" : "Enter PIN"}
+                </button>
               </div>
-            </>
+            </form>
+
+            <div className="mt-2">
+              <p className="text-center">
+                Return to <Link to="/login">login here</Link>
+              </p>
+            </div>
+          </>
           {/* {successMessage && (
             <div className="alert alert-success">{successMessage}</div>
           )} */}

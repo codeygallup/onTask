@@ -58,7 +58,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/recover" element={<Recover />} />
-            <Route path="/reset" element={<Reset />} />
+            <Route path="/reset/:user" element={<Reset />} />
             <Route element={<PrivateRoutes />}>
               <Route path="/project" element={<Project />} />
               <Route path="/project/:id" element={<ProjectPage />} />

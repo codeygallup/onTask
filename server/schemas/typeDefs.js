@@ -47,7 +47,8 @@ const typeDefs = gql`
     removeTask(taskId: ID): Task
     updateComplete(taskId: ID): Task
     requestPasswordRecovery(email: String!): Auth
-    resetPassword(email: String!, token: String!, newPassword: String!): Auth
+    resetPassword(email: String!, newPassword: String!): Auth
+    validatePIN(email: String!, pin: String!): Auth
   }
 `;
 

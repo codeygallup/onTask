@@ -90,15 +90,23 @@ export const UPDATE_COMPLETE = gql`
 export const REQUEST_PASSWORD_RECOVERY = gql`
   mutation requestPasswordRecovery($email: String!) {
     requestPasswordRecovery(email: $email) {
-      token 
+      token
     }
   }
 `;
 
 export const RESET_PASSWORD = gql`
-  mutation resetPassword($email: String!, $token: String!, $newPassword: String!) {
-    resetPassword(email: $email, token: $token, newPassword: $newPassword) {
-      token 
+  mutation resetPassword($email: String!, $newPassword: String!) {
+    resetPassword(email: $email, newPassword: $newPassword) {
+      token
+    }
+  }
+`;
+
+export const VALIDATE_PIN = gql`
+  mutation validatePIN($email: String!, $pin: String!) {
+    validatePIN(email: $email, pin: $pin) {
+      token
     }
   }
 `;

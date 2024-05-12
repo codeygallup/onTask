@@ -9,7 +9,6 @@ const resolvers = {
     me: async (_, args, context) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id });
-  
       }
       throw new AuthenticationError("Log in");
     },
@@ -118,48 +117,65 @@ const resolvers = {
     requestPasswordRecovery: async (_, { email }) => {
       // Find user by email
       const user = await User.findOne({ email });
-      
+
       if (!user) {
-        throw new Error('User not found');
+        throw new Error("User not found");
       }
-    
+
       // Generate recovery token and update user
-      const userRecoveryToken = await user.generateRecoveryToken();
-      user.recoveryToken = userRecoveryToken;
-      user.recoveryTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
+      // const userRecoveryToken = await user.generateRecoveryToken();
+      // user.recoveryToken = userRecoveryToken;
+      // user.recoveryTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
+      const resetPIN = Math.floor(100000 + Math.random() * 900000).toString();
+      user.resetPIN = resetPIN;
+      user.resetPINExpiry = Date.now() + 3600000; // PIN expires in 1 hour
+
       await user.save();
-    
+
       // Send recovery email
-      passwordRecover(email, userRecoveryToken);
-    
+      passwordRecover(email, resetPIN);
+
       // Return an object with the token and user
       return {
-        token: userRecoveryToken, // Return the recovery token
-        user: user // Return the user object
+        // token: userRecoveryToken, // Return the recovery token
+        user: user, // Return the user object
       };
     },
-    resetPassword: async (_, { email, token, newPassword }) => {
+    resetPassword: async (_, { email, newPassword }) => {
       // Find user by email
       const user = await User.findOne({ email });
-    
-      if (!user) {
-        throw new Error('User not found');
-      }
-    
-      // Validate recovery token
-      if (user.recoveryToken !== token || user.recoveryTokenExpiry < Date.now()) {
-        throw new Error('Invalid or expired token');
-      }
-    
-      user.password = newPassword
 
-      user.recoveryToken = null;
-      user.recoveryTokenExpiry = null;
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      user.password = newPassword;
+
+      user.resetPIN = null;
+      user.resetPINExpiry = null;
       await user.save();
-    
+
       return {
         success: true,
-        message: 'Password reset successful',
+        message: "Password reset successful",
+      };
+    },
+    validatePIN: async (_, { email, pin }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      // Validate reset pin
+      if (user.resetPIN !== pin || user.resetPINExpiry < Date.now()) {
+        throw new Error("Invalid or expired PIN");
+      }
+
+      // Return success message if PIN is valid
+      return {
+        success: true,
+        message: "PIN validation successful",
       };
     },
   },
