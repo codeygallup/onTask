@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import Password from "./Password";
 
 export default function LoginForm({
   title,
@@ -16,7 +15,7 @@ export default function LoginForm({
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorModal, setErrorModal] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (title === "Login") {
@@ -42,7 +41,7 @@ export default function LoginForm({
 
     try {
       const { data } = await handleSub({
-        variables: { ...formData },
+        variables: { ...formData, password },
       });
       authData === "loginUser"
         ? Auth.login(data.loginUser.token)
@@ -58,12 +57,6 @@ export default function LoginForm({
     setErrorModal(false);
     setErrorMsg("");
   };
-
-  const handleShowPassword = () => {
-    setShowPassword((prev) => !prev);
-  };
-
-  console.log(window.innerWidth);
 
   return (
     <>
@@ -117,47 +110,12 @@ export default function LoginForm({
                 Email
               </label>
             </div>
-            <div className="form-group d-flex align-items-center flex-wrap">
-              <div className="flex-grow-1">
-                <input
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  onChange={handleFormChange}
-                  value={formData.password}
-                  placeholder=" "
-                  className={`form-control mb-2 ${
-                    errorModal ? "input-error" : ""
-                  }`}
-                  required
-                />
-                <label
-                  htmlFor="password"
-                  className={`${errorModal ? "text-danger input-error" : ""}`}
-                >
-                  Password
-                </label>
-              </div>
-              <button
-                type="button"
-                className="btn pb-3"
-                onClick={handleShowPassword}
-              >
-                {showPassword ? (
-                  <FontAwesomeIcon icon={faEyeSlash} />
-                ) : (
-                  <FontAwesomeIcon icon={faEye} />
-                )}
-              </button>
-              {title === "Login" && (
-                <div className="w-100">
-                  <div>
-                    <p className="mb-0 float-end">
-                      <Link to="/recover"> Forgot password?</Link>
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
+            <Password
+              errorModal={errorModal}
+              title={title}
+              password={password}
+              setPassword={setPassword}
+            />
 
             <div className="d-grid">
               <button

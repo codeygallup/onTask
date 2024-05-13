@@ -2,9 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { RESET_PASSWORD, VALIDATE_PIN } from "../utils/mutations";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FIND_USER } from "../utils/queries";
+import Password from "../components/Password";
 
 const Reset = () => {
   const { id } = useParams();
@@ -13,7 +12,6 @@ const Reset = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [pin, setPin] = useState("");
   const [validatedPin, setValidatedPin] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const pinRef = useRef(null);
   const passwordRef = useRef(null);
@@ -37,10 +35,6 @@ const Reset = () => {
       pinRef.current.focus();
     }
   }, [validatedPin]);
-
-  const handleShowPassword = () => {
-    setShowPassword((prev) => !prev);
-  };
 
   const handleValidatePIN = async (e) => {
     e.preventDefault();
@@ -86,33 +80,13 @@ const Reset = () => {
             >
               <h3 className="text-center mb-5">Changing password for {user}</h3>
               {validatedPin ? (
-                <div className="form-group d-flex align-items-center flex-wrap">
-                  <div className="flex-grow-1">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      id="password"
-                      name="password"
-                      ref={passwordRef}
-                      placeholder=" "
-                      className="form-control"
-                      required
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                    <label htmlFor="password">Password</label>
-                  </div>
-                  <button
-                    type="button"
-                    className="btn pb-3"
-                    onClick={handleShowPassword}
-                  >
-                    {showPassword ? (
-                      <FontAwesomeIcon icon={faEyeSlash} />
-                    ) : (
-                      <FontAwesomeIcon icon={faEye} />
-                    )}
-                  </button>
-                </div>
+                <>
+                  <Password
+                    password={newPassword}
+                    setPassword={setNewPassword}
+                    passwordRef={passwordRef}
+                  />
+                </>
               ) : (
                 <>
                   <div className="form-group">
@@ -174,13 +148,12 @@ const Reset = () => {
 
 export default Reset;
 
-
 // const reset = () => {
 //   return (
 //     <>
 //     {validatedPin ? (
 //       <Password />
-//     ) : 
+//     ) :
 //     <Pin />}
 //     </>
 //   )
