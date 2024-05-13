@@ -85,29 +85,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// {
-{
-  /* 
-      <div className="card-body p-5">
-        <div className="text-center">
-          {userArr.map((project) => {
-            return (
-              <p
-                className={
-                  userArr.length < 10 ? "projectList" : "projectLongList"
-                }
-                key={project._id}
-              >
-                <Link to={`/project/${project._id}`}>
-                  {project.title}
-                </Link>
-              </p>
-            );
-          })}
-        </div>
-      </div>
-    </>
-  )} */
-}
-// }

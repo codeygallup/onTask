@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { RESET_PASSWORD, VALIDATE_PIN } from "../utils/mutations";
@@ -14,6 +14,9 @@ const Reset = () => {
   const [pin, setPin] = useState("");
   const [validatedPin, setValidatedPin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
+  const pinRef = useRef(null);
+  const passwordRef = useRef(null);
 
   const [resetPassword] = useMutation(RESET_PASSWORD);
   const [validatePIN] = useMutation(VALIDATE_PIN);
@@ -26,6 +29,14 @@ const Reset = () => {
   useEffect(() => {
     setEmail(user);
   }, [user]);
+
+  useEffect(() => {
+    if (validatedPin) {
+      passwordRef.current.focus();
+    } else {
+      pinRef.current.focus();
+    }
+  }, [validatedPin]);
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -51,6 +62,7 @@ const Reset = () => {
         variables: { email, newPassword },
       });
       // setSuccessMessage(data.resetPassword.message);
+      setSuccessModal(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -58,7 +70,11 @@ const Reset = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center vh-100">
+      <div
+        className={`d-flex justify-content-center align-items-center vh-100 ${
+          successModal ? "faded" : ""
+        }`}
+      >
         <div
           className="container card shadow p-4"
           style={{ maxWidth: "550px" }}
@@ -76,6 +92,7 @@ const Reset = () => {
                       type={showPassword ? "text" : "password"}
                       id="password"
                       name="password"
+                      ref={passwordRef}
                       placeholder=" "
                       className="form-control"
                       required
@@ -103,6 +120,7 @@ const Reset = () => {
                       type="PIN"
                       id="PIN"
                       name="PIN"
+                      ref={pinRef}
                       placeholder=" "
                       className="form-control"
                       required
@@ -131,8 +149,48 @@ const Reset = () => {
           )} */}
         </div>
       </div>
+      {successModal && (
+        <div
+          className="modal"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content text-center">
+              <div className="modal-body">
+                <p className="fs-4">Password succesfully changed</p>{" "}
+                <p className="text-center">
+                  <Link to="/login">Return to login</Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
 export default Reset;
+
+
+// const reset = () => {
+//   return (
+//     <>
+//     {validatedPin ? (
+//       <Password />
+//     ) : 
+//     <Pin />}
+//     </>
+//   )
+// }
+
+// const password = () => {
+//   // all password logic here
+// }
+
+// const pin = () => {
+//   // all pin logic here
+
+// }
