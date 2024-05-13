@@ -9,7 +9,6 @@ const Reset = () => {
   const { id } = useParams();
   const [email, setEmail] = useState(null);
   const [newPassword, setNewPassword] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [pin, setPin] = useState("");
   const [validatedPin, setValidatedPin] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
@@ -39,11 +38,10 @@ const Reset = () => {
   const handleValidatePIN = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await validatePIN({
+      await validatePIN({
         variables: { email, pin },
       });
       setValidatedPin(true);
-      // setSuccessMessage(data.resetPassword.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -52,10 +50,9 @@ const Reset = () => {
   const handleSubmitPassword = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await resetPassword({
+      await resetPassword({
         variables: { email, newPassword },
       });
-      // setSuccessMessage(data.resetPassword.message);
       setSuccessModal(true);
     } catch (error) {
       console.error("Error:", error);
@@ -91,7 +88,7 @@ const Reset = () => {
                 <>
                   <div className="form-group">
                     <input
-                      type="PIN"
+                      type="text"
                       id="PIN"
                       name="PIN"
                       ref={pinRef}
@@ -118,9 +115,6 @@ const Reset = () => {
               </p>
             </div>
           </>
-          {/* {successMessage && (
-            <div className="alert alert-success">{successMessage}</div>
-          )} */}
         </div>
       </div>
       {successModal && (
@@ -147,23 +141,3 @@ const Reset = () => {
 };
 
 export default Reset;
-
-// const reset = () => {
-//   return (
-//     <>
-//     {validatedPin ? (
-//       <Password />
-//     ) :
-//     <Pin />}
-//     </>
-//   )
-// }
-
-// const password = () => {
-//   // all password logic here
-// }
-
-// const pin = () => {
-//   // all pin logic here
-
-// }

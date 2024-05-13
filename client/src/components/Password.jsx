@@ -58,20 +58,3 @@ const Password = ({
 };
 
 export default Password;
-
-{
-  /* 
-  <input
-    value={newPassword}
-    onChange={(e) => setNewPassword(e.target.value)}
-  />*/
-}
-
-{
-  /* 
-                <input
-                  onChange={handleFormChange}
-                  value={formData.password}
-                />
-              > */
-}
