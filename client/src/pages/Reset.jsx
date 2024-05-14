@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { RESET_PASSWORD, VALIDATE_PIN } from "../utils/mutations";
 import { FIND_USER } from "../utils/queries";
@@ -7,6 +7,7 @@ import Password from "../components/Password";
 
 const Reset = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [email, setEmail] = useState(null);
   const [newPassword, setNewPassword] = useState("");
   const [pin, setPin] = useState("");
@@ -18,10 +19,10 @@ const Reset = () => {
   const [resetPassword] = useMutation(RESET_PASSWORD);
   const [validatePIN] = useMutation(VALIDATE_PIN);
 
-  const { data } = useQuery(FIND_USER, {
-    variables: { id: id },
-  });
-  const user = data?.findUser?.email;
+  const { data: { findUser: { _id: userId, email: user } = {} } = {} } =
+    useQuery(FIND_USER, {
+      variables: { id: id },
+    });
 
   useEffect(() => {
     setEmail(user);
@@ -57,6 +58,11 @@ const Reset = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const handleModalClose = (userId) => {
+    if (userId === null || userId === undefined) navigate("/login");
+    navigate(`/login?userId=${encodeURIComponent(userId)}`);
   };
 
   return (
@@ -128,9 +134,18 @@ const Reset = () => {
             <div className="modal-content text-center">
               <div className="modal-body">
                 <p className="fs-4">Password succesfully changed</p>{" "}
-                <p className="text-center">
+                {/* <p className="text-center">
                   <Link to="/login">Return to login</Link>
-                </p>
+                </p> */}
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary mx-auto"
+                  onClick={() => handleModalClose(userId)}
+                >
+                  Login
+                </button>
               </div>
             </div>
           </div>

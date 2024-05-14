@@ -1,24 +1,36 @@
 import { useState } from "react";
 import { LOGIN } from "../utils/mutations";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import LoginForm from "../components/LoginForm";
+import { useLocation } from "react-router-dom";
+import { FIND_USER } from "../utils/queries";
 
 const Login = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const userIdParam = queryParams.get("userId") || "";
+  const { data: { findUser: { email: user } = {} } = {} } = useQuery(
+    FIND_USER,
+    {
+      variables: { id: userIdParam },
+    }
+  );
+
   const [formData, setFormData] = useState({
-    email: "",
+    email: user ?? "",
     password: "",
   });
 
   const [loginUser] = useMutation(LOGIN);
 
   return (
-      <LoginForm
-        title="Login"
-        formData={formData}
-        setFormData={setFormData}
-        handleSub={loginUser}
-        authData="loginUser"
-      />
+    <LoginForm
+      title="Login"
+      formData={formData}
+      setFormData={setFormData}
+      handleSub={loginUser}
+      authData="loginUser"
+    />
   );
 };
 
