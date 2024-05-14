@@ -75,10 +75,9 @@ function ProjectPage() {
   //   setTasks(allTasks);
   // }, [allTasks, completedTasks, incompletedTasks]);
 
-  const { data } = useQuery(ONE_PROJECT, {
+  const { data: { oneProject = [] } = {} } = useQuery(ONE_PROJECT, {
     variables: { id: id },
   });
-  const project = data?.oneProject || [];
 
   const [task, setTask] = useState({
     taskText: "",
@@ -125,7 +124,7 @@ function ProjectPage() {
         <HomeButton />
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="shadow rounded">
-            <CardHeader project={project} removeProject={removeProject} />
+            <CardHeader project={oneProject} removeProject={removeProject} />
             <div className="text-center d-flex justify-content-center fs-5">
               <select value={selectedOption} onChange={handleSelect}>
                 <option value="allTasks">All Tasks</option>

@@ -8,11 +8,10 @@ import { HomeButton, ProjectForm } from "../components";
 function ProjectUpdate() {
   let { id } = useParams();
 
-  const { data } = useQuery(ONE_PROJECT, {
-    variables: { id: id },
-  });
-
-  const projectData = data?.oneProject || [];
+  const { data: { oneProject: projectData = [] } = {} } = useQuery(
+    ONE_PROJECT,
+    { variables: { id: id } }
+  );
 
   const [project, setProject] = useState({
     projectId: id,

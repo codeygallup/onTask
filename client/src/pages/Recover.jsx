@@ -12,11 +12,14 @@ const Recover = () => {
   const handleSubmitEmail = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await requestPasswordRecovery({
+      const {
+        data: {
+          requestPasswordRecovery: { user: { _id = null } = {} } = {},
+        } = {},
+      } = await requestPasswordRecovery({
         variables: { email },
       });
-      const userId = data.requestPasswordRecovery.user._id;
-      window.location.assign(`/reset/${userId}`);
+      window.location.assign(`/reset/${_id}`);
       //   setSuccessMessage(data.requestPasswordRecovery.message);
     } catch (error) {
       console.error("Error:", error);

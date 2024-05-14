@@ -5,8 +5,7 @@ import Auth from "../utils/auth";
 import { ScaleLoader } from "react-spinners";
 
 const Home = () => {
-  const { loading, data } = useQuery(USER_PROJECTS);
-  const userArr = data?.userProjects || [];
+  const { loading, data: { userProjects = [] } = {} } = useQuery(USER_PROJECTS);
 
   if (loading)
     return (
@@ -59,7 +58,7 @@ const Home = () => {
                 <h2>Project List</h2>
                 <hr />
                 <div>
-                  {userArr.map((project) => {
+                  {userProjects.map((project) => {
                     return (
                       <p key={project._id} className="fs-2 mb-3">
                         <Link
