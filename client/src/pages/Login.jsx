@@ -30,6 +30,7 @@ const Login = () => {
       setFormData={setFormData}
       handleSub={loginUser}
       authData="loginUser"
+      userIdParam={userIdParam}
     />
   );
 };

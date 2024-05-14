@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { REQUEST_PASSWORD_RECOVERY } from "../utils/mutations";
+import Modal from "../components/Modal";
 
 const Recover = () => {
   const [email, setEmail] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successModal, setSuccessModal] = useState(false);
+  const [userId, setUserId] = useState(null)
 
   const [requestPasswordRecovery] = useMutation(REQUEST_PASSWORD_RECOVERY);
 
@@ -19,18 +21,22 @@ const Recover = () => {
       } = await requestPasswordRecovery({
         variables: { email },
       });
-      window.location.assign(`/reset/${_id}`);
-      //   setSuccessMessage(data.requestPasswordRecovery.message);
+      setUserId(_id)
+      setSuccessModal(true)
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const handleRedirect = () => {
+    window.location.assign(`/reset/${userId}`);
   };
 
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100">
         <div
-          className="container card shadow p-4"
+          className={`container card shadow p-4 ${successModal && 'faded'}`}
           style={{ maxWidth: "550px" }}
         >
           <>
@@ -62,11 +68,22 @@ const Recover = () => {
               </p>
             </div>
           </>
-          {/* {successMessage && (
-            <div className="alert alert-success">{successMessage}</div>
-          )} */}
         </div>
       </div>
+      {successModal && (
+        <Modal
+          modalMessage={
+            "A recovery PIN was sent to your email, please check your spam"
+          }
+          buttonConfig={[
+            {
+              label: "Input PIN",
+              className: "btn-secondary mx-auto",
+              onClick: handleRedirect,
+            },
+          ]}
+        />
+      )}
     </>
   );
 };

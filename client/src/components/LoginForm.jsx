@@ -10,9 +10,11 @@ export default function LoginForm({
   setFormData,
   handleSub,
   authData,
+  userIdParam = null,
 }) {
   const emailRef = useRef(null);
   const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorModal, setErrorModal] = useState(false);
@@ -20,11 +22,15 @@ export default function LoginForm({
 
   useEffect(() => {
     if (title === "Login") {
-      emailRef.current.focus();
+      if (userIdParam) {
+        passwordRef.current.focus();
+      } else {
+        emailRef.current.focus();
+      }
     } else {
       usernameRef.current.focus();
     }
-  }, [title]);
+  }, [title, userIdParam]);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -110,6 +116,7 @@ export default function LoginForm({
               title={title}
               password={password}
               setPassword={setPassword}
+              passwordRef={passwordRef}
             />
 
             <div className="d-grid">
@@ -135,7 +142,7 @@ export default function LoginForm({
         </div>
       </div>
       {errorModal && (
-          <Modal
+        <Modal
           modalMessage={"Your email or  password is incorrect!"}
           buttonConfig={[
             {
