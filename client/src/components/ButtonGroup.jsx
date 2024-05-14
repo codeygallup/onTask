@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import { TaskContext } from "./TaskContext";
+import Modal from "./Modal";
 
 export default function ButtonGroup({ task }) {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -91,40 +92,21 @@ export default function ButtonGroup({ task }) {
         </div>
       )}
       {deleteModal && (
-        <div
-          className="modal"
-          tabIndex="-1"
-          role="dialog"
-          style={{ display: "block" }}
-        >
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content text-center">
-              <div className="modal-body">
-                <p className="fs-4">
-                  Are you sure you want to delete this task?
-                </p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={() => setDeleteModal(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={(e) => {
-                    closeModal(e, task._id);
-                  }}
-                >
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal
+          modalMessage={"Are you sure you want to delete this task?"}
+          buttonConfig={[
+            {
+              label: "Cancel",
+              className: "btn-success",
+              onClick: () => setDeleteModal(false),
+            },
+            {
+              label: "Confirm",
+              className: "btn-danger",
+              onClick: (e) => closeModal(e, task._id),
+            },
+          ]}
+        />
       )}
     </>
   );

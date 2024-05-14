@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import Modal from "./Modal";
 
 export default function CardHeader({ project, removeProject }) {
+  const [deleteModal, setDeleteModal] = useState(false);
+
   const handleDelete = async (e, projectId) => {
     e.preventDefault();
 
@@ -14,6 +18,11 @@ export default function CardHeader({ project, removeProject }) {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const closeModal = (e, id) => {
+    handleDelete(e, id);
+    setDeleteModal(false);
   };
 
   return (
@@ -28,7 +37,7 @@ export default function CardHeader({ project, removeProject }) {
           <h1>{project.title}</h1>
           <button
             className="btn btn-danger me-2"
-            onClick={(e) => handleDelete(e, project._id)}
+            onClick={() => setDeleteModal(true)}
           >
             <FontAwesomeIcon icon={faTrash} />
           </button>
@@ -38,6 +47,23 @@ export default function CardHeader({ project, removeProject }) {
           <p>{project.description}</p>
         </details>
       </div>
+      {deleteModal && (
+        <Modal
+          modalMessage={"Are you sure you want to delete this project?"}
+          buttonConfig={[
+            {
+              label: "Cancel",
+              className: "btn-success",
+              onClick: () => setDeleteModal(false),
+            },
+            {
+              label: "Confirm",
+              className: "btn-danger",
+              onClick: (e) => closeModal(e, project._id),
+            },
+          ]}
+        />
+      )}
     </>
   );
 }

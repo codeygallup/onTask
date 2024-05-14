@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { RESET_PASSWORD, VALIDATE_PIN } from "../utils/mutations";
 import { FIND_USER } from "../utils/queries";
 import Password from "../components/Password";
+import Modal from "../components/Modal";
 
 const Reset = () => {
   const { id } = useParams();
@@ -124,32 +125,16 @@ const Reset = () => {
         </div>
       </div>
       {successModal && (
-        <div
-          className="modal"
-          tabIndex="-1"
-          role="dialog"
-          style={{ display: "block" }}
-        >
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content text-center">
-              <div className="modal-body">
-                <p className="fs-4">Password succesfully changed</p>{" "}
-                {/* <p className="text-center">
-                  <Link to="/login">Return to login</Link>
-                </p> */}
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary mx-auto"
-                  onClick={() => handleModalClose(userId)}
-                >
-                  Login
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal
+          modalMessage={"Password succesfully changed"}
+          buttonConfig={[
+            {
+              label: "Login",
+              className: "btn-secondary mx-auto",
+              onClick: () => handleModalClose(userId),
+            },
+          ]}
+        />
       )}
     </>
   );
