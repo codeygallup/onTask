@@ -54,16 +54,6 @@ export const USER_PROJECTS = gql`
   }
 `;
 
-export const PROJECT_TASKS = gql`
-  query projectTasks($taskProject: ID) {
-    projectTasks(taskProject: $taskProject) {
-      _id
-      taskText
-      complete
-    }
-  }
-`;
-
 export const COMPLETE_PROJECT_TASKS = gql`
   query completeProjectTasks($taskProject: ID) {
     completeProjectTasks(taskProject: $taskProject) {

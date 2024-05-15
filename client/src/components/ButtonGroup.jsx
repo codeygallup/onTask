@@ -16,8 +16,6 @@ export default function ButtonGroup({ task }) {
     removeTask,
     updateComplete,
     refetch,
-    incompleteRefetch,
-    completeRefetch,
     setSelectedOption,
     selectedOption,
   } = useContext(TaskContext);
@@ -29,8 +27,8 @@ export default function ButtonGroup({ task }) {
       await removeTask({
         variables: { taskId },
       });
-      await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
-      await setSelectedOption(selectedOption);
+      await refetch();
+      setSelectedOption(selectedOption);
     } catch (err) {
       console.error(err);
     }
@@ -43,8 +41,8 @@ export default function ButtonGroup({ task }) {
       await updateComplete({
         variables: { taskId },
       });
-      await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
-      await setSelectedOption(selectedOption);
+      await refetch();
+      setSelectedOption(selectedOption);
     } catch (err) {
       console.error(err);
     }

@@ -7,12 +7,11 @@ export default function TaskInput() {
     addTask,
     setTask,
     refetch,
-    completeRefetch,
-    incompleteRefetch,
     setSelectedOption,
     selectedOption,
     id,
   } = useContext(TaskContext);
+
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setTask({ ...task, [name]: value });
@@ -25,8 +24,8 @@ export default function TaskInput() {
       await addTask({
         variables: { ...task },
       });
-      await Promise.all([refetch(), completeRefetch(), incompleteRefetch()]);
-      await setSelectedOption(selectedOption);
+      await refetch();
+      setSelectedOption(selectedOption);
     } catch (err) {
       console.error(err);
     }

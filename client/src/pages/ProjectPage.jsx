@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import {
   COMPLETE_PROJECT_TASKS,
   INCOMPLETE_PROJECT_TASKS,
   ONE_PROJECT,
-  PROJECT_TASKS,
 } from "../utils/queries";
 import {
   REMOVE_PROJECT,
@@ -19,7 +18,12 @@ import { TaskContext } from "../components/TaskContext";
 function ProjectPage() {
   let { id } = useParams();
 
-  const [tasks, setTasks] = useState([]);
+  const [task, setTask] = useState({
+    taskText: "",
+    complete: false,
+    taskProject: id,
+  });
+  // const [tasks, setTasks] = useState([]);
   const [selectedOption, setSelectedOption] = useState("allTasks");
 
   const [addTask] = useMutation(ADD_TASK);
@@ -27,81 +31,70 @@ function ProjectPage() {
   const [removeProject] = useMutation(REMOVE_PROJECT);
   const [updateComplete] = useMutation(UPDATE_COMPLETE);
 
-  const { data: taskData, refetch } = useQuery(PROJECT_TASKS, {
-    variables: { taskProject: id },
+  const { data: { oneProject = {} } = {}, refetch } = useQuery(ONE_PROJECT, {
+    variables: { id: id },
   });
 
-  const { data: completedData, refetch: completeRefetch } = useQuery(
-    COMPLETE_PROJECT_TASKS,
-    {
-      variables: { taskProject: id },
-    }
-  );
+  // const { data: completedData, refetch: completeRefetch } = useQuery(
+  //   COMPLETE_PROJECT_TASKS,
+  //   {
+  //     variables: { taskProject: id },
+  //   }
+  // );
 
-  const { data: incompleteData, refetch: incompleteRefetch } = useQuery(
-    INCOMPLETE_PROJECT_TASKS,
-    {
-      variables: { taskProject: id },
-    }
-  );
+  // const { data: incompleteData, refetch: incompleteRefetch } = useQuery(
+  //   INCOMPLETE_PROJECT_TASKS,
+  //   {
+  //     variables: { taskProject: id },
+  //   }
+  // );
 
-  const allTasks = useMemo(() => taskData?.projectTasks || [], [taskData]);
+  const allTasks = useMemo(() => oneProject.tasks || [], [oneProject]);
   const completedTasks = useMemo(
-    () => completedData?.completeProjectTasks || [],
-    [completedData]
+    () => oneProject.tasks?.filter((task) => task.complete) || [],
+    [oneProject]
   );
   const incompletedTasks = useMemo(
-    () => incompleteData?.incompleteProjectTasks || [],
-    [incompleteData]
+    () => oneProject.tasks?.filter((task) => !task.complete) || [],
+    [oneProject]
   );
 
-  useEffect(() => {
-    switch (selectedOption) {
-      case "allTasks":
-        setTasks(allTasks);
-        break;
-      case "completedTasks":
-        setTasks(completedTasks);
-        break;
-      case "incompletedTasks":
-        setTasks(incompletedTasks);
-        break;
-      default:
-        setTasks(allTasks);
-    }
-  }, [selectedOption, allTasks, completedTasks, incompletedTasks]);
+  // useEffect(() => {
+  //   switch (selectedOption) {
+  //     case "allTasks":
+  //       setTasks(allTasks);
+  //       break;
+  //     case "completedTasks":
+  //       setTasks(completedTasks);
+  //       break;
+  //     case "incompletedTasks":
+  //       setTasks(incompletedTasks);
+  //       break;
+  //     default:
+  //       setTasks(allTasks);
+  //   }
+  // }, [selectedOption, allTasks, completedTasks, incompletedTasks]);
 
   // useEffect(() => {
   //   setTasks(allTasks);
   // }, [allTasks, completedTasks, incompletedTasks]);
 
-  const { data: { oneProject = [] } = {} } = useQuery(ONE_PROJECT, {
-    variables: { id: id },
-  });
-
-  const [task, setTask] = useState({
-    taskText: "",
-    complete: false,
-    taskProject: id,
-  });
-
-  const handleSelect = (e) => {
-    const selectedValue = e.target.value;
-    setSelectedOption(selectedValue);
-    switch (selectedValue) {
+  const tasks = useMemo(() => {
+    switch (selectedOption) {
       case "allTasks":
-        setTasks(allTasks);
-        break;
+        return allTasks;
       case "completedTasks":
-        setTasks(completedTasks);
-        break;
+        return completedTasks;
       case "incompletedTasks":
-        setTasks(incompletedTasks);
-        break;
+        return incompletedTasks;
       default:
-        setTasks(tasks);
+        return allTasks;
     }
-  };
+  }, [selectedOption, allTasks, completedTasks, incompletedTasks]);
+
+  const handleSelect = useCallback((e) => {
+    setSelectedOption(e.target.value);
+  }, []);
 
   return (
     <>
@@ -113,8 +106,6 @@ function ProjectPage() {
           addTask,
           updateComplete,
           refetch,
-          completeRefetch,
-          incompleteRefetch,
           setSelectedOption,
           selectedOption,
           handleSelect,
@@ -134,9 +125,9 @@ function ProjectPage() {
             </div>
             <div className="container vw-100">
               <div className="side overflow-y-scroll">
-                {tasks.map((task) => {
-                  return <TaskItem key={task._id} task={task} />;
-                })}
+                {tasks.map((task) => (
+                  <TaskItem key={task._id} task={task} />
+                ))}
               </div>
               <TaskInput selectedOption={selectedOption} />
             </div>

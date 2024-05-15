@@ -16,7 +16,11 @@ const resolvers = {
       return await User.findById(_id);
     },
     oneProject: async (_, { _id }) => {
-      return await Project.findOne({ _id });
+      const project = await Project.findById(_id);
+      const tasks = await Task.find({ taskProject: _id });
+      project.tasks = tasks;
+
+      return project;
     },
     userProjects: async (_, args, context) => {
       if (context.user) {
@@ -25,11 +29,6 @@ const resolvers = {
         });
       }
       throw new AuthenticationError("You need to be logged in");
-    },
-    projectTasks: async (_, { taskProject }) => {
-      return await Task.find({
-        taskProject: taskProject,
-      });
     },
     completeProjectTasks: async (_, { taskProject }) => {
       return await Task.find({
