@@ -1,11 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import {
-  COMPLETE_PROJECT_TASKS,
-  INCOMPLETE_PROJECT_TASKS,
-  ONE_PROJECT,
-} from "../utils/queries";
+import { ONE_PROJECT } from "../utils/queries";
 import {
   REMOVE_PROJECT,
   ADD_TASK,
@@ -23,7 +19,6 @@ function ProjectPage() {
     complete: false,
     taskProject: id,
   });
-  // const [tasks, setTasks] = useState([]);
   const [selectedOption, setSelectedOption] = useState("allTasks");
 
   const [addTask] = useMutation(ADD_TASK);
@@ -34,20 +29,6 @@ function ProjectPage() {
   const { data: { oneProject = {} } = {}, refetch } = useQuery(ONE_PROJECT, {
     variables: { id: id },
   });
-
-  // const { data: completedData, refetch: completeRefetch } = useQuery(
-  //   COMPLETE_PROJECT_TASKS,
-  //   {
-  //     variables: { taskProject: id },
-  //   }
-  // );
-
-  // const { data: incompleteData, refetch: incompleteRefetch } = useQuery(
-  //   INCOMPLETE_PROJECT_TASKS,
-  //   {
-  //     variables: { taskProject: id },
-  //   }
-  // );
 
   const allTasks = useMemo(() => oneProject.tasks || [], [oneProject]);
   const completedTasks = useMemo(
