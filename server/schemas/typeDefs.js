@@ -6,8 +6,6 @@ const typeDefs = gql`
     findUser(_id: ID!): User
     oneProject(_id: ID!): Project
     userProjects(projectUser: ID): [Project]
-    completeProjectTasks(taskProject: ID): [Task]
-    incompleteProjectTasks(taskProject: ID): [Task]
   }
 
   type User {

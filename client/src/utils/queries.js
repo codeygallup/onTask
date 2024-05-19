@@ -53,23 +53,3 @@ export const USER_PROJECTS = gql`
     }
   }
 `;
-
-export const COMPLETE_PROJECT_TASKS = gql`
-  query completeProjectTasks($taskProject: ID) {
-    completeProjectTasks(taskProject: $taskProject) {
-      _id
-      taskText
-      complete
-    }
-  }
-`;
-
-export const INCOMPLETE_PROJECT_TASKS = gql`
-  query incompleteProjectTasks($taskProject: ID) {
-    incompleteProjectTasks(taskProject: $taskProject) {
-      _id
-      taskText
-      complete
-    }
-  }
-`;

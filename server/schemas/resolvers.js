@@ -30,18 +30,6 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in");
     },
-    completeProjectTasks: async (_, { taskProject }) => {
-      return await Task.find({
-        taskProject: taskProject,
-        complete: true,
-      });
-    },
-    incompleteProjectTasks: async (_, { taskProject }) => {
-      return await Task.find({
-        taskProject: taskProject,
-        complete: false,
-      });
-    },
   },
   Mutation: {
     loginUser: async (_, { email, password }) => {
