@@ -13,6 +13,7 @@ import {
 } from "@apollo/client";
 import "./App.css";
 import { setContext } from "@apollo/client/link/context";
+import jwtDecode from 'jwt-decode'
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -54,6 +55,8 @@ const client = new ApolloClient({
   }),
 });
 
+
+
 const PrivateRoutes = () => {
   const isAuthenticated = !!localStorage.getItem("id_token");
 
@@ -84,3 +87,45 @@ function App() {
 }
 
 export default App;
+
+// const PrivateRoutes = () => {
+//   const [showModal, setShowModal] = useState(false)
+//   const token = localStorage.getItem("id_token");
+//   let isAuthenticated = false;
+//   if (token) {
+//     try {
+//       const { exp } = jwtDecode(token);
+//       if (Date.now() >= exp * 1000) {
+//         console.log("Token is expired");
+//         localStorage.removeItem("id_token");
+//       } else {
+//         isAuthenticated = true;
+//       }
+//     } catch (err) {
+//       console.error("Token decoding failed", err);
+//       localStorage.removeItem("id_token");
+//     }
+//   }
+//   const handleModalClose = () => {
+//     setShowModal(false);
+//     window.location.href = "/login";
+//   };
+
+//   return (
+//     <>
+//       {isAuthenticated ? <Outlet /> : <Navigate to={"/"} />}
+//       {showModal && (
+//         <Modal
+//           modalMessage={"Your session has expired"}
+//           buttonConfig={[
+//             {
+//               label: "Return to login",
+//               className: "btn-secondary mx-auto",
+//               onClick: handleModalClose,
+//             },
+//           ]}
+//         />
+//       )}
+//     </>
+//   );
+// };
