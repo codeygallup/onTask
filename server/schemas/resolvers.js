@@ -115,7 +115,7 @@ const resolvers = {
       // Generate recovery pin and update user
       const resetPIN = Math.floor(100000 + Math.random() * 900000).toString();
       user.resetPIN = resetPIN;
-      user.resetPINExpiry = Date.now() + 1800000; // PIN expires in 1 hour
+      user.resetPINExpiry = Date.now() + 1800000; // PIN expires in 1 hour, change PIN to lesser
 
       await user.save();
 
