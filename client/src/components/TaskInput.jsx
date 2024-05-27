@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function TaskInput() {
@@ -11,6 +11,11 @@ export default function TaskInput() {
     selectedOption,
     id,
   } = useContext(TaskContext);
+
+  const taskRef = useRef(null)
+  useEffect(() => {
+    taskRef.current.focus()
+  }, [])
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +49,7 @@ export default function TaskInput() {
           <input
             placeholder="Enter task..."
             name="taskText"
+            ref={taskRef}
             onChange={handleFormChange}
             value={task.taskText}
             type="text"
