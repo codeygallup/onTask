@@ -104,7 +104,7 @@ function ProjectPage() {
                 <option value="incompletedTasks">Incomplete Tasks</option>
               </select>
             </div>
-            <div className="container vw-100">
+            <div className="container">
               <div className="side overflow-y-scroll">
                 {tasks.map((task) => (
                   <TaskItem key={task._id} task={task} />
