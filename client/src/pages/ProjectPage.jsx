@@ -10,6 +10,8 @@ import {
 } from "../utils/mutations";
 import { CardHeader, TaskInput, TaskItem, HomeButton } from "../components";
 import { TaskContext } from "../components/TaskContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function ProjectPage() {
   let { id } = useParams();
@@ -20,6 +22,7 @@ function ProjectPage() {
     taskProject: id,
   });
   const [selectedOption, setSelectedOption] = useState("allTasks");
+  // const [multipleTrash, setMultipleTrash] = useState(true)
 
   const [addTask] = useMutation(ADD_TASK);
   const [removeTask] = useMutation(REMOVE_TASK);
@@ -97,12 +100,20 @@ function ProjectPage() {
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="shadow rounded">
             <CardHeader project={oneProject} removeProject={removeProject} />
-            <div className="text-center d-flex justify-content-center fs-5">
-              <select value={selectedOption} onChange={handleSelect}>
+            <div className="position-relative d-flex justify-content-center fs-5">
+              <select
+                value={selectedOption}
+                onChange={handleSelect}
+                // className="position-absolute start-50 translate-middle-x"
+              >
                 <option value="allTasks">All Tasks</option>
                 <option value="completedTasks">Completed Tasks</option>
                 <option value="incompletedTasks">Incomplete Tasks</option>
               </select>
+
+              {/* <div className={`ms-auto me-2 btn ${multipleTrash ? 'btn-danger' : 'disabled'}`}>
+                <FontAwesomeIcon icon={faTrash} />
+              </div> */}
             </div>
             <div className="container">
               <div className="side overflow-y-scroll">
