@@ -8,7 +8,7 @@ const resolvers = {
   Query: {
     me: async (_, args, context) => {
       if (context.user) {
-        return await User.findOne({ _id: context.user._id });
+        return await User.findById(context.user._id);
       }
       throw new AuthenticationError("Log in");
     },
