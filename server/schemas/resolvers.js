@@ -6,12 +6,6 @@ const bcrypt = require("bcrypt");
 
 const resolvers = {
   Query: {
-    me: async (_, args, context) => {
-      if (context.user) {
-        return await User.findById(context.user._id);
-      }
-      throw new AuthenticationError("Log in");
-    },
     findUser: async (_, { _id }) => {
       return await User.findById(_id);
     },
