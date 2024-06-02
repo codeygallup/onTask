@@ -306,9 +306,23 @@ button:hover {
 select {
   border: none;
 }
-
 .side {
   max-height: 25rem;
+  overflow-y: scroll;
+}
+
+.side::-webkit-scrollbar {
+  width: 12px; 
+}
+
+.side::-webkit-scrollbar-track {
+  background: #f5f5f5; 
+  border-radius: 10px;
+}
+
+.side::-webkit-scrollbar-thumb {
+  background-color: #1b89bc; 
+  border-radius: 10px;
 }
 
 .faded {

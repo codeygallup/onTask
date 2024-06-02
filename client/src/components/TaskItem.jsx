@@ -7,7 +7,9 @@ export default function TaskItem({ task }) {
         <p className={`${task.complete ? "task-complete text-black-50" : ""}`}>
           {task.taskText}
         </p>
-        <ButtonGroup task={task} />
+        <div className="mx-3">
+          <ButtonGroup task={task} />
+        </div>
       </div>
     </>
   );

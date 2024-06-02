@@ -105,7 +105,7 @@ function ProjectPage() {
               </select>
             </div>
             <div className="container vw-100">
-              <div className="side overflow-y-scroll">
+              <div className="side">
                 {tasks.map((task) => (
                   <TaskItem key={task._id} task={task} />
                 ))}
