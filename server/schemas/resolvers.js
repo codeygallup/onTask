@@ -2,7 +2,6 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Project, Task } = require("../models");
 const { signToken } = require("../utils/auth");
 const passwordRecover = require("../utils/passwordRecovery");
-const bcrypt = require("bcrypt");
 
 const resolvers = {
   Query: {

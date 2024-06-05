@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const Task = require('./Task')
+const Task = require("./Task");
 
 const projectSchema = new Schema({
   title: {
@@ -13,12 +13,12 @@ const projectSchema = new Schema({
   },
   projectUser: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
   },
-    tasks: [Task.schema]
+  tasks: [Task.schema],
 });
 
-const Project = model("Project", projectSchema)
+const Project = model("Project", projectSchema);
 
 module.exports = Project;
