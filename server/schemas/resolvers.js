@@ -79,8 +79,8 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in");
     },
-    removeTask: async (_, { taskId }) => {
-      return await Task.findByIdAndDelete(taskId);
+    removeTasks: async (_, { taskIds }) => {
+      return await Task.deleteMany({ _id: { $in: taskIds } });
     },
     updateComplete: async (_, { taskId }, context) => {
       if (context.user) {

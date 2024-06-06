@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Modal from "./Modal";
 
@@ -39,7 +39,7 @@ export default function CardHeader({ project, removeProject }) {
             className="btn btn-danger me-2"
             onClick={() => setDeleteModal(true)}
           >
-            <FontAwesomeIcon icon={faTrash} />
+            <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
         <details className="mb-4">
