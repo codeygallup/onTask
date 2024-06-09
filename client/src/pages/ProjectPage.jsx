@@ -98,7 +98,7 @@ function ProjectPage() {
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="shadow rounded">
             <CardHeader project={oneProject} removeProject={removeProject} />
-            <div className="text-center d-flex justify-content-center fs-5">
+            <div className="text-center d-flex justify-content-center fs-5 position-relative mb-3">
               <select value={selectedOption} onChange={handleSelect}>
                 <option value="allTasks">All Tasks</option>
                 <option value="completedTasks">Completed Tasks</option>
@@ -106,7 +106,7 @@ function ProjectPage() {
               </select>
               {selectedOption !== "incompletedTasks" && (
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-danger position-absolute top-50 end-0 translate-middle-y me-2"
                   disabled={selectedTasks.length === 0}
                   onClick={() => setDeleteModal(true)}
                 >
