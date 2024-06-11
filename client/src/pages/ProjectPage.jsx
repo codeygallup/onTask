@@ -104,6 +104,7 @@ function ProjectPage() {
                 <option value="completedTasks">Completed Tasks</option>
                 <option value="incompletedTasks">Incomplete Tasks</option>
               </select>
+              {/* Show no trash when the task list is empty? */}
               {selectedOption !== "incompletedTasks" && (
                 <button
                   className="btn btn-danger position-absolute top-50 end-0 translate-middle-y me-2"

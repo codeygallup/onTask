@@ -27,17 +27,21 @@ app.get("/", (req, res) => {
 });
 
 const startApolloServer = async () => {
-  await server.start();
-  server.applyMiddleware({ app });
+  try {
+    await server.start();
+    server.applyMiddleware({ app });
 
-  db.once("open", () => {
-    app.listen(PORT, () => {
-      console.log(`🌍 Now listening on localhost:${PORT}`);
-      console.log(
-        `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
-      );
+    db.once("open", () => {
+      app.listen(PORT, () => {
+        console.log(`🌍 Now listening on localhost:${PORT}`);
+        console.log(
+          `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
+        );
+      });
     });
-  });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 startApolloServer(typeDefs, resolvers);

@@ -22,7 +22,12 @@ const userSchema = new Schema(
     },
     resetPIN: String,
     resetPINExpiry: Date,
-    projects: [Project.schema],
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Project",
+      },
+    ],
   },
   {
     toJSON: {

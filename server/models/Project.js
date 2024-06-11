@@ -16,7 +16,12 @@ const projectSchema = new Schema({
     ref: "User",
     required: true,
   },
-  tasks: [Task.schema],
+  tasks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
 });
 
 const Project = model("Project", projectSchema);
