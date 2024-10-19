@@ -54,6 +54,7 @@ export default function TaskInput() {
             value={task.taskText}
             type="text"
             className="form-control"
+            spellCheck="true"
             style={{ marginRight: "20px" }}
           />
           <button className="btn btn-info" type="submit">
