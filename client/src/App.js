@@ -25,7 +25,7 @@ import Recover from "./pages/Recover";
 import Reset from "./pages/Reset";
 
 const http = createHttpLink({
-  uri: "/graphql",
+   uri: process.env.NODE_ENV === 'production' ? '/graphql' : 'http://localhost:3001/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -54,8 +54,6 @@ const client = new ApolloClient({
     },
   }),
 });
-
-
 
 const PrivateRoutes = () => {
   const isAuthenticated = !!localStorage.getItem("id_token");
