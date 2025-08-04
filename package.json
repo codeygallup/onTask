@@ -4,15 +4,15 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js",
     "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm install && npm run build && cd ../server && npm install",
+    "start": "cd server && npm start"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Codeyg12/projectManager.git"
+    "url": "https://github.com/codeygallup/onTask.git"
   },
   "keywords": [],
   "author": "",
@@ -21,34 +21,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "apollo-server-express": "^2.15.0",
-    "axios": "^1.6.8",
-    "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
-    "dotenv": "^16.4.5",
-    "node-cron": "^3.0.3",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.5.0",
-    "react-dom": "^18.2.0",
-    "react-js-cron": "^5.0.1",
-    "react-scripts": "5.0.1",
-    "react-spinners": "^0.13.8",
-    "web-vitals": "^2.1.4",
-    "workbox-background-sync": "^6.5.4",
-    "workbox-broadcast-update": "^6.5.4",
-    "workbox-cacheable-response": "^6.5.4",
-    "workbox-core": "^6.5.4",
-    "workbox-expiration": "^6.5.4",
-    "workbox-google-analytics": "^6.5.4",
-    "workbox-navigation-preload": "^6.5.4",
-    "workbox-precaching": "^6.5.4",
-    "workbox-range-requests": "^6.5.4",
-    "workbox-routing": "^6.5.4",
-    "workbox-strategies": "^6.5.4",
-    "workbox-streams": "^6.5.4"
+    "react": "^18.2.0"
   },
-  "homepage": "https://github.com/Codeyg12/onTask"
+  "homepage": "https://github.com/codeygallup/onTask"
 }
