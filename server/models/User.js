@@ -1,19 +1,21 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const Project = require("./Project");
-
 const userSchema = new Schema(
   {
     username: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      minlength: 3,
+      maxlength: 20,
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
       match: [/.+@.+\..+/, "Must use a valid email address"],
     },
     password: {
@@ -30,6 +32,7 @@ const userSchema = new Schema(
     ],
   },
   {
+    timestamps: true,
     toJSON: {
       virtuals: true,
     },

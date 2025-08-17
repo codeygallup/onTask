@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LOGIN } from "../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import LoginForm from "../components/LoginForm";
@@ -13,6 +13,7 @@ const Login = () => {
     FIND_USER,
     {
       variables: { id: userIdParam },
+      skip: !userIdParam,
     }
   );
 
@@ -20,6 +21,15 @@ const Login = () => {
     email: user ?? "",
     password: "",
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData((prevData) => ({
+        ...prevData,
+        email: user,
+      }));
+    }
+  }, [user]);
 
   const [loginUser] = useMutation(LOGIN);
 

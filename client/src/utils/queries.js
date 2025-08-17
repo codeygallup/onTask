@@ -17,7 +17,7 @@ export const ONE_PROJECT = gql`
       description
       tasks {
         _id
-        taskText
+        text
         complete
       }
     }
@@ -32,7 +32,7 @@ export const USER_PROJECTS = gql`
       description
       tasks {
         _id
-        taskText
+        text
         complete
       }
     }

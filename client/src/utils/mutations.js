@@ -62,10 +62,10 @@ export const REMOVE_PROJECT = gql`
 `;
 
 export const ADD_TASK = gql`
-  mutation addTask($taskText: String!, $taskProject: ID) {
-    addTask(taskText: $taskText, taskProject: $taskProject) {
+  mutation addTask($text: String!, $projectId: ID) {
+    addTask(text: $text, projectId: $projectId) {
       _id
-      taskText
+      text
       complete
     }
   }

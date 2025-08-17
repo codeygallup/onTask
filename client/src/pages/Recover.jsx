@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { REQUEST_PASSWORD_RECOVERY } from "../utils/mutations";
 import Modal from "../components/Modal";
@@ -7,7 +7,8 @@ import Modal from "../components/Modal";
 const Recover = () => {
   const [email, setEmail] = useState("");
   const [successModal, setSuccessModal] = useState(false);
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   const [requestPasswordRecovery] = useMutation(REQUEST_PASSWORD_RECOVERY);
 
@@ -21,22 +22,22 @@ const Recover = () => {
       } = await requestPasswordRecovery({
         variables: { email },
       });
-      setUserId(_id)
-      setSuccessModal(true)
+      setUserId(_id);
+      setSuccessModal(true);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   const handleRedirect = () => {
-    window.location.assign(`/reset/${userId}`);
+    navigate(`/reset/${userId}`);
   };
 
   return (
     <>
       <div className="d-flex justify-content-center align-items-center vh-100">
         <div
-          className={`container card shadow p-4 ${successModal && 'faded'}`}
+          className={`container card shadow p-4 ${successModal && "faded"}`}
           style={{ maxWidth: "550px" }}
         >
           <>
