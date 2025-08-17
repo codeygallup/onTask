@@ -1,20 +1,27 @@
 const { Schema, model } = require("mongoose");
 
-const taskSchema = new Schema({
-  taskText: {
-    type: String,
-    required: true,
+const taskSchema = new Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 500,
+    },
+    complete: {
+      type: Boolean,
+      default: false,
+    },
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+    },
   },
-  complete: {
-    type: Boolean,
-    default: false,
-  },
-  taskProject: {
-    type: Schema.Types.ObjectId,
-    ref: "Project",
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Task = model("Task", taskSchema);
 

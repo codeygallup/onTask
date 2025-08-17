@@ -9,16 +9,12 @@ const resolvers = {
       return await User.findById(_id);
     },
     oneProject: async (_, { _id }) => {
-      const project = await Project.findById(_id);
-      const tasks = await Task.find({ taskProject: _id });
-      project.tasks = tasks;
-
-      return project;
+      return await Project.findById(_id).populate("tasks");
     },
     userProjects: async (_, args, context) => {
       if (context.user) {
         return await Project.find({
-          projectUser: context.user._id,
+          userId: context.user._id,
         });
       }
       throw new AuthenticationError("You need to be logged in");
@@ -45,7 +41,7 @@ const resolvers = {
     addProject: async (_, { title, description }, context) => {
       if (context.user) {
         return await Project.create({
-          projectUser: context.user._id,
+          userId: context.user._id,
           title,
           description,
         });
@@ -61,7 +57,7 @@ const resolvers = {
           {
             title,
             description,
-            projectUser: context.user._id,
+            userId: context.user._id,
           },
           { new: true }
         );
@@ -70,12 +66,20 @@ const resolvers = {
     removeProject: async (_, { projectId }) => {
       return await Project.findByIdAndDelete(projectId);
     },
-    addTask: async (_, { taskText, taskProject }, context) => {
+    addTask: async (_, { text, projectId }, context) => {
       if (context.user) {
-        return await Task.create({
-          taskText,
-          taskProject,
+        const task = await Task.create({
+          text,
+          projectId,
         });
+
+        await Project.findByIdAndUpdate(
+          projectId,
+          { $push: { tasks: task._id } },
+          { new: true }
+        );
+
+        return task;
       }
       throw new AuthenticationError("You need to be logged in");
     },

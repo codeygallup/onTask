@@ -62,7 +62,10 @@ const Reset = () => {
   };
 
   const handleModalClose = (userId) => {
-    if (userId === null || userId === undefined) navigate("/login");
+    if (userId === null || userId === undefined) {
+      navigate("/login");
+      return;
+    }
     navigate(`/login?userId=${encodeURIComponent(userId)}`);
   };
 

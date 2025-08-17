@@ -1,23 +1,30 @@
-import { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
-import { ONE_PROJECT } from "../utils/queries";
 import { HomeButton, ProjectForm } from "../components";
+import { useTask } from "../hooks/useTask";
 
 function ProjectUpdate() {
   let { id } = useParams();
 
-  const { data: { oneProject: projectData = [] } = {} } = useQuery(
-    ONE_PROJECT,
-    { variables: { id: id } }
-  );
+  const { project } = useTask(id);
 
-  const [project, setProject] = useState({
+  const [localProject, setLocalProject] = useState({
     projectId: id,
-    title: projectData.title,
-    description: projectData.description,
+    title: "",
+    description: "",
   });
+
+  useEffect(() => {
+    if (project?.title && !localProject.title) {
+      setLocalProject({
+        projectId: id,
+        title: project.title,
+        description: project.description,
+      });
+    }
+  }, [project, localProject.title, id]);
 
   const [updateProject] = useMutation(UPDATE_PROJECT);
 
@@ -28,7 +35,7 @@ function ProjectUpdate() {
         title="Update Project"
         handleSub={updateProject}
         project={project}
-        setProject={setProject}
+        setProject={setLocalProject}
       />
     </>
   );

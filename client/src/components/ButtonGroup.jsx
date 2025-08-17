@@ -8,14 +8,8 @@ import { useContext } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function ButtonGroup({ task }) {
-  let {
-    updateComplete,
-    refetch,
-    setSelectedOption,
-    selectedOption,
-    setSelectedTasks,
-    selectedTasks,
-  } = useContext(TaskContext);
+  let { updateComplete, refetch, setSelectedTasks, selectedTasks } =
+    useContext(TaskContext);
 
   const changeStatus = async (e, taskId) => {
     e.preventDefault();
@@ -25,7 +19,6 @@ export default function ButtonGroup({ task }) {
         variables: { taskId },
       });
       await refetch();
-      setSelectedOption(selectedOption);
     } catch (err) {
       console.error(err);
     }

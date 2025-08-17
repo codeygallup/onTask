@@ -4,7 +4,7 @@ const typeDefs = gql`
   type Query {
     findUser(_id: ID!): User
     oneProject(_id: ID!): Project
-    userProjects(projectUser: ID): [Project]
+    userProjects(userId: ID): [Project]
   }
 
   type User {
@@ -18,15 +18,15 @@ const typeDefs = gql`
     _id: ID
     title: String
     description: String
-    projectUser: ID
+    userId: ID
     tasks: [Task]
   }
 
   type Task {
     _id: ID
-    taskText: String
+    text: String
     complete: Boolean
-    taskProject: ID
+    projectId: ID
   }
 
   type Auth {
@@ -34,18 +34,24 @@ const typeDefs = gql`
     user: User
   }
 
+  type RecoveryResponse {
+    success: Boolean!
+    message: String
+    user: User
+  }
+
   type Mutation {
     loginUser(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addProject(projectUser: ID, title: String!, description: String!): Project
+    addProject(userId: ID, title: String!, description: String!): Project
     updateProject(projectId: ID, title: String!, description: String!): Project
     removeProject(projectId: ID): Project
-    addTask(taskText: String!, taskProject: ID): Task
+    addTask(text: String!, projectId: ID): Task
     removeTasks(taskIds: [ID]): Task
     updateComplete(taskId: ID): Task
-    requestPasswordRecovery(email: String!): Auth
-    resetPassword(email: String!, newPassword: String!): Auth
-    validatePIN(email: String!, pin: String!): Auth
+    requestPasswordRecovery(email: String!): RecoveryResponse
+    resetPassword(email: String!, newPassword: String!): RecoveryResponse
+    validatePIN(email: String!, pin: String!): RecoveryResponse
   }
 `;
 
