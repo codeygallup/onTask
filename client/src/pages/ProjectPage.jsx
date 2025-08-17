@@ -20,7 +20,6 @@ function ProjectPage() {
     project,
     filteredTasks,
     handleAddTask,
-    updateComplete,
   } = useTask(id);
 
   const { handleDeleteProject } = useProject(id);

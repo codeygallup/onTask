@@ -39,7 +39,7 @@ export function useTask(projectId) {
     } catch (err) {
       console.error(err);
     }
-  }, [removeTasks, refetch, selectedOption, selectedTasks]);
+  }, [removeTasks, refetch, selectedTasks]);
 
   const handleAddTask = useCallback(
     async (taskData) => {

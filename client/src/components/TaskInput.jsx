@@ -2,20 +2,12 @@ import { useContext, useEffect, useRef } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function TaskInput() {
-  let {
-    task,
-    addTask,
-    setTask,
-    refetch,
-    setSelectedOption,
-    selectedOption,
-    id,
-  } = useContext(TaskContext);
+  const { task, setTask, handleAddTask, id } = useContext(TaskContext);
 
-  const taskRef = useRef(null)
+  const taskRef = useRef(null);
   useEffect(() => {
-    taskRef.current.focus()
-  }, [])
+    taskRef.current.focus();
+  }, []);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -26,20 +18,20 @@ export default function TaskInput() {
     e.preventDefault();
 
     try {
-      await addTask({
-        variables: { ...task },
+      await handleAddTask({
+        ...task,
       });
-      await refetch();
-      setSelectedOption(selectedOption);
+
+      setTask({
+        text: "",
+        complete: false,
+        taskProject: id,
+      });
+
+      taskRef.current.focus();
     } catch (err) {
       console.error(err);
     }
-
-    setTask({
-      taskText: "",
-      complete: false,
-      taskProject: id,
-    });
   };
 
   return (
@@ -48,10 +40,10 @@ export default function TaskInput() {
         <div className="text-center input-group my-4">
           <input
             placeholder="Enter task..."
-            name="taskText"
+            name="text"
             ref={taskRef}
             onChange={handleFormChange}
-            value={task.taskText}
+            value={task.text}
             type="text"
             className="form-control"
             spellCheck="true"
