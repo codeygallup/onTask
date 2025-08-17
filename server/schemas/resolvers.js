@@ -9,6 +9,21 @@ const resolvers = {
       return await User.findById(_id);
     },
     oneProject: async (_, { _id }) => {
+      const populateProjectTasks = async () => {
+        try {
+          const projects = await Project.find({})
+
+          for (const project of projects) {
+            await project.populate("tasks");
+            await project.save();
+          }
+          return projects;
+        } catch (err) {
+          console.error(err);
+          throw new Error("Error populating project tasks");
+        }
+      }
+      await populateProjectTasks();
       return await Project.findById(_id).populate("tasks");
     },
     userProjects: async (_, args, context) => {
