@@ -20,6 +20,8 @@ function ProjectPage() {
     project,
     filteredTasks,
     handleAddTask,
+    updateComplete,
+    refetch,
   } = useTask(id);
 
   const { handleDeleteProject } = useProject(id);
@@ -47,6 +49,10 @@ function ProjectPage() {
           selectedTasks,
           setSelectedTasks,
           handleAddTask,
+          updateComplete,
+          refetch,
+          setSelectedOption,
+          selectedOption,
           projectId: id,
         }}
       >
@@ -97,7 +103,10 @@ function ProjectPage() {
               {
                 label: "Confirm",
                 className: "btn-danger",
-                onClick: handleDeleteSelectedTasks,
+                onClick: () => {
+                  handleDeleteSelectedTasks();
+                  setDeleteModal(false);
+                },
               },
             ]}
           />
