@@ -34,7 +34,7 @@ function ProjectUpdate() {
       <ProjectForm
         title="Update Project"
         handleSub={updateProject}
-        project={project}
+        project={localProject}
         setProject={setLocalProject}
       />
     </>
