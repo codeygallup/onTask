@@ -18,6 +18,7 @@ const typeDefs = gql`
     _id: ID
     title: String
     description: String
+    lastOpenedAt: String
     userId: ID
     tasks: [Task]
   }

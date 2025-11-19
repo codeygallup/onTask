@@ -22,6 +22,10 @@ const projectSchema = new Schema(
         ref: "Task",
       },
     ],
+    lastOpenedAt: {
+      type: Date,
+      default: Date.now,
+    }
   },
   {
     timestamps: true,
