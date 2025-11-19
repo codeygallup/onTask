@@ -11,9 +11,8 @@ import {
   InMemoryCache,
   createHttpLink,
 } from "@apollo/client";
-import "./App.css";
 import { setContext } from "@apollo/client/link/context";
-import jwtDecode from 'jwt-decode'
+import jwtDecode from "jwt-decode";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -23,9 +22,13 @@ import ProjectPage from "./pages/ProjectPage";
 import ProjectUpdate from "./pages/ProjectUpdate";
 import Recover from "./pages/Recover";
 import Reset from "./pages/Reset";
+import Navbar from "./components/Navbar";
 
 const http = createHttpLink({
-   uri: process.env.NODE_ENV === 'production' ? '/graphql' : 'http://localhost:3001/graphql',
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "/graphql"
+      : "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -65,20 +68,19 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/recover" element={<Recover />} />
-            <Route path="/reset/:id" element={<Reset />} />
-            <Route element={<PrivateRoutes />}>
-              <Route path="/project" element={<Project />} />
-              <Route path="/project/:id" element={<ProjectPage />} />
-              <Route path="/project/:id/update" element={<ProjectUpdate />} />
-            </Route>
-          </Routes>
-        </div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/recover" element={<Recover />} />
+          <Route path="/reset/:id" element={<Reset />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/project" element={<Project />} />
+            <Route path="/project/:id" element={<ProjectPage />} />
+            <Route path="/project/:id/update" element={<ProjectUpdate />} />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </ApolloProvider>
   );
