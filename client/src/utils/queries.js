@@ -30,6 +30,7 @@ export const USER_PROJECTS = gql`
       _id
       title
       description
+      lastOpenedAt
       tasks {
         _id
         text
