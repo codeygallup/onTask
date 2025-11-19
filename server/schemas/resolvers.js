@@ -9,13 +9,28 @@ const resolvers = {
       return await User.findById(_id);
     },
     oneProject: async (_, { _id }) => {
-      return await Project.findById(_id).populate("tasks");
+      return await Project.findByIdAndUpdate(
+        _id,
+        { lastOpenedAt: new Date() },
+        { new: true }
+      ).populate("tasks");
     },
     userProjects: async (_, args, context) => {
       if (context.user) {
-        return await Project.find({
+        const projects = await Project.find({
           userId: context.user._id,
+        }).populate("tasks");
+
+        // Set lastOpenedAt for projects that don't have it
+        const updates = projects.map(async (project) => {
+          if (!project.lastOpenedAt) {
+            project.lastOpenedAt = project.createdAt || new Date();
+            await project.save();
+          }
         });
+
+        await Promise.all(updates);
+        return projects;
       }
       throw new AuthenticationError("You need to be logged in");
     },
