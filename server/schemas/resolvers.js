@@ -116,30 +116,31 @@ const resolvers = {
         }
       }
     },
-    requestPasswordRecovery: async (_, { email }) => {
-      // Find user by email
-      const user = await User.findOne({ email });
+requestPasswordRecovery: async (_, { email }) => {
+  // Find user by email
+  const user = await User.findOne({ email });
 
-      if (!user) {
-        throw new Error("User not found");
-      }
+  if (!user) {
+    throw new Error("User not found");
+  }
 
-      // Generate recovery pin and update user
-      const resetPIN = Math.floor(100000 + Math.random() * 900000).toString();
-      user.resetPIN = resetPIN;
-      user.resetPINExpiry = Date.now() + 1800000; // PIN expires in 1 hour, change PIN to lesser
+  // Generate recovery pin and update user
+  const resetPIN = Math.floor(100000 + Math.random() * 900000).toString();
+  user.resetPIN = resetPIN;
+  user.resetPINExpiry = Date.now() + 1800000; // 30 minutes
 
-      await user.save();
+  await user.save();
 
-      // Send recovery email
-      passwordRecover(email, resetPIN);
+  // Send recovery email
+  passwordRecover(email, resetPIN);
 
-      // Return an object with the token and user
-      return {
-        // token: userRecoveryToken, // Return the recovery token
-        user: user, // Return the user object
-      };
-    },
+  // Return an object with success, message, and user
+  return {
+    success: true,  // ← ADD THIS
+    message: "Recovery PIN sent successfully",  // ← ADD THIS
+    user: user,
+  };
+},
     resetPassword: async (_, { email, newPassword }) => {
       // Find user by email
       const user = await User.findOne({ email });
