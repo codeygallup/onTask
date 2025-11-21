@@ -19,8 +19,8 @@ export default function ProjectForm({ title, handleSub, project, setProject }) {
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="container shadow rounded p-5">
+      <div className="flex justify-center items-center border-2 border-slate-300 rounded-lg p-4 m-10 md:h-[calc(100vh-10rem)] bg-slate-50 mt-20">
+        <div className="flex flex-col md:w-1/2">
           <form className="text-center" onSubmit={handleSubmit}>
             <h3 className="mb-5">{title}</h3>
             <label className="my-2">Title:</label>
@@ -30,7 +30,7 @@ export default function ProjectForm({ title, handleSub, project, setProject }) {
               type="text"
               onChange={handleFormChange}
               value={project.title}
-              className="form-control"
+              className="border-2 border-slate-300 rounded-md w-full p-2 bg-slate-100" 
               placeholder="Whats the projects title?"
               autoFocus
               required
@@ -41,13 +41,16 @@ export default function ProjectForm({ title, handleSub, project, setProject }) {
               type="text"
               onChange={handleFormChange}
               value={project.description}
-              className="form-control"
+              className="border-2 border-slate-300 rounded-md w-full p-2 bg-slate-100"
               placeholder="Describe what the purpose of the project is..."
               required
               rows="8"
             />
             <br />
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="border-2 border-slate-300 rounded-md py-2.5 px-4 mt-4"
+            >
               Add
             </button>
           </form>
