@@ -56,37 +56,38 @@ function ProjectPage() {
           projectId: id,
         }}
       >
-        <HomeButton />
-        <div className="d-flex justify-content-center align-items-center vh-100">
-          <div className="shadow rounded">
-            <CardHeader project={project} removeProject={handleDeleteProject} />
-            <div className="text-center d-flex justify-content-center fs-5 position-relative mb-3">
-              <select value={selectedOption} onChange={handleSelect}>
-                <option value="allTasks">All Tasks</option>
-                <option value="completedTasks">Completed Tasks</option>
-                <option value="incompletedTasks">Incomplete Tasks</option>
-              </select>
-              {/* Show no trash when the task list is empty? */}
-              {selectedOption !== "incompletedTasks" && (
-                <button
-                  className="btn btn-danger position-absolute top-50 end-0 translate-middle-y me-2"
-                  disabled={selectedTasks.length === 0}
-                  onClick={() => setDeleteModal(true)}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              )}
-            </div>
-            <div className="container vw-100">
-              <div className="side">
-                {filteredTasks.map((task) => (
-                  <TaskItem key={task._id} task={task} />
-                ))}
-              </div>
-              <TaskInput selectedOption={selectedOption} />
-            </div>
-          </div>
-        </div>
+        {/* <HomeButton /> */}
+<div className="border-2 border-slate-300 rounded-lg p-4 m-10 bg-slate-50 h-[calc(100vh-10rem)] flex flex-col">
+  <div className="flex flex-col gap-4 flex-1 overflow-hidden">
+    <CardHeader project={project} removeProject={handleDeleteProject} />
+    
+    <div className="text-center">
+      <select value={selectedOption} onChange={handleSelect}>
+        <option value="allTasks">All Tasks</option>
+        <option value="completedTasks">Completed Tasks</option>
+        <option value="incompletedTasks">Incomplete Tasks</option>
+      </select>
+      
+      {selectedOption !== "incompletedTasks" && (
+        <button
+          disabled={selectedTasks.length === 0}
+          onClick={() => setDeleteModal(true)}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      )}
+    </div>
+    
+    <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 overflow-y-auto mb-4">
+        {filteredTasks.map((task) => (
+          <TaskItem key={task._id} task={task} />
+        ))}
+      </div>
+      <TaskInput selectedOption={selectedOption} />
+    </div>
+  </div>
+</div>
         {deleteModal && (
           <Modal
             modalMessage={
@@ -96,17 +97,17 @@ function ProjectPage() {
             }
             buttonConfig={[
               {
-                label: "Cancel",
-                className: "btn-success",
-                onClick: () => setDeleteModal(false),
-              },
-              {
                 label: "Confirm",
-                className: "btn-danger",
+                className: "px-2 py-1 bg-red-500 text-white rounded-md",
                 onClick: () => {
                   handleDeleteSelectedTasks();
                   setDeleteModal(false);
                 },
+              },
+              {
+                label: "Cancel",
+                className: "px-2 py-1 bg-green-500 text-white rounded-md",
+                onClick: () => setDeleteModal(false),
               },
             ]}
           />

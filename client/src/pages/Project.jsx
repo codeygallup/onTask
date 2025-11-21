@@ -13,7 +13,7 @@ const Project = () => {
 
   return (
     <>
-      <HomeButton />
+      {/* <HomeButton /> */}
       <ProjectForm
         title="Add New Project"
         handleSub={addProject}
