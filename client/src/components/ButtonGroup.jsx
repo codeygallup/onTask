@@ -38,7 +38,7 @@ export default function ButtonGroup({ task }) {
     <>
       {!task.complete ? (
         <button
-          className="btn btn-danger"
+          className="border-2 border-slate-300 rounded-md py-0.5 px-1.5 md:py-1 md:px-2 bg-violet-500"
           onClick={(e) => {
             changeStatus(e, task._id);
           }}
@@ -46,23 +46,23 @@ export default function ButtonGroup({ task }) {
           <FontAwesomeIcon icon={faCheck} />
         </button>
       ) : (
-        <div className="btn-group">
+        <div className="flex md:gap-2 flex-col md:flex-row">
           <button
-            className="btn btn-success"
+            className="border-2 border-slate-300 rounded-md py-0.5 px-1 md:py-1 md:px-2 bg-green-300"
             onClick={(e) => {
               changeStatus(e, task._id);
             }}
           >
             <FontAwesomeIcon icon={faArrowRotateLeft} />
           </button>
-          <button
-            className={`btn ${isSelected ? "btn-warning" : "btn-danger"}`}
+          {/* <button
+            className={`border-2 border-slate-300 rounded-md py-0.5 px-1 md:py-1 md:px-2 ${isSelected ? "bg-red-800" : "bg-amber-400"}`}
             onClick={() => {
               handleTaskSelect(task._id);
             }}
           >
             <FontAwesomeIcon icon={faCheckDouble} />
-          </button>
+          </button> */}
         </div>
       )}
     </>

@@ -1,31 +1,33 @@
 const Modal = ({ modalMessage, buttonConfig }) => {
   return (
-    <div
-      className="modal"
-      tabIndex="-1"
-      role="dialog"
-      style={{ display: "block" }}
-    >
-      <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content text-center">
-          <div className="modal-body">
-            <p className="fs-4">{modalMessage}</p>
+    <>
+      <div className="fixed inset-0 backdrop-blur-xs z-40"></div>
+      
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        role="dialog"
+        tabIndex="-1"
+      >
+        <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+          <div className="p-6 text-center">
+            <p className="text-xl">{modalMessage}</p>
           </div>
-          <div className="modal-footer">
-         {buttonConfig.map((btnConfig, i) => (
-             <button
-             key={i}
-             type="button"
-             className={`btn ${btnConfig.className}`}
-             onClick={btnConfig.onClick}
-           >
-             {btnConfig.label}
-           </button>
-         ))}
+          
+          <div className="flex gap-3 justify-center p-4 border-t border-gray-200">
+            {buttonConfig.map((btnConfig, i) => (
+              <button
+                key={i}
+                type="button"
+                className={`border-2 border-slate-300 rounded-md ${btnConfig.className}`}
+                onClick={btnConfig.onClick}
+              >
+                {btnConfig.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
