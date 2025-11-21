@@ -117,3 +117,12 @@ export const VALIDATE_PIN = gql`
     }
   }
 `;
+
+export const UPDATE_LAST_OPENED = gql`
+  mutation updateLastOpened($projectId: ID!) {
+    updateLastOpened(projectId: $projectId) {
+      _id
+      lastOpenedAt
+    }
+  }
+`;

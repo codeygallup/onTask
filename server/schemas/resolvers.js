@@ -11,7 +11,7 @@ const resolvers = {
     oneProject: async (_, { _id }) => {
       return await Project.findByIdAndUpdate(
         _id,
-        { lastOpenedAt: new Date() },
+        { lastOpenedAt: new Date().toISOString() },
         { new: true }
       ).populate("tasks");
     },
@@ -24,7 +24,7 @@ const resolvers = {
         // Set lastOpenedAt for projects that don't have it
         const updates = projects.map(async (project) => {
           if (!project.lastOpenedAt) {
-            project.lastOpenedAt = project.createdAt || new Date();
+            project.lastOpenedAt = new Date().toISOString();
             await project.save();
           }
         });
@@ -78,6 +78,18 @@ const resolvers = {
         );
       }
     },
+    updateLastOpened: async (_, { projectId }, context) => {
+      if (context.user) {
+        const project = await Project.findByIdAndUpdate(
+          projectId,
+          { lastOpenedAt: new Date().toISOString() },
+          { new: true }
+        ).populate("tasks");
+
+        return project;
+      }
+      throw new AuthenticationError("You need to be logged in");
+    },
     removeProject: async (_, { projectId }) => {
       return await Project.findByIdAndDelete(projectId);
     },
@@ -116,31 +128,31 @@ const resolvers = {
         }
       }
     },
-requestPasswordRecovery: async (_, { email }) => {
-  // Find user by email
-  const user = await User.findOne({ email });
+    requestPasswordRecovery: async (_, { email }) => {
+      // Find user by email
+      const user = await User.findOne({ email });
 
-  if (!user) {
-    throw new Error("User not found");
-  }
+      if (!user) {
+        throw new Error("User not found");
+      }
 
-  // Generate recovery pin and update user
-  const resetPIN = Math.floor(100000 + Math.random() * 900000).toString();
-  user.resetPIN = resetPIN;
-  user.resetPINExpiry = Date.now() + 1800000; // 30 minutes
+      // Generate recovery pin and update user
+      const resetPIN = Math.floor(100000 + Math.random() * 900000).toString();
+      user.resetPIN = resetPIN;
+      user.resetPINExpiry = Date.now() + 1800000; // 30 minutes
 
-  await user.save();
+      await user.save();
 
-  // Send recovery email
-  passwordRecover(email, resetPIN);
+      // Send recovery email
+      passwordRecover(email, resetPIN);
 
-  // Return an object with success, message, and user
-  return {
-    success: true,  // ← ADD THIS
-    message: "Recovery PIN sent successfully",  // ← ADD THIS
-    user: user,
-  };
-},
+      // Return an object with success, message, and user
+      return {
+        success: true,
+        message: "Recovery PIN sent successfully",
+        user: user,
+      };
+    },
     resetPassword: async (_, { email, newPassword }) => {
       // Find user by email
       const user = await User.findOne({ email });

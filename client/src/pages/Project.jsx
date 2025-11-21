@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_PROJECT } from "../utils/mutations";
-import { HomeButton, ProjectForm } from "../components";
+import { ProjectForm } from "../components";
 
 const Project = () => {
   const [project, setProject] = useState({
@@ -13,7 +13,6 @@ const Project = () => {
 
   return (
     <>
-      {/* <HomeButton /> */}
       <ProjectForm
         title="Add New Project"
         handleSub={addProject}
