@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { UPDATE_LAST_OPENED } from "../utils/mutations";
-import { CardHeader, TaskInput, TaskItem, HomeButton } from "../components";
+import { CardHeader, TaskInput, TaskItem } from "../components";
 import { TaskContext } from "../components/TaskContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -72,8 +72,8 @@ function ProjectPage() {
           <div className="flex flex-col gap-4 flex-1 overflow-hidden">
             <CardHeader project={project} removeProject={handleDeleteProject} />
 
-            <div className="text-center">
-              <select value={selectedOption} onChange={handleSelect}>
+            <div className="flex justify-between items-center mb-2">
+              <select value={selectedOption} onChange={handleSelect} className="bg-slate-50 border-2 border-slate-300 rounded-md py-1 px-2">
                 <option value="allTasks">All Tasks</option>
                 <option value="completedTasks">Completed Tasks</option>
                 <option value="incompletedTasks">Incomplete Tasks</option>

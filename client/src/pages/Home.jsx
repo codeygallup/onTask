@@ -83,7 +83,7 @@ const Home = () => {
                 {recentProjects.length > 0 ? (
                   recentProjects.map((project) => (
                     <Link to={`/project/${project._id}`} key={project._id}>
-                      <div className="md:h-28 border-2 bg-slate-100 border-slate-300 rounded p-4 flex gap-4">
+                      <div className="md:h-28 border-2 bg-slate-100 border-slate-300 rounded p-4 flex gap-4 hover:bg-slate-200 hover:border-teal-400 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                         <div className="flex-1">
                           <h4 className="font-semibold text-lg">
                             {project.title}
@@ -93,7 +93,7 @@ const Home = () => {
                           </p>
                         </div>
                         <div className="w-32 flex flex-col justify-center">
-                          <div className="w-full bg-gray-200 rounded-full h-4">
+                          <div className="w-full bg-gray-200 rounded-full h-4 outline-1 outline-gray-400">
                             <div
                               className="bg-teal-500 h-4 rounded-full"
                               style={{
@@ -117,7 +117,7 @@ const Home = () => {
                                     100
                                 )
                               : 0}
-                            %
+                            % Complete
                           </p>
                         </div>
                       </div>
@@ -142,7 +142,7 @@ const Home = () => {
               {userProjects.map((project) => {
                 return (
                   <p
-                    className="border-2 border-slate-300 text-center rounded-md py-1.5"
+                    className="border-2 border-slate-300 text-center rounded-md py-1.5 hover:bg-slate-200 hover:border-teal-400 transition-all duration-200"
                     key={project._id}
                   >
                     <Link to={`/project/${project._id}`}>{project.title}</Link>
@@ -151,7 +151,7 @@ const Home = () => {
               })}
             </div>
             <Link to="/project" className="mt-auto">
-              <button className="border-2 border-slate-400 rounded-md py-2.5 w-full bg-slate-200">
+              <button className="border-2 border-slate-400 rounded-md py-2.5 w-full bg-slate-200 hover:bg-slate-300 hover:transition-colors">
                 Add Project
               </button>
             </Link>
