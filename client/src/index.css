@@ -49,3 +49,26 @@
   background-color: #1b89bc;
   border-radius: 10px;
 }
+
+/* Floating label that changes text */
+.floating-label-input:placeholder-shown + .floating-label {
+  top: 0.5rem;
+  font-size: 1rem;
+}
+
+.floating-label-input:placeholder-shown + .floating-label::before {
+  content: attr(data-placeholder);
+}
+
+.floating-label-input:focus + .floating-label,
+.floating-label-input:not(:placeholder-shown) + .floating-label {
+  top: -2rem;
+  font-size: 0.875rem;
+  color: #14b8a6;
+  font-weight: 600;
+}
+
+.floating-label-input:focus + .floating-label::before,
+.floating-label-input:not(:placeholder-shown) + .floating-label::before {
+  content: attr(data-label);
+}
