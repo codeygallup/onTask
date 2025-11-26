@@ -21,15 +21,6 @@ const resolvers = {
           userId: context.user._id,
         }).populate("tasks");
 
-        // Set lastOpenedAt for projects that don't have it
-        const updates = projects.map(async (project) => {
-          if (!project.lastOpenedAt) {
-            project.lastOpenedAt = new Date().toISOString();
-            await project.save();
-          }
-        });
-
-        await Promise.all(updates);
         return projects;
       }
       throw new AuthenticationError("You need to be logged in");
