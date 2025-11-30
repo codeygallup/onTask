@@ -1,15 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRotateLeft,
-  faCheck,
-  faCheckDouble,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateLeft, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { TaskContext } from "./TaskContext";
 
 export default function ButtonGroup({ task }) {
-  let { updateComplete, refetch, setSelectedTasks, selectedTasks } =
-    useContext(TaskContext);
+  let { updateComplete, refetch } = useContext(TaskContext);
 
   const changeStatus = async (e, taskId) => {
     e.preventDefault();
@@ -24,46 +19,24 @@ export default function ButtonGroup({ task }) {
     }
   };
 
-  const handleTaskSelect = (taskId) => {
-    setSelectedTasks((prev) =>
-      prev.includes(taskId)
-        ? prev.filter((id) => id !== taskId)
-        : [...prev, taskId]
-    );
-  };
-
-  const isSelected = selectedTasks.includes(task._id);
-
   return (
     <>
       {!task.complete ? (
         <button
-          className="border-2 border-slate-300 rounded-md py-0.5 px-1.5 md:py-1 md:px-2 bg-violet-500"
-          onClick={(e) => {
-            changeStatus(e, task._id);
-          }}
+          className="border-2 border-slate-300 rounded-md py-1 px-1.5 md:py-1 md:px-2 bg-violet-500 hover:bg-violet-600 transition-colors"
+          onClick={(e) => changeStatus(e, task._id)}
+          title="Mark as complete"
         >
-          <FontAwesomeIcon icon={faCheck} />
+          <FontAwesomeIcon icon={faCheck} className="text-white" />
         </button>
       ) : (
-        <div className="flex md:gap-2 flex-col md:flex-row">
-          <button
-            className="border-2 border-slate-300 rounded-md py-0.5 px-1 md:py-1 md:px-2 bg-green-300"
-            onClick={(e) => {
-              changeStatus(e, task._id);
-            }}
-          >
-            <FontAwesomeIcon icon={faArrowRotateLeft} />
-          </button>
-          {/* <button
-            className={`border-2 border-slate-300 rounded-md py-0.5 px-1 md:py-1 md:px-2 ${isSelected ? "bg-red-800" : "bg-amber-400"}`}
-            onClick={() => {
-              handleTaskSelect(task._id);
-            }}
-          >
-            <FontAwesomeIcon icon={faCheckDouble} />
-          </button> */}
-        </div>
+        <button
+          className="border-2 border-slate-300 rounded-md p-1.5 md:py-1 md:px-2 bg-green-400 hover:bg-green-500 transition-colors"
+          onClick={(e) => changeStatus(e, task._id)}
+          title="Mark as incomplete"
+        >
+          <FontAwesomeIcon icon={faArrowRotateLeft} className="text-white" />
+        </button>
       )}
     </>
   );

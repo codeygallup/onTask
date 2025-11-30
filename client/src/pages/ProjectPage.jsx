@@ -73,7 +73,11 @@ function ProjectPage() {
             <CardHeader project={project} removeProject={handleDeleteProject} />
 
             <div className="flex justify-between items-center mb-2">
-              <select value={selectedOption} onChange={handleSelect} className="bg-slate-50 border-2 border-slate-300 rounded-md py-1 px-2">
+              <select
+                value={selectedOption}
+                onChange={handleSelect}
+                className="bg-slate-50 border-2 border-slate-300 rounded-md py-1 px-2"
+              >
                 <option value="allTasks">All Tasks</option>
                 <option value="completedTasks">Completed Tasks</option>
                 <option value="incompletedTasks">Incomplete Tasks</option>
@@ -83,6 +87,11 @@ function ProjectPage() {
                 <button
                   disabled={selectedTasks.length === 0}
                   onClick={() => setDeleteModal(true)}
+                  className={`transition-colors p-2 rounded-md ${
+                    selectedTasks.length > 0
+                      ? "text-red-500 hover:bg-red-50"
+                      : "text-slate-400 cursor-not-allowed"
+                  }`}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
