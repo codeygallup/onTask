@@ -73,7 +73,11 @@ function ProjectPage() {
             <CardHeader project={project} removeProject={handleDeleteProject} />
 
             <div className="flex justify-between items-center mb-2">
+              <label htmlFor="task-filter" className="sr-only">
+                Filter tasks
+              </label>
               <select
+                id="task-filter"
                 value={selectedOption}
                 onChange={handleSelect}
                 className="bg-slate-50 border-2 border-slate-300 rounded-md py-1 px-2"

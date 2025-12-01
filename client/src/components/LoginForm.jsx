@@ -62,7 +62,7 @@ export default function LoginForm({
   return (
     <>
       <div className="flex justify-center items-center md:min-h-screen mx-4 mt-20 md:mt-0 md:pt-0 pb-20">
-        <div className="w-full max-w-[750px] bg-white rounded-lg shadow-lg px-18 py-6 border-2 border-slate-300">
+        <div className="w-full max-w-[750px] bg-white rounded-lg shadow-lg px-6 md:px-18 py-6 border-2 border-slate-300">
           <form className="mx-5" onSubmit={handleSubmit}>
             <h3 className="text-center text-3xl mb-8">{title}</h3>
             

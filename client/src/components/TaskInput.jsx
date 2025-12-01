@@ -38,7 +38,11 @@ export default function TaskInput() {
     <>
       <form onSubmit={handleTask}>
         <div className="flex justify-center items-center md:mt-10 md:mb-4">
+          <label htmlFor="task-input" className="sr-only">
+            Task description
+          </label>
           <input
+            id="task-input"
             placeholder="Enter task..."
             name="text"
             ref={taskRef}
@@ -48,7 +52,10 @@ export default function TaskInput() {
             className="border-2 border-slate-300 rounded-md w-2/3 py-1 px-2 md:p-2 bg-slate-100 mr-2.5 focus:outline-teal-400"
             spellCheck="true"
           />
-          <button className="border-2 border-slate-300 rounded-md py-1 px-2 md:py-2 md:px-4 hover:bg-slate-200" type="submit">
+          <button
+            className="border-2 border-slate-300 rounded-md py-1 px-2 md:py-2 md:px-4 hover:bg-slate-200"
+            type="submit"
+          >
             Add Task
           </button>
         </div>
