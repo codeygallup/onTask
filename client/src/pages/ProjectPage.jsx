@@ -90,11 +90,10 @@ function ProjectPage() {
               {selectedOption !== "incompletedTasks" && (
                 <button
                   disabled={selectedTasks.length === 0}
-                  onClick={() => setDeleteModal(true)}
-                  className={`transition-colors p-2 rounded-md ${
+                  className={`transition-colors px-2 py-1 rounded-md border-2 ${
                     selectedTasks.length > 0
-                      ? "text-red-500 hover:bg-red-50"
-                      : "text-slate-400 cursor-not-allowed"
+                      ? "text-red-500 border-red-300 hover:bg-red-50 hover:border-red-400"
+                      : "text-slate-400 border-slate-200 cursor-not-allowed"
                   }`}
                 >
                   <FontAwesomeIcon icon={faTrash} />
@@ -117,21 +116,23 @@ function ProjectPage() {
             modalMessage={
               selectedTasks.length === 1
                 ? "Are you sure you want to delete this task?"
-                : `Are you sure you want to delete all ${selectedTasks.length} tasks?`
+                : `Are you sure you want to delete ${selectedTasks.length} tasks?`
             }
             buttonConfig={[
               {
-                label: "Confirm",
-                className: "px-2 py-1 bg-red-500 text-white rounded-md",
+                label: "Cancel",
+                className:
+                  "px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600",
+                onClick: () => setDeleteModal(false),
+              },
+              {
+                label: "Delete",
+                className:
+                  "px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600",
                 onClick: () => {
                   handleDeleteSelectedTasks();
                   setDeleteModal(false);
                 },
-              },
-              {
-                label: "Cancel",
-                className: "px-2 py-1 bg-green-500 text-white rounded-md",
-                onClick: () => setDeleteModal(false),
               },
             ]}
           />

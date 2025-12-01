@@ -53,7 +53,7 @@ export default function TaskInput() {
             spellCheck="true"
           />
           <button
-            className="border-2 border-slate-300 rounded-md py-1 px-2 md:py-2 md:px-4 hover:bg-slate-200"
+            className="border-2 border-teal-500 rounded-md py-1 px-2 md:py-2 md:px-4 bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors"
             type="submit"
           >
             Add Task

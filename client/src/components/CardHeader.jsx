@@ -30,7 +30,7 @@ export default function CardHeader({ project, removeProject }) {
       <div className="flex flex-col">
         <div className="flex justify-between">
           <Link to={`/project/${project._id}/update`}>
-            <button className="border-2 border-slate-300 rounded-md py-1 px-2 bg-blue-200">
+            <button className="border-2 border-slate-300 rounded-md py-1 px-2 bg-teal-500 hover:bg-teal-600 text-white transition-colors">
               <FontAwesomeIcon icon={faPenToSquare} />
             </button>
           </Link>
@@ -52,14 +52,16 @@ export default function CardHeader({ project, removeProject }) {
           modalMessage={"Are you sure you want to delete this project?"}
           buttonConfig={[
             {
-              label: "Confirm",
-              className: "px-2 py-1 bg-red-500 text-white rounded-md",
-              onClick: (e) => closeModal(e, project._id),
+              label: "Cancel",
+              className:
+                "px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600",
+              onClick: () => setDeleteModal(false),
             },
             {
-              label: "Cancel",
-              className: "px-2 py-1 bg-green-500 text-white rounded-md",
-              onClick: () => setDeleteModal(false),
+              label: "Delete Project",
+              className:
+                "px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600",
+              onClick: (e) => closeModal(e, project._id),
             },
           ]}
         />

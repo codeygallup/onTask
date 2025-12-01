@@ -151,7 +151,7 @@ const Home = () => {
               })}
             </div>
             <Link to="/project" className="mt-auto">
-              <button className="border-2 border-slate-400 rounded-md py-2.5 w-full bg-slate-200 hover:bg-slate-300 hover:transition-colors">
+              <button className="border-2 border-teal-500 rounded-md py-2.5 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors">
                 Add Project
               </button>
             </Link>

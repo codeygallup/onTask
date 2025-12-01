@@ -17,7 +17,7 @@ const Navbar = () => {
       {Auth.loggedIn() && (
         <button
           onClick={Auth.logout}
-          className="border-2 md:py-1 py-2 px-2.5 rounded-lg hover:bg-slate-300 hover:transition-colors"
+          className="border-2 border-slate-500 md:py-1 py-2 px-2.5 rounded-lg bg-slate-100 hover:bg-slate-300 transition-colors"
         >
           Logout
         </button>
