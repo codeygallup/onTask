@@ -3,6 +3,8 @@ import { useQuery } from "@apollo/client";
 import { USER_PROJECTS } from "../utils/queries";
 import Auth from "../utils/auth";
 import { ScaleLoader } from "react-spinners";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Home = () => {
   const { loading, data: { userProjects = [] } = {} } = useQuery(USER_PROJECTS);
@@ -62,20 +64,34 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row md:h-[calc(100vh-5rem)] md:overflow-hidden overflow-scroll">
+        <div className="flex flex-col md:flex-row md:h-[calc(100vh-5rem)] md:overflow-hidden overflow-auto">
           <main className="flex-1 p-4 flex flex-col gap-4">
-            <div className="flex gap-4 justify-evenly">
-              <div className="bg-slate-100 border-slate-300 w-1/3 h-24 flex flex-col justify-center items-center border-2 rounded-lg">
-                <h3>Total Tasks</h3>
-                <h4>
-                  {completedTasks} / {totalTasks}
-                </h4>
+            {totalTasks === 0 ? (
+              <div className="text-center text-gray-500 mt-6 border-2 border-slate-300 bg-slate-100 rounded-lg p-4 flex flex-col gap-4">
+                <p className="text-xl">No tasks yet!</p>
+                <p className="text-sm mt-2">
+                  Create a project and add your first task
+                </p>
               </div>
-              <div className="bg-slate-100 border-slate-300 w-1/3 h-24 flex flex-col justify-center items-center border-2 rounded-lg">
-                <h3>Due Soon</h3>
-                <h4>10</h4>
+            ) : (
+              <div className="flex gap-4 justify-evenly">
+                <div className="bg-slate-100 border-slate-300 w-1/3 h-24 flex flex-col justify-center items-center border-2 rounded-lg">
+                  <h3 className="text-md md:text-base">Total Tasks</h3>
+                  <h4 className="text-lg md:text-xl">
+                    {completedTasks} / {totalTasks}
+                  </h4>
+                </div>
+                <div className="bg-slate-100 border-slate-300 w-1/3 h-24 flex flex-col justify-center items-center border-2 rounded-lg">
+                  <h3 className="text-md md:text-base">Progress</h3>
+                  <h4 className="text-lg md:text-xl">
+                    {totalTasks > 0
+                      ? Math.round((completedTasks / totalTasks) * 100)
+                      : 0}
+                    %
+                  </h4>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="flex-1 border-2 bg-slate-50 border-slate-300 rounded-lg p-4 flex flex-col">
               <h2 className="text-center text-2xl mb-4">Recent Projects</h2>
@@ -150,7 +166,7 @@ const Home = () => {
                 );
               })}
             </div>
-            <Link to="/project" className="mt-auto">
+            <Link to="/project" className="mt-auto hidden md:block">
               <button className="border-2 border-teal-500 rounded-md py-2.5 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors">
                 Add Project
               </button>
@@ -158,6 +174,11 @@ const Home = () => {
           </aside>
         </div>
       )}
+      <Link to="/project" className="md:hidden fixed bottom-6 right-6 z-50">
+        <button className="bg-teal-500 hover:bg-teal-600 text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center transition-colors">
+          <FontAwesomeIcon icon={faPlus} className="text-4xl" />
+        </button>
+      </Link>
     </>
   );
 };
