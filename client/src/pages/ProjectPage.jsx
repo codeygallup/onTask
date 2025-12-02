@@ -103,7 +103,7 @@ function ProjectPage() {
             </div>
 
             <div className="flex-1 flex flex-col overflow-hidden">
-              <div className="flex-1 overflow-y-auto mb-4">
+              <div className="flex-1 overflow-y-auto mb-4 custom-scrollbar pr-4">
                 {filteredTasks.map((task) => (
                   <TaskItem key={task._id} task={task} />
                 ))}
