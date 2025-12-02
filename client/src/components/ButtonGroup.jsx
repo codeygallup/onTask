@@ -23,6 +23,7 @@ export default function ButtonGroup({ task }) {
           className="border-2 border-slate-300 rounded-md py-1 px-1.5 md:py-1 md:px-2 bg-teal-500 hover:bg-teal-600 transition-colors"
           onClick={(e) => changeStatus(e, task._id)}
           title="Mark as complete"
+          aria-label="Mark task as complete"
         >
           <FontAwesomeIcon icon={faCheck} className="text-white" />
         </button>
@@ -31,6 +32,7 @@ export default function ButtonGroup({ task }) {
           className="border-2 border-slate-300 rounded-md p-1.5 md:py-1 md:px-2 bg-slate-400 hover:bg-slate-500 transition-colors"
           onClick={(e) => changeStatus(e, task._id)}
           title="Mark as incomplete"
+          aria-label="Mark task as incomplete"
         >
           <FontAwesomeIcon icon={faArrowRotateLeft} className="text-white" />
         </button>

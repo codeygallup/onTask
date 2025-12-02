@@ -90,6 +90,7 @@ function ProjectPage() {
               {selectedOption !== "incompletedTasks" && (
                 <button
                   disabled={selectedTasks.length === 0}
+                  onClick={() => setDeleteModal(true)}
                   className={`transition-colors px-2 py-1 rounded-md border-2 ${
                     selectedTasks.length > 0
                       ? "text-red-500 border-red-300 hover:bg-red-50 hover:border-red-400"

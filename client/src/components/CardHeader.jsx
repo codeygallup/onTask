@@ -30,20 +30,26 @@ export default function CardHeader({ project, removeProject }) {
       <div className="flex flex-col">
         <div className="flex justify-between">
           <Link to={`/project/${project._id}/update`}>
-            <button className="border-2 border-slate-300 rounded-md py-1 px-2 bg-teal-500 hover:bg-teal-600 text-white transition-colors">
+            <button
+              className="border-2 border-slate-300 rounded-md py-1 px-2 bg-teal-500 hover:bg-teal-600 text-white transition-colors"
+              aria-label="Edit project"
+            >
               <FontAwesomeIcon icon={faPenToSquare} />
             </button>
           </Link>
           <h1 className="text-2xl">{project.title}</h1>
           <button
             className="border-2 border-slate-300 rounded-md py-1 px-2 bg-red-500"
+            aria-label="Delete project"
             onClick={() => setDeleteModal(true)}
           >
             <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
         <details className="mt-2 text-center">
-          <summary>Project description</summary>
+          <summary aria-label="Toggle project description">
+            Project description
+          </summary>
           <p>{project.description}</p>
         </details>
       </div>

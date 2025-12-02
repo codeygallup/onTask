@@ -22,6 +22,7 @@ export default function TaskItem({ task }) {
       <div className="relative flex justify-between items-center border-b-2 border-slate-300 p-4 gap-2">
         <button
           onClick={handleTaskSelect}
+          aria-label={isSelected ? "Deselect task" : "Select task for deletion"}
           className={`absolute top-1 right-0 w-4 h-4 rounded-full border-2 transition-all duration-200 flex items-center justify-center z-10 ${
             isSelected
               ? "border-red-500 bg-red-500"

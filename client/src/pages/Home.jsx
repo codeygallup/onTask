@@ -32,7 +32,12 @@ const Home = () => {
 
   if (loading)
     return (
-      <div className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div
+        className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        role="status"
+        aria-live="polite"
+        aria-label="Loading projects"
+      >
         <ScaleLoader height={100} width={15} color="#1b89bc" />
       </div>
     );
@@ -98,7 +103,17 @@ const Home = () => {
               <div className="flex-1 flex flex-col gap-8 justify-center">
                 {recentProjects.length > 0 ? (
                   recentProjects.map((project) => (
-                    <Link to={`/project/${project._id}`} key={project._id}>
+                    <Link
+                      to={`/project/${project._id}`}
+                      key={project._id}
+                      aria-label={`Open project ${project.title} - ${
+                        project.tasks?.length || 0
+                      } tasks, ${Math.round(
+                        (project.tasks.filter((t) => t.complete).length /
+                          project.tasks.length) *
+                          100
+                      )}% complete`}
+                    >
                       <div className="md:h-28 border-2 bg-slate-100 border-slate-300 rounded p-4 flex gap-4 hover:bg-slate-200 hover:border-teal-400 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                         <div className="flex-1">
                           <h4 className="font-semibold text-lg">
@@ -109,7 +124,21 @@ const Home = () => {
                           </p>
                         </div>
                         <div className="w-32 flex flex-col justify-center">
-                          <div className="w-full bg-gray-200 rounded-full h-4 outline-1 outline-gray-400">
+                          <div
+                            className="w-full bg-gray-200 rounded-full h-4 outline-1 outline-gray-400"
+                            role="progressbar"
+                            aria-valuenow={
+                              project.tasks?.length
+                                ? (project.tasks.filter((t) => t.complete)
+                                    .length /
+                                    project.tasks.length) *
+                                  100
+                                : 0
+                            }
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            aria-label="Project completion progress"
+                          >
                             <div
                               className="bg-teal-500 h-4 rounded-full"
                               style={{
@@ -161,13 +190,21 @@ const Home = () => {
                     className="border-2 border-slate-300 text-center rounded-md py-1.5 hover:bg-slate-200 hover:border-teal-400 transition-all duration-200"
                     key={project._id}
                   >
-                    <Link to={`/project/${project._id}`}>{project.title}</Link>
+                    <Link
+                      to={`/project/${project._id}`}
+                      aria-label={`Open project: ${project.title}`}
+                    >
+                      {project.title}
+                    </Link>
                   </p>
                 );
               })}
             </div>
             <Link to="/project" className="mt-auto hidden md:block">
-              <button className="border-2 border-teal-500 rounded-md py-2.5 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors">
+              <button
+                className="border-2 border-teal-500 rounded-md py-2.5 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors"
+                aria-label="Add new project"
+              >
                 Add Project
               </button>
             </Link>
@@ -175,7 +212,10 @@ const Home = () => {
         </div>
       )}
       <Link to="/project" className="md:hidden fixed bottom-6 right-6 z-50">
-        <button className="bg-teal-500 hover:bg-teal-600 text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center transition-colors">
+        <button
+          className="bg-teal-500 hover:bg-teal-600 text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center transition-colors"
+          aria-label="Add new project"
+        >
           <FontAwesomeIcon icon={faPlus} className="text-4xl" />
         </button>
       </Link>
