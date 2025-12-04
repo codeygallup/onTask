@@ -61,22 +61,23 @@ export default function LoginForm({
 
   return (
     <>
-      <div className="flex justify-center items-center md:min-h-screen mx-4 mt-20 md:mt-0 md:pt-0 pb-20">
-        <div className="w-full max-w-[750px] bg-white rounded-lg shadow-lg px-6 md:px-18 py-6 border-2 border-slate-300">
-          <form className="mx-5" onSubmit={handleSubmit}>
-            <h3 className="text-center text-3xl mb-8">{title}</h3>
-            
+      <div className="flex justify-center items-center min-h-[calc(100vh-10rem)] mx-4 md:my-20 md:min-h-0">
+        <div className="w-full max-w-[750px] bg-white rounded-lg shadow-xl border-0 md:border-2 md:border-slate-300 px-6 md:px-12 py-8">
+          <form className="mx-2 md:mx-5" onSubmit={handleSubmit}>
+            <h3 className="text-center text-3xl mb-8 font-bold">{title}</h3>
+
             {title === "Sign Up" && (
               <div className="relative mb-10">
                 <input
                   type="text"
+                  id="username"
                   name="username"
                   ref={usernameRef}
                   onChange={handleFormChange}
                   value={formData.username}
                   placeholder=" "
-                  className={`peer w-full px-4 py-2 border-2 rounded mb-2 focus:outline-none focus:border-teal-500 ${
-                    errorModal ? "input-error" : ""
+                  className={`peer w-full px-4 py-2 border-2 rounded mb-2 focus:outline-none focus:border-teal-500 transition-colors ${
+                    errorModal ? "border-red-500" : "border-slate-300"
                   }`}
                   required
                 />
@@ -90,7 +91,7 @@ export default function LoginForm({
                 </label>
               </div>
             )}
-            
+
             <div className="relative mb-10">
               <input
                 type="email"
@@ -100,8 +101,8 @@ export default function LoginForm({
                 onChange={handleFormChange}
                 value={formData.email}
                 placeholder=" "
-                className={`peer w-full px-4 py-2 border-2 rounded mb-2 focus:outline-none focus:border-teal-500 ${
-                  errorModal ? "input-error" : ""
+                className={`peer w-full px-4 py-2 border-2 rounded mb-2 focus:outline-none focus:border-teal-500 transition-colors ${
+                  errorModal ? "border-red-500" : "border-slate-300"
                 }`}
                 required
               />
@@ -114,7 +115,7 @@ export default function LoginForm({
                 Email
               </label>
             </div>
-            
+
             <Password
               errorModal={errorModal}
               title={title}
@@ -126,34 +127,47 @@ export default function LoginForm({
             <div className="w-full">
               <button
                 type="submit"
-                className="w-full bg-teal-500 text-white py-3 rounded-lg text-center my-4 hover:bg-teal-600 transition-colors font-semibold"
+                className="w-full bg-teal-500 text-white py-3 rounded-lg text-center my-4 hover:bg-teal-600 transition-colors font-semibold shadow-md hover:shadow-lg"
               >
                 {title === "Login" ? "Log in" : "Sign Up"}
               </button>
             </div>
           </form>
-          
+
           <div className="mt-3">
             {title === "Login" ? (
               <p className="text-center">
-                To create an account <Link to="/signup" className="text-teal-500 hover:text-teal-600 no-underline">click here</Link>
+                To create an account{" "}
+                <Link
+                  to="/signup"
+                  className="text-teal-500 hover:text-teal-600 no-underline font-semibold"
+                >
+                  click here
+                </Link>
               </p>
             ) : (
               <p className="text-center">
-                Already a user? <Link to="/login" className="text-teal-500 hover:text-teal-600 no-underline">login here</Link>
+                Already a user?{" "}
+                <Link
+                  to="/login"
+                  className="text-teal-500 hover:text-teal-600 no-underline font-semibold"
+                >
+                  login here
+                </Link>
               </p>
             )}
           </div>
         </div>
       </div>
-      
+
       {errorModal && (
         <Modal
           modalMessage={"Your email or password is incorrect!"}
           buttonConfig={[
             {
               label: "Try Again",
-              className: "px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600",
+              className:
+                "px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 font-semibold",
               onClick: () => setErrorModal(false),
             },
           ]}

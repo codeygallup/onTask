@@ -30,7 +30,6 @@ function ProjectUpdate() {
 
   return (
     <>
-      {/* <HomeButton /> */}
       <ProjectForm
         title="Update Project"
         handleSub={updateProject}

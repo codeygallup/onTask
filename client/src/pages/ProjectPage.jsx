@@ -68,7 +68,7 @@ function ProjectPage() {
           projectId: id,
         }}
       >
-        <div className="border-2 border-slate-300 rounded-lg p-4 m-10 bg-slate-50 h-[calc(100vh-10rem)] flex flex-col">
+        <div className="border-0 md:border-2 md:border-slate-300 rounded-lg p-2 md:p-4 m-2 md:m-10 bg-white md:bg-slate-50 h-[calc(100vh-8rem)] md:h-[calc(100vh-10rem)] flex flex-col shadow-lg md:shadow-none">
           <div className="flex flex-col gap-4 flex-1 overflow-hidden">
             <CardHeader project={project} removeProject={handleDeleteProject} />
 
@@ -80,7 +80,7 @@ function ProjectPage() {
                 id="task-filter"
                 value={selectedOption}
                 onChange={handleSelect}
-                className="bg-slate-50 border-2 border-slate-300 rounded-md py-1 px-2"
+                className="bg-white md:bg-slate-50 border-2 border-slate-300 rounded-md py-1 px-2 focus:outline-none focus:border-teal-500 shadow-sm md:shadow-none"
               >
                 <option value="allTasks">All Tasks</option>
                 <option value="completedTasks">Completed Tasks</option>
@@ -91,6 +91,11 @@ function ProjectPage() {
                 <button
                   disabled={selectedTasks.length === 0}
                   onClick={() => setDeleteModal(true)}
+                  aria-label={
+                    selectedTasks.length > 0
+                      ? "Delete selected tasks"
+                      : "No tasks selected"
+                  }
                   className={`transition-colors px-2 py-1 rounded-md border-2 ${
                     selectedTasks.length > 0
                       ? "text-red-500 border-red-300 hover:bg-red-50 hover:border-red-400"
@@ -103,7 +108,7 @@ function ProjectPage() {
             </div>
 
             <div className="flex-1 flex flex-col overflow-hidden">
-              <div className="flex-1 overflow-y-auto mb-4 custom-scrollbar pr-4">
+              <div className="flex-1 overflow-y-auto mb-4 custom-scrollbar pe-6">
                 {filteredTasks.map((task) => (
                   <TaskItem key={task._id} task={task} />
                 ))}
@@ -123,13 +128,13 @@ function ProjectPage() {
               {
                 label: "Cancel",
                 className:
-                  "px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600",
+                  "px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-slate-600 font-semibold",
                 onClick: () => setDeleteModal(false),
               },
               {
                 label: "Delete",
                 className:
-                  "px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600",
+                  "px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 font-semibold",
                 onClick: () => {
                   handleDeleteSelectedTasks();
                   setDeleteModal(false);

@@ -23,7 +23,7 @@ export default function ProjectForm({ title, handleSub, project, setProject }) {
 
   return (
     <>
-      <div className="flex justify-center items-center md:min-h-0 md:h-[calc(100vh-10rem)] bg-slate-50 md:mt-10 md:w-1/2 md:mx-auto md:p-10 border-2 border-slate-300 rounded-lg px-4 mx-10 my-40">
+      <div className="flex justify-center items-center md:min-h-0 md:h-[calc(100vh-10rem)] bg-slate-50 md:mt-10 md:w-1/2 md:mx-auto md:p-10 shadow md:border-2 border-slate-300 rounded-lg px-4 mx-10 my-40">
         <div className="flex flex-col w-full h-full">
           <form
             className="text-center flex flex-col h-full justify-between py-4"
