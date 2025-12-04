@@ -15,7 +15,7 @@ export function useProject() {
         console.error(err);
       }
     },
-    [removeProject]
+    [removeProject],
   );
 
   return {

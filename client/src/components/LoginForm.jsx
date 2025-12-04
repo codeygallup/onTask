@@ -61,10 +61,10 @@ export default function LoginForm({
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-[calc(100vh-10rem)] mx-4 md:my-20 md:min-h-0">
-        <div className="w-full max-w-[750px] bg-white rounded-lg shadow-xl border-0 md:border-2 md:border-slate-300 px-6 md:px-12 py-8">
+      <div className="mx-4 flex min-h-[calc(100vh-10rem)] items-center justify-center md:my-20 md:min-h-0">
+        <div className="w-full max-w-[750px] rounded-lg border-0 bg-white px-6 py-8 shadow-xl md:border-2 md:border-slate-300 md:px-12">
           <form className="mx-2 md:mx-5" onSubmit={handleSubmit}>
-            <h3 className="text-center text-3xl mb-8 font-bold">{title}</h3>
+            <h3 className="mb-8 text-center text-3xl font-bold">{title}</h3>
 
             {title === "Sign Up" && (
               <div className="relative mb-10">
@@ -76,14 +76,14 @@ export default function LoginForm({
                   onChange={handleFormChange}
                   value={formData.username}
                   placeholder=" "
-                  className={`peer w-full px-4 py-2 border-2 rounded mb-2 focus:outline-none focus:border-teal-500 transition-colors ${
+                  className={`peer mb-2 w-full rounded border-2 px-4 py-2 transition-colors focus:border-teal-500 focus:outline-none ${
                     errorModal ? "border-red-500" : "border-slate-300"
                   }`}
                   required
                 />
                 <label
                   htmlFor="username"
-                  className={`absolute top-2 left-4 text-gray-500 transition-all duration-300 ease-in-out pointer-events-none peer-focus:-top-8 peer-focus:text-base peer-focus:text-teal-500 peer-[:not(:placeholder-shown)]:-top-8 peer-[:not(:placeholder-shown)]:text-base peer-[:not(:placeholder-shown)]:text-teal-500 ${
+                  className={`pointer-events-none absolute top-2 left-4 text-gray-500 transition-all duration-300 ease-in-out peer-focus:-top-8 peer-focus:text-base peer-focus:text-teal-500 peer-[:not(:placeholder-shown)]:-top-8 peer-[:not(:placeholder-shown)]:text-base peer-[:not(:placeholder-shown)]:text-teal-500 ${
                     errorModal ? "text-red-500" : ""
                   }`}
                 >
@@ -101,14 +101,14 @@ export default function LoginForm({
                 onChange={handleFormChange}
                 value={formData.email}
                 placeholder=" "
-                className={`peer w-full px-4 py-2 border-2 rounded mb-2 focus:outline-none focus:border-teal-500 transition-colors ${
+                className={`peer mb-2 w-full rounded border-2 px-4 py-2 transition-colors focus:border-teal-500 focus:outline-none ${
                   errorModal ? "border-red-500" : "border-slate-300"
                 }`}
                 required
               />
               <label
                 htmlFor="email"
-                className={`absolute top-2 left-4 text-gray-500 transition-all duration-300 ease-in-out pointer-events-none peer-focus:-top-8 peer-focus:text-base peer-focus:text-teal-500 peer-[:not(:placeholder-shown)]:-top-8 peer-[:not(:placeholder-shown)]:text-base peer-[:not(:placeholder-shown)]:text-teal-500 ${
+                className={`pointer-events-none absolute top-2 left-4 text-gray-500 transition-all duration-300 ease-in-out peer-focus:-top-8 peer-focus:text-base peer-focus:text-teal-500 peer-[:not(:placeholder-shown)]:-top-8 peer-[:not(:placeholder-shown)]:text-base peer-[:not(:placeholder-shown)]:text-teal-500 ${
                   errorModal ? "text-red-500" : ""
                 }`}
               >
@@ -127,7 +127,7 @@ export default function LoginForm({
             <div className="w-full">
               <button
                 type="submit"
-                className="w-full bg-teal-500 text-white py-3 rounded-lg text-center my-4 hover:bg-teal-600 transition-colors font-semibold shadow-md hover:shadow-lg"
+                className="my-4 w-full rounded-lg bg-teal-500 py-3 text-center font-semibold text-white shadow-md transition-colors hover:bg-teal-600 hover:shadow-lg"
               >
                 {title === "Login" ? "Log in" : "Sign Up"}
               </button>
@@ -140,7 +140,7 @@ export default function LoginForm({
                 To create an account{" "}
                 <Link
                   to="/signup"
-                  className="text-teal-500 hover:text-teal-600 no-underline font-semibold"
+                  className="font-semibold text-teal-500 no-underline hover:text-teal-600"
                 >
                   click here
                 </Link>
@@ -150,7 +150,7 @@ export default function LoginForm({
                 Already a user?{" "}
                 <Link
                   to="/login"
-                  className="text-teal-500 hover:text-teal-600 no-underline font-semibold"
+                  className="font-semibold text-teal-500 no-underline hover:text-teal-600"
                 >
                   login here
                 </Link>

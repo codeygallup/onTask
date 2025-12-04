@@ -19,14 +19,14 @@ const Password = ({
   return (
     <div className="relative">
       <div className="flex items-center gap-2">
-        <div className="flex-1 relative">
+        <div className="relative flex-1">
           <input
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
             ref={passwordRef}
             placeholder=" "
-            className={`peer w-full px-4 py-2 border-2 rounded mb-2 focus:outline-none focus:border-teal-500 ${
+            className={`peer mb-2 w-full rounded border-2 px-4 py-2 focus:border-teal-500 focus:outline-none ${
               errorModal ? "input-error" : ""
             }`}
             required
@@ -35,7 +35,7 @@ const Password = ({
           />
           <label
             htmlFor="password"
-            className={`absolute top-2 left-4 text-gray-500 transition-all duration-300 ease-in-out pointer-events-none peer-focus:-top-8 peer-focus:text-base peer-focus:text-teal-500 peer-[:not(:placeholder-shown)]:-top-8 peer-[:not(:placeholder-shown)]:text-base peer-[:not(:placeholder-shown)]:text-teal-500 ${
+            className={`pointer-events-none absolute top-2 left-4 text-gray-500 transition-all duration-300 ease-in-out peer-focus:-top-8 peer-focus:text-base peer-focus:text-teal-500 peer-[:not(:placeholder-shown)]:-top-8 peer-[:not(:placeholder-shown)]:text-base peer-[:not(:placeholder-shown)]:text-teal-500 ${
               errorModal ? "text-red-500" : ""
             }`}
           >
@@ -44,7 +44,7 @@ const Password = ({
         </div>
         <button
           type="button"
-          className="pb-3 px-3 hover:text-teal-500 transition-colors"
+          className="px-3 pb-3 transition-colors hover:text-teal-500"
           onClick={handleShowPassword}
         >
           {showPassword ? (
@@ -59,7 +59,7 @@ const Password = ({
           <p className="mb-0 text-right">
             <Link
               to="/recover"
-              className="text-teal-500 hover:text-teal-600 no-underline"
+              className="text-teal-500 no-underline hover:text-teal-600"
             >
               Forgot password?
             </Link>

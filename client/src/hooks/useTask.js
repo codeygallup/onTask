@@ -52,7 +52,7 @@ export function useTask(projectId) {
         console.error(err);
       }
     },
-    [addTask, refetch, projectId]
+    [addTask, refetch, projectId],
   );
 
   return {

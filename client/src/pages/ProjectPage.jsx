@@ -49,7 +49,7 @@ function ProjectPage() {
     (e) => {
       setSelectedOption(e.target.value);
     },
-    [setSelectedOption]
+    [setSelectedOption],
   );
 
   return (
@@ -68,11 +68,11 @@ function ProjectPage() {
           projectId: id,
         }}
       >
-        <div className="border-0 md:border-2 md:border-slate-300 rounded-lg p-2 md:p-4 m-2 md:m-10 bg-white md:bg-slate-50 h-[calc(100vh-8rem)] md:h-[calc(100vh-10rem)] flex flex-col shadow-lg md:shadow-none">
-          <div className="flex flex-col gap-4 flex-1 overflow-hidden">
+        <div className="m-2 flex h-[calc(100vh-8rem)] flex-col rounded-lg border-0 bg-white p-2 shadow-lg md:m-10 md:h-[calc(100vh-10rem)] md:border-2 md:border-slate-300 md:bg-slate-50 md:p-4 md:shadow-none">
+          <div className="flex flex-1 flex-col gap-4 overflow-hidden">
             <CardHeader project={project} removeProject={handleDeleteProject} />
 
-            <div className="flex justify-between items-center mb-2">
+            <div className="mb-2 flex items-center justify-between">
               <label htmlFor="task-filter" className="sr-only">
                 Filter tasks
               </label>
@@ -80,7 +80,7 @@ function ProjectPage() {
                 id="task-filter"
                 value={selectedOption}
                 onChange={handleSelect}
-                className="bg-white md:bg-slate-50 border-2 border-slate-300 rounded-md py-1 px-2 focus:outline-none focus:border-teal-500 shadow-sm md:shadow-none"
+                className="rounded-md border-2 border-slate-300 bg-white px-2 py-1 shadow-sm focus:border-teal-500 focus:outline-none md:bg-slate-50 md:shadow-none"
               >
                 <option value="allTasks">All Tasks</option>
                 <option value="completedTasks">Completed Tasks</option>
@@ -96,10 +96,10 @@ function ProjectPage() {
                       ? "Delete selected tasks"
                       : "No tasks selected"
                   }
-                  className={`transition-colors px-2 py-1 rounded-md border-2 ${
+                  className={`rounded-md border-2 px-2 py-1 transition-colors ${
                     selectedTasks.length > 0
-                      ? "text-red-500 border-red-300 hover:bg-red-50 hover:border-red-400"
-                      : "text-slate-400 border-slate-200 cursor-not-allowed"
+                      ? "border-red-300 text-red-500 hover:border-red-400 hover:bg-red-50"
+                      : "cursor-not-allowed border-slate-200 text-slate-400"
                   }`}
                 >
                   <FontAwesomeIcon icon={faTrash} />
@@ -107,8 +107,8 @@ function ProjectPage() {
               )}
             </div>
 
-            <div className="flex-1 flex flex-col overflow-hidden">
-              <div className="flex-1 overflow-y-auto mb-4 custom-scrollbar pe-6">
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <div className="custom-scrollbar mb-4 flex-1 overflow-y-auto pe-6">
                 {filteredTasks.map((task) => (
                   <TaskItem key={task._id} task={task} />
                 ))}

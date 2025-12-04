@@ -37,7 +37,7 @@ export default function TaskInput() {
   return (
     <>
       <form onSubmit={handleTask}>
-        <div className="flex justify-center items-center md:mt-10 md:mb-4">
+        <div className="flex items-center justify-center md:mt-10 md:mb-4">
           <label htmlFor="task-input" className="sr-only">
             Task description
           </label>
@@ -49,11 +49,11 @@ export default function TaskInput() {
             onChange={handleFormChange}
             value={task.text}
             type="text"
-            className="border-2 border-slate-300 rounded-md w-2/3 py-1 px-2 md:p-2 bg-slate-100 mr-2.5 focus:outline-teal-400"
+            className="mr-2.5 w-2/3 rounded-md border-2 border-slate-300 bg-slate-100 px-2 py-1 focus:outline-teal-400 md:p-2"
             spellCheck="true"
           />
           <button
-            className="border-2 border-teal-500 rounded-md py-1 px-2 md:py-2 md:px-4 bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors"
+            className="rounded-md border-2 border-teal-500 bg-teal-500 px-2 py-1 font-semibold text-white transition-colors hover:bg-teal-600 md:px-4 md:py-2"
             type="submit"
           >
             Add Task

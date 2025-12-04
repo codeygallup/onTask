@@ -31,7 +31,7 @@ export default function CardHeader({ project, removeProject }) {
         <div className="flex justify-between">
           <Link to={`/project/${project._id}/update`}>
             <button
-              className="border-2 border-slate-300 rounded-md py-1 px-2 bg-teal-500 hover:bg-teal-600 text-white transition-colors"
+              className="rounded-md border-2 border-slate-300 bg-teal-500 px-2 py-1 text-white transition-colors hover:bg-teal-600"
               aria-label="Edit project"
             >
               <FontAwesomeIcon icon={faPenToSquare} />
@@ -39,7 +39,7 @@ export default function CardHeader({ project, removeProject }) {
           </Link>
           <h1 className="text-2xl">{project.title}</h1>
           <button
-            className="border-2 border-slate-300 rounded-md py-1 px-2 bg-red-500"
+            className="rounded-md border-2 border-slate-300 bg-red-500 px-2 py-1"
             aria-label="Delete project"
             onClick={() => setDeleteModal(true)}
           >

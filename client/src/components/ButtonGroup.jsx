@@ -20,7 +20,7 @@ export default function ButtonGroup({ task }) {
     <>
       {!task.complete ? (
         <button
-          className="border-2 border-slate-300 rounded-md py-1 px-1.5 md:py-1 md:px-2 bg-teal-500 hover:bg-teal-600 transition-colors"
+          className="rounded-md border-2 border-slate-300 bg-teal-500 px-1.5 py-1 transition-colors hover:bg-teal-600 md:px-2 md:py-1"
           onClick={(e) => changeStatus(e, task._id)}
           title="Mark as complete"
           aria-label="Mark task as complete"
@@ -29,7 +29,7 @@ export default function ButtonGroup({ task }) {
         </button>
       ) : (
         <button
-          className="border-2 border-slate-300 rounded-md p-1.5 md:py-1 md:px-2 bg-slate-400 hover:bg-slate-500 transition-colors"
+          className="rounded-md border-2 border-slate-300 bg-slate-400 p-1.5 transition-colors hover:bg-slate-500 md:px-2 md:py-1"
           onClick={(e) => changeStatus(e, task._id)}
           title="Mark as incomplete"
           aria-label="Mark task as incomplete"

@@ -14,7 +14,7 @@ const Login = () => {
     {
       variables: { id: userIdParam },
       skip: !userIdParam,
-    }
+    },
   );
 
   const [formData, setFormData] = useState({

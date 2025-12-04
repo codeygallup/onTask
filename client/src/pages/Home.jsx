@@ -10,7 +10,6 @@ import { useMemo } from "react";
 const Home = () => {
   const { loading, data: { userProjects = [] } = {} } = useQuery(USER_PROJECTS);
 
-
   const totalTasks = useMemo(() => {
     return userProjects.reduce((acc, project) => acc + project.tasks.length, 0);
   }, [userProjects]);
@@ -18,7 +17,7 @@ const Home = () => {
   const completedTasks = useMemo(() => {
     return userProjects.reduce(
       (acc, project) => acc + project.tasks.filter((t) => t.complete).length,
-      0
+      0,
     );
   }, [userProjects]);
 
@@ -40,7 +39,7 @@ const Home = () => {
   if (loading)
     return (
       <div
-        className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center"
         role="status"
         aria-live="polite"
         aria-label="Loading projects"
@@ -52,23 +51,23 @@ const Home = () => {
   return (
     <>
       {!Auth.loggedIn() ? (
-        <div className="flex h-full py-20 md:h-[calc(100vh-20rem)] w-full max-w-md mx-auto flex-col justify-center items-center mt-20">
-          <div className="w-4/5 md:w-full border-0 md:border-2 md:border-slate-300 rounded-lg shadow-xl md:shadow-lg bg-white px-6 py-10 md:p-8">
-            <h2 className="text-3xl font-bold mb-2 text-center">
+        <div className="mx-auto mt-20 flex h-full w-full max-w-md flex-col items-center justify-center py-20 md:h-[calc(100vh-20rem)]">
+          <div className="w-4/5 rounded-lg border-0 bg-white px-6 py-10 shadow-xl md:w-full md:border-2 md:border-slate-300 md:p-8 md:shadow-lg">
+            <h2 className="mb-2 text-center text-3xl font-bold">
               Welcome to OnTask!
             </h2>
-            <p className="text-slate-600 text-center mb-8">
+            <p className="mb-8 text-center text-slate-600">
               Manage your projects efficiently
             </p>
 
             <div className="flex flex-col gap-4">
               <Link to="/login">
-                <button className="w-full bg-teal-500 text-white py-3 px-4 rounded-lg text-xl font-semibold hover:bg-teal-600 transition-colors shadow-md hover:shadow-lg">
+                <button className="w-full rounded-lg bg-teal-500 px-4 py-3 text-xl font-semibold text-white shadow-md transition-colors hover:bg-teal-600 hover:shadow-lg">
                   Login
                 </button>
               </Link>
               <Link to="/signup">
-                <button className="w-full border-2 border-teal-500 text-teal-500 py-3 px-4 rounded-lg text-xl font-semibold hover:bg-teal-50 transition-colors">
+                <button className="w-full rounded-lg border-2 border-teal-500 px-4 py-3 text-xl font-semibold text-teal-500 transition-colors hover:bg-teal-50">
                   Sign Up
                 </button>
               </Link>
@@ -76,30 +75,30 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row md:h-[calc(100vh-5rem)] md:overflow-hidden overflow-auto">
-          <main className="flex-1 p-4 flex flex-col gap-4">
+        <div className="flex flex-col overflow-auto md:h-[calc(100vh-5rem)] md:flex-row md:overflow-hidden">
+          <main className="flex flex-1 flex-col gap-4 p-4">
             {totalTasks === 0 ? (
-              <div className="text-center text-gray-500 mt-6 border-0 md:border-2 md:border-slate-300 bg-white md:bg-slate-100 rounded-lg p-4 flex flex-col gap-4 shadow-md md:shadow-none">
+              <div className="mt-6 flex flex-col gap-4 rounded-lg border-0 bg-white p-4 text-center text-gray-500 shadow-md md:border-2 md:border-slate-300 md:bg-slate-100 md:shadow-none">
                 <p className="text-xl">No tasks yet!</p>
-                <p className="text-sm mt-2">
+                <p className="mt-2 text-sm">
                   Create a project and add your first task
                 </p>
               </div>
             ) : (
-              <div className="flex gap-4 justify-evenly">
-                <div className="bg-white md:bg-slate-100 w-1/3 h-24 flex flex-col justify-center items-center border-0 md:border-2 md:border-slate-300 rounded-lg shadow-md md:shadow-none">
-                  <h3 className="text-sm md:text-base font-semibold">
+              <div className="flex justify-evenly gap-4">
+                <div className="flex h-24 w-1/3 flex-col items-center justify-center rounded-lg border-0 bg-white shadow-md md:border-2 md:border-slate-300 md:bg-slate-100 md:shadow-none">
+                  <h3 className="text-sm font-semibold md:text-base">
                     Total Tasks
                   </h3>
-                  <h4 className="text-lg md:text-xl font-bold">
+                  <h4 className="text-lg font-bold md:text-xl">
                     {completedTasks} / {totalTasks}
                   </h4>
                 </div>
-                <div className="bg-white md:bg-slate-100 w-1/3 h-24 flex flex-col justify-center items-center border-0 md:border-2 md:border-slate-300 rounded-lg shadow-md md:shadow-none">
-                  <h3 className="text-sm md:text-base font-semibold">
+                <div className="flex h-24 w-1/3 flex-col items-center justify-center rounded-lg border-0 bg-white shadow-md md:border-2 md:border-slate-300 md:bg-slate-100 md:shadow-none">
+                  <h3 className="text-sm font-semibold md:text-base">
                     Progress
                   </h3>
-                  <h4 className="text-lg md:text-xl font-bold">
+                  <h4 className="text-lg font-bold md:text-xl">
                     {totalTasks > 0
                       ? Math.round((completedTasks / totalTasks) * 100)
                       : 0}
@@ -109,11 +108,11 @@ const Home = () => {
               </div>
             )}
 
-            <div className="flex-1 border-0 md:border-2 bg-white md:bg-slate-50 md:border-slate-300 rounded-lg p-4 flex flex-col shadow-lg md:shadow-none">
-              <h2 className="text-center text-2xl mb-4 font-bold">
+            <div className="flex flex-1 flex-col rounded-lg border-0 bg-white p-4 shadow-lg md:border-2 md:border-slate-300 md:bg-slate-50 md:shadow-none">
+              <h2 className="mb-4 text-center text-2xl font-bold">
                 Recent Projects
               </h2>
-              <div className="flex-1 flex flex-col gap-4 md:gap-8 justify-center">
+              <div className="flex flex-1 flex-col justify-center gap-4 md:gap-8">
                 {recentProjects.length > 0 ? (
                   recentProjects.map((project) => (
                     <Link
@@ -123,18 +122,18 @@ const Home = () => {
                         project.tasks?.length || 0
                       } tasks`}
                     >
-                      <div className="md:h-28 border-0 md:border-2 bg-white md:bg-slate-100 md:border-slate-300 rounded-lg p-4 flex gap-4 shadow-md md:shadow-none hover:bg-slate-200 hover:border-teal-400 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
+                      <div className="flex gap-4 rounded-lg border-0 bg-white p-4 shadow-md transition-all duration-200 hover:-translate-y-1 hover:border-teal-400 hover:bg-slate-200 hover:shadow-lg md:h-28 md:border-2 md:border-slate-300 md:bg-slate-100 md:shadow-none">
                         <div className="flex-1">
-                          <h4 className="font-semibold text-lg">
+                          <h4 className="text-lg font-semibold">
                             {project.title}
                           </h4>
                           <p className="text-slate-600">
                             {project.tasks?.length || 0} Tasks
                           </p>
                         </div>
-                        <div className="w-32 flex flex-col justify-center">
+                        <div className="flex w-32 flex-col justify-center">
                           <div
-                            className="w-full bg-gray-300 rounded-full h-4"
+                            className="h-4 w-full rounded-full bg-gray-300"
                             role="progressbar"
                             aria-valuenow={
                               project.tasks?.length
@@ -142,7 +141,7 @@ const Home = () => {
                                     (project.tasks.filter((t) => t.complete)
                                       .length /
                                       project.tasks.length) *
-                                      100
+                                      100,
                                   )
                                 : 0
                             }
@@ -151,7 +150,7 @@ const Home = () => {
                             aria-label="Project completion progress"
                           >
                             <div
-                              className="bg-teal-500 h-4 rounded-full transition-all duration-300"
+                              className="h-4 rounded-full bg-teal-500 transition-all duration-300"
                               style={{
                                 width: `${
                                   project.tasks?.length
@@ -164,13 +163,13 @@ const Home = () => {
                               }}
                             ></div>
                           </div>
-                          <p className="text-center text-sm text-slate-600 mt-1">
+                          <p className="mt-1 text-center text-sm text-slate-600">
                             {project.tasks?.length
                               ? Math.round(
                                   (project.tasks.filter((t) => t.complete)
                                     .length /
                                     project.tasks.length) *
-                                    100
+                                    100,
                                 )
                               : 0}
                             % Complete
@@ -182,7 +181,7 @@ const Home = () => {
                 ) : (
                   <div className="text-center text-gray-500">
                     <p className="text-xl">No recent projects</p>
-                    <p className="text-sm mt-2">
+                    <p className="mt-2 text-sm">
                       Start by creating a new project!
                     </p>
                   </div>
@@ -191,37 +190,37 @@ const Home = () => {
             </div>
           </main>
 
-          <aside className="bg-slate-100 p-4 md:w-1/3 border-l-0 md:border-l-2 md:border-slate-300 flex flex-col border-t-2 border-t-slate-300 md:border-t-0">
-            <h2 className="text-center text-2xl border-b-2 border-b-slate-300 font-bold pb-2">
+          <aside className="flex flex-col border-t-2 border-l-0 border-t-slate-300 bg-slate-100 p-4 md:w-1/3 md:border-t-0 md:border-l-2 md:border-slate-300">
+            <h2 className="border-b-2 border-b-slate-300 pb-2 text-center text-2xl font-bold">
               All Projects
             </h2>
-           <div className="flex flex-col gap-2 my-4">
-  {userProjects.map((project) => (
-    <Link
-      to={`/project/${project._id}`}
-      key={project._id}
-      aria-label={`Open project: ${project.title}`}
-    >
-      <div className="border-0 md:border-2 md:border-slate-300 rounded-md py-2 px-3 bg-white md:bg-transparent shadow-sm md:shadow-none hover:bg-slate-200 hover:border-teal-400 transition-all duration-200 flex justify-between items-center">
-        <span className="font-medium">{project.title}</span>
-        <span className="text-sm text-slate-500">
-          {project.tasks?.length || 0} tasks
-        </span>
-      </div>
-    </Link>
-  ))}
-</div>
+            <div className="my-4 flex flex-col gap-2">
+              {userProjects.map((project) => (
+                <Link
+                  to={`/project/${project._id}`}
+                  key={project._id}
+                  aria-label={`Open project: ${project.title}`}
+                >
+                  <div className="flex items-center justify-between rounded-md border-0 bg-white px-3 py-2 shadow-sm transition-all duration-200 hover:border-teal-400 hover:bg-slate-200 md:border-2 md:border-slate-300 md:bg-transparent md:shadow-none">
+                    <span className="font-medium">{project.title}</span>
+                    <span className="text-sm text-slate-500">
+                      {project.tasks?.length || 0} tasks
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
             <Link to="/project" className="mt-auto hidden md:block">
-              <button className="border-2 border-teal-500 rounded-md py-2.5 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors">
+              <button className="w-full rounded-md border-2 border-teal-500 bg-teal-500 py-2.5 font-semibold text-white transition-colors hover:bg-teal-600">
                 Add Project
               </button>
             </Link>
           </aside>
         </div>
       )}
-      <Link to="/project" className="md:hidden fixed bottom-6 right-6 z-50">
+      <Link to="/project" className="fixed right-6 bottom-6 z-50 md:hidden">
         <button
-          className="bg-teal-500 hover:bg-teal-600 text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center transition-colors"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-500 text-white shadow-lg transition-colors hover:bg-teal-600"
           aria-label="Add new project"
         >
           <FontAwesomeIcon icon={faPlus} className="text-4xl" />
