@@ -5,30 +5,37 @@ import Auth from "../utils/auth";
 import { ScaleLoader } from "react-spinners";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useMemo } from "react";
 
 const Home = () => {
   const { loading, data: { userProjects = [] } = {} } = useQuery(USER_PROJECTS);
-  const totalTasks = userProjects.reduce(
-    (acc, project) => acc + project.tasks.length,
-    0
-  );
-  const completedTasks = userProjects.reduce(
-    (acc, project) => acc + project.tasks.filter((t) => t.complete).length,
-    0
-  );
 
-  const recentProjects = [...userProjects]
-    .sort((a, b) => {
-      const dateA = !isNaN(a.lastOpenedAt)
-        ? new Date(Number(a.lastOpenedAt))
-        : new Date(a.lastOpenedAt);
-      const dateB = !isNaN(b.lastOpenedAt)
-        ? new Date(Number(b.lastOpenedAt))
-        : new Date(b.lastOpenedAt);
 
-      return dateB - dateA;
-    })
-    .slice(0, 3);
+  const totalTasks = useMemo(() => {
+    return userProjects.reduce((acc, project) => acc + project.tasks.length, 0);
+  }, [userProjects]);
+
+  const completedTasks = useMemo(() => {
+    return userProjects.reduce(
+      (acc, project) => acc + project.tasks.filter((t) => t.complete).length,
+      0
+    );
+  }, [userProjects]);
+
+  const recentProjects = useMemo(() => {
+    return [...userProjects]
+      .sort((a, b) => {
+        const dateA = !isNaN(a.lastOpenedAt)
+          ? new Date(Number(a.lastOpenedAt))
+          : new Date(a.lastOpenedAt);
+        const dateB = !isNaN(b.lastOpenedAt)
+          ? new Date(Number(b.lastOpenedAt))
+          : new Date(b.lastOpenedAt);
+
+        return dateB - dateA;
+      })
+      .slice(0, 3);
+  }, [userProjects]);
 
   if (loading)
     return (
@@ -127,7 +134,7 @@ const Home = () => {
                         </div>
                         <div className="w-32 flex flex-col justify-center">
                           <div
-                            className="w-full bg-gray-200 rounded-full h-4"
+                            className="w-full bg-gray-300 rounded-full h-4"
                             role="progressbar"
                             aria-valuenow={
                               project.tasks?.length
@@ -188,21 +195,22 @@ const Home = () => {
             <h2 className="text-center text-2xl border-b-2 border-b-slate-300 font-bold pb-2">
               All Projects
             </h2>
-            <div className="flex flex-col gap-2 my-4">
-              {userProjects.map((project) => {
-                return (
-                  <Link
-                    to={`/project/${project._id}`}
-                    key={project._id}
-                    aria-label={`Open project: ${project.title}`}
-                  >
-                    <p className="border-0 md:border-2 md:border-slate-300 text-center rounded-md py-2 bg-white md:bg-transparent shadow-sm md:shadow-none hover:bg-slate-200 hover:border-teal-400 transition-all duration-200">
-                      {project.title}
-                    </p>
-                  </Link>
-                );
-              })}
-            </div>
+           <div className="flex flex-col gap-2 my-4">
+  {userProjects.map((project) => (
+    <Link
+      to={`/project/${project._id}`}
+      key={project._id}
+      aria-label={`Open project: ${project.title}`}
+    >
+      <div className="border-0 md:border-2 md:border-slate-300 rounded-md py-2 px-3 bg-white md:bg-transparent shadow-sm md:shadow-none hover:bg-slate-200 hover:border-teal-400 transition-all duration-200 flex justify-between items-center">
+        <span className="font-medium">{project.title}</span>
+        <span className="text-sm text-slate-500">
+          {project.tasks?.length || 0} tasks
+        </span>
+      </div>
+    </Link>
+  ))}
+</div>
             <Link to="/project" className="mt-auto hidden md:block">
               <button className="border-2 border-teal-500 rounded-md py-2.5 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold transition-colors">
                 Add Project
