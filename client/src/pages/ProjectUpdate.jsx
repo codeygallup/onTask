@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { UPDATE_PROJECT } from "../utils/mutations";
-import { HomeButton, ProjectForm } from "../components";
+import { ProjectForm } from "../components";
 import { useTask } from "../hooks/useTask";
 
 function ProjectUpdate() {
