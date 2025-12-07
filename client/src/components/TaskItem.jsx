@@ -23,7 +23,7 @@ export default function TaskItem({ task }) {
         <button
           onClick={handleTaskSelect}
           aria-label={isSelected ? "Deselect task" : "Select task for deletion"}
-          className={`absolute top-2 right-1 z-10 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all duration-200 ${
+          className={`absolute top-1.5 right-1 md:-right-1 z-10 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all duration-200 ${
             isSelected
               ? "border-red-500 bg-red-500"
               : "border-slate-300 bg-transparent hover:border-slate-400"

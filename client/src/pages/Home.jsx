@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { USER_PROJECTS } from "../utils/queries";
 import Auth from "../utils/auth";
-import { ScaleLoader } from "react-spinners";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMemo } from "react";
@@ -36,15 +35,10 @@ const Home = () => {
       .slice(0, 3);
   }, [userProjects]);
 
-  if (loading)
+  if (!loading)
     return (
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center"
-        role="status"
-        aria-live="polite"
-        aria-label="Loading projects"
-      >
-        <ScaleLoader height={100} width={15} color="#1b89bc" />
+      <div className="flex items-center justify-center min-h-[calc(100vh-5rem)]">
+        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
 

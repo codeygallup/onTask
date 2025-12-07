@@ -98,7 +98,7 @@ function ProjectPage() {
                   }
                   className={`rounded-md border-2 px-2 py-1 transition-colors ${
                     selectedTasks.length > 0
-                      ? "border-red-300 text-red-500 hover:border-red-400 hover:bg-red-50"
+                      ? "border-red-300 text-red-500 hover:border-red-400 hover:bg-red-50 animate-bounce"
                       : "cursor-not-allowed border-slate-200 text-slate-400"
                   }`}
                 >
