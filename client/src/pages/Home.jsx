@@ -38,7 +38,7 @@ const Home = () => {
   if (loading)
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-5rem)]">
-        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-4xl animate-spin"></div>
       </div>
     );
 
@@ -127,7 +127,7 @@ const Home = () => {
                         </div>
                         <div className="flex w-32 flex-col justify-center">
                           <div
-                            className="h-4 w-full rounded-full bg-gray-300"
+                            className="h-4 w-full rounded-xl bg-gray-300"
                             role="progressbar"
                             aria-valuenow={
                               project.tasks?.length
@@ -144,7 +144,7 @@ const Home = () => {
                             aria-label="Project completion progress"
                           >
                             <div
-                              className="h-4 rounded-full bg-teal-500 transition-all duration-300"
+                              className="h-4 rounded-xl bg-teal-500 transition-all duration-300"
                               style={{
                                 width: `${
                                   project.tasks?.length
@@ -214,7 +214,7 @@ const Home = () => {
       )}
       <Link to="/project" className="fixed right-6 bottom-6 z-50 md:hidden">
         <button
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-500 text-white shadow-lg transition-colors hover:bg-teal-600"
+          className="flex h-14 w-14 items-center justify-center rounded-4xl bg-teal-500 text-white shadow-lg transition-colors hover:bg-teal-600"
           aria-label="Add new project"
         >
           <FontAwesomeIcon icon={faPlus} className="text-4xl" />
