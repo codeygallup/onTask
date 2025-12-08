@@ -20,7 +20,7 @@
     "start": "react-scripts start",
     "dev": "concurrently \"npm run start\" \"npm run tw\"",
     "tw": "npx tailwindcss -i ./src/index.css -o ./src/output.css --watch",
-    "build:css": "npx tailwindcss -i ./src/index.css -o ./src/output.css",
+    "build:css": "npx tailwindcss -i ./src/index.css -o ./public/tailwind.css",
     "build": "npm run build:css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
