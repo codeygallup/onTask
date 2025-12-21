@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client/react";
 import { UPDATE_LAST_OPENED } from "../utils/mutations";
 import { useParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTask } from "../hooks/useTask";
 import { useProject } from "../hooks/useProject";
 import { TaskContext } from "../components/TaskContext";
@@ -15,6 +15,7 @@ import TaskInput from "../components/TaskInput";
 const ProjectPage = () => {
   let { id } = useParams<{ id: string }>();
   const [updateLastOpened] = useMutation(UPDATE_LAST_OPENED);
+  const taskRowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -38,6 +39,15 @@ const ProjectPage = () => {
     updateComplete,
     refetch,
   } = useTask(id);
+
+  useEffect(() => {
+    if (taskRowRef.current) {
+      taskRowRef.current.scrollTo({
+        top: taskRowRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [filteredTasks]);
 
   const { handleDeleteProject } = useProject();
 
@@ -111,7 +121,10 @@ const ProjectPage = () => {
             </div>
 
             <div className="flex flex-1 flex-col overflow-hidden">
-              <div className="custom-scrollbar mb-4 flex-1 overflow-y-auto pe-6">
+              <div
+                className="custom-scrollbar mb-4 flex-1 overflow-y-auto pe-6"
+                ref={taskRowRef}
+              >
                 {filteredTasks.map((task) => (
                   <TaskItem key={task._id} task={task} />
                 ))}
