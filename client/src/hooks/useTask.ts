@@ -2,34 +2,15 @@ import { useCallback, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { ADD_TASK, REMOVE_TASKS, UPDATE_COMPLETE } from "../utils/mutations";
 import { ONE_PROJECT } from "../utils/queries";
-import type { Project } from "../types";
-
-interface TaskFormData {
-  text: string;
-  complete?: boolean;
-  projectId?: string;
-}
-
-interface AddTaskVariables {
-  text: string;
-  projectId: string;
-}
-
-interface RemoveTasksVariables {
-  taskIds: string[];
-}
-
-interface UpdateCompleteVariables {
-  taskId: string;
-}
-
-interface OneProjectData {
-  oneProject: Project;
-}
-
-interface OneProjectVariables {
-  id: string;
-}
+import type {
+  AddTaskVariables,
+  OneProjectData,
+  OneProjectVariables,
+  Project,
+  RemoveTasksVariables,
+  TaskFormData,
+  UpdateCompleteVariables,
+} from "../types";
 
 export function useTask(projectId: string) {
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);

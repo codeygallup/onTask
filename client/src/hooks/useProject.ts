@@ -1,10 +1,7 @@
 import { useMutation } from "@apollo/client/react";
 import { useCallback } from "react";
 import { REMOVE_PROJECT } from "../utils/mutations";
-
-interface DeleteProjectVariables {
-  projectId: string;
-}
+import type { DeleteProjectVariables } from "../types";
 
 export function useProject() {
   const [removeProject] = useMutation<any, DeleteProjectVariables>(
