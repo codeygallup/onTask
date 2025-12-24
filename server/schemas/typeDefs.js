@@ -35,6 +35,10 @@ const typeDefs = gql`
     user: User
   }
 
+  type TokenResponse {
+    token: ID
+  }
+
   type RecoveryResponse {
     success: Boolean!
     message: String
@@ -44,6 +48,7 @@ const typeDefs = gql`
   type Mutation {
     loginUser(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
+    refreshToken: TokenResponse
     addProject(userId: ID, title: String!, description: String!): Project
     updateLastOpened(projectId: ID!): Project
     updateProject(projectId: ID, title: String!, description: String!): Project

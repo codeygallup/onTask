@@ -181,6 +181,13 @@ const resolvers = {
         message: "PIN validation successful",
       };
     },
+    refreshToken: async (_, args, context) => {
+      if (context.user) {
+        const newToken = signToken(context.user);
+        return { token: newToken };
+      }
+      throw new AuthenticationError("You need to be logged in");
+    },
   },
 };
 
