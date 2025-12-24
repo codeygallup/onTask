@@ -126,3 +126,11 @@ export const UPDATE_LAST_OPENED = gql`
     }
   }
 `;
+
+export const REFRESH_TOKEN = gql`
+  mutation RefreshToken {
+    refreshToken {
+      token
+    }
+  }
+`;

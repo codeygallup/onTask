@@ -172,3 +172,9 @@ export interface DeleteProjectVariables {
 export interface UserProjectsData {
   userProjects: Project[];
 }
+
+export interface RefreshTokenResponse {
+  refreshToken: {
+    token: string;
+  };
+}
