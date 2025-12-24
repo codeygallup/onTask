@@ -1,24 +1,23 @@
 import { useMutation } from "@apollo/client/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { REFRESH_TOKEN } from "../utils/mutations";
 import Auth from "../utils/auth";
 import Modal from "./Modal";
-import type { RefreshTokenResponse } from "../types";
-
-interface SessionManagerProps {
-  warningTime?: number;
-}
+import type { RefreshTokenResponse, SessionManagerProps } from "../types";
 
 const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [refreshToken] = useMutation<RefreshTokenResponse>(REFRESH_TOKEN);
+  const countDownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
+    null
+  );
 
   useEffect(() => {
     let checkInterval: ReturnType<typeof setInterval>;
-    let countDownInterval: ReturnType<typeof setInterval>;
 
     const checkTokenExpiry = () => {
+      if (showModal) return;
       const token = Auth.getToken();
       if (!token) return;
 
@@ -30,20 +29,36 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
         const currentTime = Date.now();
         const timeUntilExpiry = expiryTime - currentTime;
 
-        if (timeUntilExpiry <= warningTime && timeUntilExpiry > 0) {
+        if (
+          timeUntilExpiry <= warningTime &&
+          timeUntilExpiry > 0 &&
+          !showModal
+        ) {
           setShowModal(true);
           setTimeLeft(Math.floor(timeUntilExpiry / 1000));
 
-          countDownInterval = setInterval(() => {
+          if (countDownIntervalRef.current) {
+            clearInterval(countDownIntervalRef.current);
+          }
+
+          countDownIntervalRef.current = setInterval(() => {
             setTimeLeft((prev) => {
               if (prev <= 1) {
-                clearInterval(countDownInterval);
+                if (countDownIntervalRef.current) {
+                  clearInterval(countDownIntervalRef.current);
+                }
                 Auth.logout();
                 return 0;
               }
               return prev - 1;
             });
           }, 1000);
+        } else if (timeUntilExpiry > warningTime && showModal) {
+          setShowModal(false);
+          if (countDownIntervalRef.current) {
+            clearInterval(countDownIntervalRef.current);
+            countDownIntervalRef.current = null;
+          }
         } else if (timeUntilExpiry <= 0) {
           Auth.logout();
         }
@@ -57,7 +72,9 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
 
     return () => {
       clearInterval(checkInterval);
-      if (countDownInterval) clearInterval(countDownInterval);
+      if (countDownIntervalRef.current) {
+        clearInterval(countDownIntervalRef.current);
+      }
     };
   }, [warningTime]);
 
@@ -67,11 +84,18 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
 
       if (data?.refreshToken?.token) {
         localStorage.setItem("id_token", data.refreshToken.token);
+
+        if (countDownIntervalRef.current) {
+          clearInterval(countDownIntervalRef.current);
+          countDownIntervalRef.current = null;
+        }
+
         setShowModal(false);
+        setTimeLeft(0);
         console.log("Session extended successfully");
       }
-    } catch (error) {
-      console.error("Failed to refresh token:", error);
+    } catch (err) {
+      console.error("Failed to refresh token:", err);
       Auth.logout();
     }
   };
@@ -96,7 +120,8 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
             Session Expiring Soon
           </p>
           <p className="text-slate-700">
-            Hey fucker, you're about to be signed out due to inactivity!
+            Your session is about to expire due to inactivity. Please log out or
+            extend your session to continue.
           </p>
           <div className="text-center">
             <div className="text-4xl font-bold text-red-500">

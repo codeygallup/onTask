@@ -178,3 +178,7 @@ export interface RefreshTokenResponse {
     token: string;
   };
 }
+
+export interface SessionManagerProps {
+  warningTime?: number;
+}
