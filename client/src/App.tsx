@@ -17,6 +17,8 @@ import Reset from "./pages/Reset";
 import Project from "./pages/Project";
 import ProjectPage from "./pages/ProjectPage";
 import ProjectUpdate from "./pages/ProjectUpdate";
+import Auth from "./utils/auth";
+import SessionManager from "./components/SessionManager";
 
 const http = new HttpLink({
   uri:
@@ -53,8 +55,8 @@ const client = new ApolloClient({
 });
 
 const PrivateRoutes = () => {
-  const isAuthenticated = !!localStorage.getItem("id_token");
-  return isAuthenticated ? <Outlet /> : <Navigate to={"/"} />;
+  const isAuthenticated = Auth.loggedIn();
+  return isAuthenticated ? <Outlet /> : <Navigate to={"/"} replace />;
 };
 
 function App() {
@@ -62,6 +64,7 @@ function App() {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Navbar />
+        {Auth.loggedIn() && <SessionManager warningTime={1 * 60 * 1000} />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />

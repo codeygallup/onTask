@@ -83,7 +83,7 @@ export interface ButtonConfig {
 }
 
 export interface ModalProps {
-  modalMessage: string;
+  modalMessage: string | React.ReactNode;
   buttonConfig: ButtonConfig[];
 }
 
