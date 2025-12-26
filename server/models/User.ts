@@ -1,7 +1,21 @@
-const { Schema, model } = require("mongoose");
-const bcrypt = require("bcrypt");
+import { Document, Model, Schema, model } from "mongoose";
+import bcrypt from "bcrypt";
 
-const userSchema = new Schema(
+export interface IUser extends Document {
+  username: string;
+  password: string;
+  email: string;
+  resetPIN?: string;
+  resetPINExpiry?: Date;
+  projects: Schema.Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
+  isCorrectPassword(password: string): Promise<boolean>;
+}
+
+export interface IUserModel extends Model<IUser> {}
+
+const userSchema = new Schema<IUser>(
   {
     username: {
       type: String,
@@ -46,10 +60,12 @@ userSchema.pre("save", async function () {
   }
 });
 
-userSchema.methods.isCorrectPassword = async function (password) {
+userSchema.methods.isCorrectPassword = async function (
+  password: string
+): Promise<boolean> {
   return bcrypt.compare(password, this.password);
 };
 
-const User = model("User", userSchema);
+const User = model<IUser, IUserModel>("User", userSchema);
 
-module.exports = User;
+export default User;
