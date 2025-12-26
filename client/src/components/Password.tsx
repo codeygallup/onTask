@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { PasswordProps } from "../types";
+import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 
 const Password = ({
   title = "",
@@ -10,6 +11,7 @@ const Password = ({
   setPassword,
   errorModal = false,
   passwordRef,
+  showStrengthIndicator = false,
 }: PasswordProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -27,7 +29,7 @@ const Password = ({
             name="password"
             ref={passwordRef}
             placeholder=" "
-            className={`peer mb-2 w-full rounded border-2 px-4 py-2 focus:border-teal-500 focus:outline-none ${
+            className={`peer mb-2 w-full rounded border-2 border-slate-300 px-4 py-2 focus:border-teal-500 focus:outline-none ${
               errorModal ? "input-error" : ""
             }`}
             required
@@ -55,6 +57,11 @@ const Password = ({
           )}
         </button>
       </div>
+
+      {showStrengthIndicator && (
+        <PasswordStrengthIndicator password={password} />
+      )}
+
       {title === "Login" && (
         <div className="w-full">
           <p className="mb-0 text-right">
