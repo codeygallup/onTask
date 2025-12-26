@@ -1,5 +1,7 @@
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
   host: "smtp-mail.outlook.com",
@@ -11,7 +13,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function passwordRecover(to, recoveryPIN) {
+async function passwordRecover(
+  to: string,
+  recoveryPIN: string
+): Promise<{ success: boolean; messageId?: string; error?: string }> {
   // Construct the email body with the reset link
   const emailBody = `Enter the following code to change your password: ${recoveryPIN}. If you did not request a password reset, please ignore this email.`;
 
@@ -28,10 +33,10 @@ async function passwordRecover(to, recoveryPIN) {
 
     console.log("Message sent: %s", info.messageId);
     return { success: true, messageId: info.messageId };
-  } catch (error) {
-    console.error("Failed to send email:", error);
-    return { success: false, error: error.message };
+  } catch (err: any) {
+    console.error("Failed to send email:", err);
+    return { success: false, error: err.message };
   }
 }
 
-module.exports = passwordRecover;
+export default passwordRecover;
