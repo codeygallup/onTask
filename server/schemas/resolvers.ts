@@ -23,6 +23,7 @@ import { ITask } from "../models/Task";
 import {
   emailSchema,
   mongoIdSchema,
+  newUserPasswordSchema,
   passwordSchema,
   pinSchema,
   projectDescriptionSchema,
@@ -97,7 +98,7 @@ const resolvers = {
     addUser: async (_: unknown, { username, email, password }: AddUserArgs) => {
       const validUsername = usernameSchema.parse(username);
       const validEmail = emailSchema.parse(email);
-      const validPassword = passwordSchema.parse(password);
+      const validPassword = newUserPasswordSchema.parse(password);
 
       const user = await User.create({
         username: validUsername,
