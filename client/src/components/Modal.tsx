@@ -14,7 +14,7 @@ const Modal = ({ modalMessage, buttonConfig }: ModalProps) => {
       >
         <div className="w-full max-w-md rounded-lg bg-white shadow-xl">
           <div className="p-6 text-center">
-            <p id="modal-title" className="text-xl">
+            <p id="modal-title" className="text-xl whitespace-pre-line">
               {modalMessage}
             </p>
           </div>

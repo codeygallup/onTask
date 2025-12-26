@@ -139,6 +139,7 @@ export interface PasswordProps {
   setPassword: (password: string) => void;
   errorModal?: boolean;
   passwordRef?: React.RefObject<HTMLInputElement | null>;
+  showStrengthIndicator?: boolean;
 }
 
 export interface ProjectFormProps {
@@ -181,4 +182,13 @@ export interface RefreshTokenResponse {
 
 export interface SessionManagerProps {
   warningTime?: number;
+}
+
+export interface PasswordRequirement {
+  label: string;
+  test: (password: string) => boolean;
+}
+
+export interface PasswordStrengthIndicatorProps {
+  password: string;
 }

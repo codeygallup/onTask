@@ -17,8 +17,8 @@ const LoginForm = ({
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  // const [errorMsg, setErrorMsg] = useState<string>("");
   const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
@@ -57,15 +57,40 @@ const LoginForm = ({
         ? Auth.login(data.loginUser.token)
         : Auth.login(data.addUser.token);
     } catch (err: any) {
-      console.error(err); 
+      console.error(err);
+
+      let errorMsg = "Something went wrong. Please try again.";
+
+      if (err.message && typeof err.message === "string") {
+        try {
+          const parsed = JSON.parse(err.message);
+          if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].message) {
+            errorMsg = parsed.map((e: any) => `\n• ${e.message}`).join("\n");
+          } else {
+            errorMsg = err.message;
+          }
+        } catch {
+          errorMsg = err.message;
+        }
+      } else if (err.graphQLErrors && err.graphQLErrors.length > 0) {
+        errorMsg = err.graphQLErrors[0].message;
+      } else if (err.networkError) {
+        errorMsg = "Network error. Please check your connection.";
+      }
+
+      setErrorMsg(errorMsg);
       setErrorModalOpen(true);
     }
   };
 
   return (
     <>
-      <div className="mx-4 flex min-h-[calc(100vh-10rem)] items-center justify-center md:my-20 md:min-h-0">
-        <div className="w-full max-w-[750px] rounded-lg border-0 bg-white px-6 py-8 shadow-xl md:border-2 md:border-slate-300 md:px-12">
+      <div
+        className={`mx-4 flex min-h-[calc(100vh-10rem)] items-center justify-center ${
+          title === "Login" ? "md:my-20" : "md:my-6"
+        } md:min-h-0`}
+      >
+        <div className="w-full max-w-[750px] rounded-lg border-0 bg-white px-6 py-6 shadow-xl md:border-2 md:border-slate-300 md:px-12">
           <form className="mx-2 md:mx-5" onSubmit={handleSubmit}>
             <h3 className="mb-8 text-center text-3xl font-bold">{title}</h3>
 
@@ -125,6 +150,7 @@ const LoginForm = ({
               password={password}
               setPassword={setPassword}
               passwordRef={passwordRef}
+              showStrengthIndicator={title === "Sign Up"} // Show on signup only
             />
 
             <div className="w-full">
@@ -165,7 +191,7 @@ const LoginForm = ({
 
       {errorModalOpen && (
         <Modal
-          modalMessage={"Your email or password is incorrect!"}
+          modalMessage={errorMsg}
           buttonConfig={[
             {
               label: "Try Again",
