@@ -49,9 +49,6 @@ const LoginForm = ({
       e.stopPropagation();
     }
 
-    // ADD THIS LINE HERE
-    console.log("Submitting with data:", { ...formData, password });
-
     try {
       const { data } = await handleSub({
         variables: { ...formData, password },
@@ -60,7 +57,7 @@ const LoginForm = ({
         ? Auth.login(data.loginUser.token)
         : Auth.login(data.addUser.token);
     } catch (err: any) {
-      console.error(err); // This should also log the actual error
+      console.error(err); 
       setErrorModalOpen(true);
     }
   };
