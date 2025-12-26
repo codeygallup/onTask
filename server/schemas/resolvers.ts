@@ -20,18 +20,30 @@ import {
 import { IUser } from "../models/User";
 import { IProject } from "../models/Project";
 import { ITask } from "../models/Task";
+import {
+  emailSchema,
+  mongoIdSchema,
+  passwordSchema,
+  pinSchema,
+  projectDescriptionSchema,
+  projectTitleSchema,
+  taskTextSchema,
+  usernameSchema,
+} from "../validations";
 
 const resolvers = {
   Query: {
     findUser: async (_: unknown, { _id }: IdArgs): Promise<IUser | null> => {
-      return await User.findById(_id);
+      const validId = mongoIdSchema.parse(_id);
+      return await User.findById(validId);
     },
     oneProject: async (
       _: unknown,
       { _id }: IdArgs
     ): Promise<IProject | null> => {
+      const validId = mongoIdSchema.parse(_id);
       return await Project.findByIdAndUpdate(
-        _id,
+        validId,
         { lastOpenedAt: new Date().toISOString() },
         { new: true }
       ).populate("tasks");
@@ -55,7 +67,10 @@ const resolvers = {
   },
   Mutation: {
     loginUser: async (_: unknown, { email, password }: LoginArgs) => {
-      const user = await User.findOne({ email });
+      const validEmail = emailSchema.parse(email);
+      passwordSchema.parse(password);
+
+      const user = await User.findOne({ email: validEmail });
 
       if (!user) {
         throw new GraphQLError("Incorrect credentials", {
@@ -80,7 +95,15 @@ const resolvers = {
       return { token, user };
     },
     addUser: async (_: unknown, { username, email, password }: AddUserArgs) => {
-      const user = await User.create({ username, email, password });
+      const validUsername = usernameSchema.parse(username);
+      const validEmail = emailSchema.parse(email);
+      const validPassword = passwordSchema.parse(password);
+
+      const user = await User.create({
+        username: validUsername,
+        email: validEmail,
+        password: validPassword,
+      });
       const token = signToken({
         username: user.username,
         email: user.email,
@@ -94,10 +117,15 @@ const resolvers = {
       context: Context
     ): Promise<IProject> => {
       if (context.user) {
+        const validTitle = projectTitleSchema.parse(title);
+        const validDescription = description
+          ? projectDescriptionSchema.parse(description)
+          : undefined;
+
         return await Project.create({
           userId: context.user._id,
-          title,
-          description,
+          title: validTitle,
+          description: validDescription,
         });
       }
 
@@ -111,11 +139,17 @@ const resolvers = {
       context: Context
     ): Promise<IProject | null> => {
       if (context.user) {
+        const validProjectId = mongoIdSchema.parse(projectId);
+        const validTitle = projectTitleSchema.parse(title);
+        const validDescription = description
+          ? projectDescriptionSchema.parse(description)
+          : undefined;
+
         return await Project.findByIdAndUpdate(
-          projectId,
+          validProjectId,
           {
-            title,
-            description,
+            title: validTitle,
+            description: validDescription,
             userId: context.user._id,
           },
           { new: true }
@@ -124,7 +158,6 @@ const resolvers = {
       throw new GraphQLError("You need to be logged in", {
         extensions: { code: "UNAUTHENTICATED" },
       });
-      // throw new AuthenticationError("You need to be logged in");
     },
     updateLastOpened: async (
       _: unknown,
@@ -132,8 +165,10 @@ const resolvers = {
       context: Context
     ): Promise<IProject | null> => {
       if (context.user) {
+        const validProjectId = mongoIdSchema.parse(projectId);
+
         const project = await Project.findByIdAndUpdate(
-          projectId,
+          validProjectId,
           { lastOpenedAt: new Date().toISOString() },
           { new: true }
         ).populate("tasks");
@@ -148,7 +183,8 @@ const resolvers = {
       _: unknown,
       { projectId }: ProjectIdArgs
     ): Promise<IProject | null> => {
-      return await Project.findByIdAndDelete(projectId);
+      const validProjectId = mongoIdSchema.parse(projectId);
+      return await Project.findByIdAndDelete(validProjectId);
     },
     addTask: async (
       _: unknown,
@@ -156,13 +192,16 @@ const resolvers = {
       context: Context
     ): Promise<ITask> => {
       if (context.user) {
+        const validText = taskTextSchema.parse(text);
+        const validProjectId = mongoIdSchema.parse(projectId);
+
         const task = await Task.create({
-          text,
-          projectId,
+          text: validText,
+          projectId: validProjectId,
         });
 
         await Project.findByIdAndUpdate(
-          projectId,
+          validProjectId,
           { $push: { tasks: task._id } },
           { new: true }
         );
@@ -174,7 +213,8 @@ const resolvers = {
       });
     },
     removeTasks: async (_: unknown, { taskIds }: TaskIdsArgs) => {
-      return await Task.deleteMany({ _id: { $in: taskIds } });
+      const validTaskIds = taskIds.map((id) => mongoIdSchema.parse(id));
+      return await Task.deleteMany({ _id: { $in: validTaskIds } });
     },
     updateComplete: async (
       _: unknown,
@@ -182,10 +222,13 @@ const resolvers = {
       context: Context
     ): Promise<ITask | null> => {
       if (context.user) {
+        const validTaskId = mongoIdSchema.parse(taskId);
         try {
-          const task = await Task.findById(taskId);
+          const task = await Task.findById(validTaskId);
           if (!task) {
-            throw new Error("Task not found");
+            throw new GraphQLError("Task not found", {
+              extensions: { code: "NOT_FOUND" },
+            });
           }
           task.complete = !task.complete;
           await task.save();
@@ -200,11 +243,14 @@ const resolvers = {
       });
     },
     requestPasswordRecovery: async (_: unknown, { email }: EmailArgs) => {
+      const validEmail = emailSchema.parse(email);
       // Find user by email
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email: validEmail });
 
       if (!user) {
-        throw new Error("User not found");
+        throw new GraphQLError("User not found", {
+          extensions: { code: "NOT_FOUND" },
+        });
       }
 
       // Generate recovery pin and update user
@@ -215,7 +261,7 @@ const resolvers = {
       await user.save();
 
       // Send recovery email
-      passwordRecover(email, resetPIN);
+      passwordRecover(validEmail, resetPIN);
 
       // Return an object with success, message, and user
       return {
@@ -228,14 +274,18 @@ const resolvers = {
       _: unknown,
       { email, newPassword }: ResetPasswordArgs
     ) => {
+      const validEmail = emailSchema.parse(email);
+      const validPassword = passwordSchema.parse(newPassword);
       // Find user by email
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email: validEmail });
 
       if (!user) {
-        throw new Error("User not found");
+        throw new GraphQLError("User not found", {
+          extensions: { code: "NOT_FOUND" },
+        });
       }
 
-      user.password = newPassword;
+      user.password = validPassword;
 
       user.resetPIN = undefined;
       user.resetPINExpiry = undefined;
@@ -247,19 +297,26 @@ const resolvers = {
       };
     },
     validatePIN: async (_: unknown, { email, pin }: ValidatePINArgs) => {
-      const user = await User.findOne({ email });
+      const validEmail = emailSchema.parse(email);
+      const validPIN = pinSchema.parse(pin);
+
+      const user = await User.findOne({ email: validEmail });
 
       if (!user) {
-        throw new Error("User not found");
+        throw new GraphQLError("User not found", {
+          extensions: { code: "NOT_FOUND" },
+        });
       }
 
       // Validate reset pin
       if (
-        user.resetPIN !== pin ||
+        user.resetPIN !== validPIN ||
         !user.resetPINExpiry ||
         user.resetPINExpiry < new Date()
       ) {
-        throw new Error("Invalid or expired PIN");
+        throw new GraphQLError("Invalid or expired PIN", {
+          extensions: { code: "BAD_USER_INPUT" },
+        });
       }
 
       // Return success message if PIN is valid
