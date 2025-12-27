@@ -35,6 +35,7 @@ const Reset = () => {
   }, [user]);
 
   useEffect(() => {
+    // Focus the appropriate input based on whether the PIN has been validated
     if (validatedPin) {
       passwordRef.current?.focus();
     } else {
@@ -75,6 +76,7 @@ const Reset = () => {
       navigate("/login");
       return;
     }
+    // Redirect to login with userId as query parameter
     navigate(`/login?userId=${encodeURIComponent(userId)}`);
   };
 

@@ -9,6 +9,7 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 const PasswordStrengthIndicator = ({
   password,
 }: PasswordStrengthIndicatorProps) => {
+  // Define password requirements and their corresponding tests
   const requirements: PasswordRequirement[] = [
     { label: "At least 8 characters", test: (p) => p.length >= 8 },
     { label: "One lowercase letter", test: (p) => /[a-z]/.test(p) },
@@ -17,11 +18,13 @@ const PasswordStrengthIndicator = ({
     { label: "One special character", test: (p) => /[^a-zA-Z0-9]/.test(p) },
   ];
 
+  // Evaluate each requirement against the current password
   const checks = useMemo(
     () => requirements.map((req) => ({ ...req, passed: req.test(password) })),
     [password]
   );
 
+  // If password is empty, don't show the indicator
   if (password.length === 0) return null;
 
   return (

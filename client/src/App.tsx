@@ -20,6 +20,7 @@ import ProjectUpdate from "./pages/ProjectUpdate";
 import Auth from "./utils/auth";
 import SessionManager from "./components/SessionManager";
 
+// Set up Apollo Client
 const http = new HttpLink({
   uri:
     import.meta.env.MODE === "production"
@@ -27,6 +28,7 @@ const http = new HttpLink({
       : "http://localhost:3001/graphql",
 });
 
+// Middleware to attach the JWT token to each request
 const authLink = new SetContextLink((prevContext) => {
   const token = localStorage.getItem("id_token");
   return {
@@ -37,9 +39,12 @@ const authLink = new SetContextLink((prevContext) => {
   };
 });
 
+// Instantiate Apollo Client
 const client = new ApolloClient({
   link: authLink.concat(http),
   cache: new InMemoryCache({
+    // This ensures that when we update a project, the tasks array is replaced entirely
+    // This prevents issues with stale data in nested arrays
     typePolicies: {
       Project: {
         fields: {
@@ -54,6 +59,7 @@ const client = new ApolloClient({
   }),
 });
 
+// Component to protect private routes
 const PrivateRoutes = () => {
   const isAuthenticated = Auth.loggedIn();
   return isAuthenticated ? <Outlet /> : <Navigate to={"/"} replace />;
@@ -64,6 +70,7 @@ function App() {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Navbar />
+        // Show session warning 1 minute before expiration
         {Auth.loggedIn() && <SessionManager warningTime={1 * 60 * 1000} />}
         <Routes>
           <Route path="/" element={<Home />} />

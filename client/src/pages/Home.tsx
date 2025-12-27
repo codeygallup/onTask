@@ -11,12 +11,14 @@ const Home = () => {
   const { loading, data } = useQuery<UserProjectsData>(USER_PROJECTS);
   const userProjects: Project[] = data?.userProjects || [];
 
+  // Calculate total tasks across all projects
   const totalTasks = useMemo((): number => {
     return userProjects.reduce((acc: number, project: Project) => {
       return acc + (project.tasks?.length || 0);
     }, 0);
   }, [userProjects]);
 
+  // Calculate completed tasks across all projects
   const completedTasks = useMemo((): number => {
     return userProjects.reduce((acc: number, project: Project) => {
       const completedInProject =
@@ -25,9 +27,11 @@ const Home = () => {
     }, 0);
   }, [userProjects]);
 
+  // Get the three most recently opened projects
   const recentProjects = useMemo((): Project[] => {
     return [...userProjects]
       .sort((a: Project, b: Project) => {
+        // Handle both timestamp and date string formats for lastOpenedAt
         const dateA: Date = a.lastOpenedAt
           ? !isNaN(Number(a.lastOpenedAt))
             ? new Date(Number(a.lastOpenedAt))

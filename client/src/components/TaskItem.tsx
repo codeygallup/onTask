@@ -12,6 +12,7 @@ const TaskItem = ({ task }: TaskItemProps) => {
 
   const handleTaskSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    // Toggle selection of the task
     setSelectedTasks((prev) =>
       prev.includes(task._id)
         ? prev.filter((id) => id !== task._id)

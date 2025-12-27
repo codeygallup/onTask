@@ -10,6 +10,7 @@ const ButtonGroup = ({ task }: ButtonGroupProps) => {
     throw new Error("ButtonGroup must be used within TaskContext.Provider");
   const { updateComplete, refetch } = taskContext;
 
+  // Function to handle changing the completion status of a task
   const changeStatus = async (
     e: React.MouseEvent<HTMLButtonElement>,
     taskId: string

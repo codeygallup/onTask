@@ -7,6 +7,7 @@ const TaskInput = () => {
     throw new Error("TaskInput must be used within TaskContext.Provider");
   const { task, setTask, handleAddTask, projectId } = taskContext;
 
+  // Focus the input on component mount
   const taskRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     taskRef.current?.focus();

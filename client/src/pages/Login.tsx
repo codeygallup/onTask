@@ -10,6 +10,7 @@ const Login = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const userIdParam = params.get("userId") || "";
+
   const { data } = useQuery<FindUserData>(FIND_USER, {
     variables: { id: userIdParam },
     skip: !userIdParam,

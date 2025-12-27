@@ -22,6 +22,7 @@ export function useTask(projectId: string) {
     UPDATE_COMPLETE
   );
 
+  // Fetch project data including tasks
   const { data, refetch } = useQuery<OneProjectData, OneProjectVariables>(
     ONE_PROJECT,
     {
@@ -29,9 +30,11 @@ export function useTask(projectId: string) {
     }
   );
 
+  // Memoize project and tasks data
   const oneProject = data?.oneProject || ({} as Project);
   const tasks = useMemo(() => oneProject.tasks || [], [oneProject.tasks]);
 
+  // Filter tasks based on selected option (all, completed, incompleted)
   const filteredTasks = useMemo(() => {
     switch (selectedOption) {
       case "completedTasks":

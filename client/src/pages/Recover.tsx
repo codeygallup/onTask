@@ -24,6 +24,7 @@ const Recover = () => {
     try {
       const { data } = await requestPasswordRecovery({ variables: { email } });
 
+      // If the request was successful, show the success modal
       if (data?.requestPasswordRecovery?.success) {
         setUserId(data.requestPasswordRecovery.user._id);
         setSuccessModal(true);
@@ -36,6 +37,7 @@ const Recover = () => {
     }
   };
 
+  // Redirect to reset page with userId
   const handleRedirect = (): void => {
     navigate(`/reset/${userId}`);
   };

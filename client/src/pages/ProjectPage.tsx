@@ -18,6 +18,7 @@ const ProjectPage = () => {
   const taskRowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    // Update last opened timestamp when project is accessed
     if (id) {
       updateLastOpened({
         variables: { projectId: id },
@@ -25,6 +26,7 @@ const ProjectPage = () => {
     }
   }, [id, updateLastOpened]);
 
+  // If no project ID is provided, do not render the page
   if (!id) return null;
 
   const {
@@ -41,6 +43,7 @@ const ProjectPage = () => {
   } = useTask(id);
 
   useEffect(() => {
+    // Scroll to bottom when tasks are added
     if (taskRowRef.current) {
       taskRowRef.current.scrollTo({
         top: taskRowRef.current.scrollHeight,

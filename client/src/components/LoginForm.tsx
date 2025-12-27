@@ -22,6 +22,7 @@ const LoginForm = ({
   const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
+    // Focus the appropriate input field on mount
     if (title === "Login") {
       if (userIdParam) {
         passwordRef.current?.focus();
@@ -61,19 +62,26 @@ const LoginForm = ({
 
       let errorMsg = "Something went wrong. Please try again.";
 
+      // Parse error message if it's a JSON string
       if (err.message && typeof err.message === "string") {
         try {
           const parsed = JSON.parse(err.message);
+          // Check if parsed is an array of errors with message property
           if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].message) {
+            // Join all error messages into a list
             errorMsg = parsed.map((e: any) => `\n• ${e.message}`).join("\n");
           } else {
+            // Fallback to original message if structure is unexpected
             errorMsg = err.message;
           }
         } catch {
+          // If parsing fails, use the original message
           errorMsg = err.message;
         }
+        // GraphQL errors
       } else if (err.graphQLErrors && err.graphQLErrors.length > 0) {
         errorMsg = err.graphQLErrors[0].message;
+        // Network error
       } else if (err.networkError) {
         errorMsg = "Network error. Please check your connection.";
       }

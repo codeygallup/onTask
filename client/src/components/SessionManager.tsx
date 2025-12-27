@@ -9,6 +9,7 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [refreshToken] = useMutation<RefreshTokenResponse>(REFRESH_TOKEN);
+  // Ref to store the countdown interval ID
   const countDownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
     null
   );
@@ -16,19 +17,25 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
   useEffect(() => {
     let checkInterval: ReturnType<typeof setInterval>;
 
+    // Function to check token expiry
     const checkTokenExpiry = () => {
+      // If modal is already shown, no need to check again
       if (showModal) return;
+      // Get the token from Auth utility if none is found, exit early
       const token = Auth.getToken();
       if (!token) return;
 
       try {
         const decoded = Auth.getProfile();
+        // Check if the decoded token has an expiration time
         if (!decoded || !decoded.exp) return;
 
+        // Calculate time until expiry in milliseconds
         const expiryTime = decoded.exp * 1000;
         const currentTime = Date.now();
         const timeUntilExpiry = expiryTime - currentTime;
 
+        // Show modal if within warning time
         if (
           timeUntilExpiry <= warningTime &&
           timeUntilExpiry > 0 &&
@@ -37,12 +44,15 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
           setShowModal(true);
           setTimeLeft(Math.floor(timeUntilExpiry / 1000));
 
+          // Start countdown interval
           if (countDownIntervalRef.current) {
             clearInterval(countDownIntervalRef.current);
           }
 
+          // Update time left every second
           countDownIntervalRef.current = setInterval(() => {
             setTimeLeft((prev) => {
+              // If time left reaches 0, logout the user
               if (prev <= 1) {
                 if (countDownIntervalRef.current) {
                   clearInterval(countDownIntervalRef.current);
@@ -54,6 +64,7 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
             });
           }, 1000);
         } else if (timeUntilExpiry > warningTime && showModal) {
+          // If user is active again, hide modal and clear interval
           setShowModal(false);
           if (countDownIntervalRef.current) {
             clearInterval(countDownIntervalRef.current);
@@ -67,9 +78,11 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
       }
     };
 
+    // Initial check and set interval to check periodically
     checkInterval = setInterval(checkTokenExpiry, 30000);
     checkTokenExpiry();
 
+    // Cleanup on unmount
     return () => {
       clearInterval(checkInterval);
       if (countDownIntervalRef.current) {
@@ -78,6 +91,7 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
     };
   }, [warningTime]);
 
+  // Function to handle session extension via token refresh
   const handleExtendSession = async () => {
     try {
       const { data } = await refreshToken();
@@ -104,12 +118,14 @@ const SessionManager = ({ warningTime = 30 * 1000 }: SessionManagerProps) => {
     Auth.logout();
   };
 
+  // Function to format time in mm:ss
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
+  // Do not render modal if not needed
   if (!showModal) return null;
 
   return (

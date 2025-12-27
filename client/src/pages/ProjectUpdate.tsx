@@ -17,6 +17,7 @@ const ProjectUpdate = () => {
     description: "",
   });
 
+  // Populate local state when project data is available
   useEffect(() => {
     if (project?.title && !localProject.title) {
       setLocalProject({
