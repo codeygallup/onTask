@@ -7,6 +7,7 @@ import cors from "cors";
 import schema from "./schemas";
 import { authMiddleware } from "./utils/auth";
 
+// Destructure typeDefs and resolvers from the imported schema
 const { typeDefs, resolvers } = schema;
 
 const app = express();
@@ -17,6 +18,7 @@ const server = new ApolloServer({
   resolvers,
 });
 
+// Serve up static assets
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
 }
@@ -24,20 +26,23 @@ if (process.env.NODE_ENV === "production") {
 const startApolloServer = async () => {
   try {
     await server.start();
-    
+
+    // Apply the Apollo GraphQL middleware and set the path to /graphql
     app.use(
-      '/graphql',
+      "/graphql",
       cors(),
       express.json(),
       expressMiddleware(server, {
-        context: authMiddleware, 
+        context: authMiddleware,
       })
     );
 
+    // Wildcard route to serve index.html for any non-API requests
     app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "../client/dist/index.html"));
     });
 
+    // Connect to the database and then start the server
     db.once("open", () => {
       app.listen(PORT, () => {
         console.log(`🌍 Now listening on localhost:${PORT}`);

@@ -43,6 +43,7 @@ const resolvers = {
       { _id }: IdArgs
     ): Promise<IProject | null> => {
       const validId = mongoIdSchema.parse(_id);
+      // Update lastOpenedAt field to current date and time
       return await Project.findByIdAndUpdate(
         validId,
         { lastOpenedAt: new Date().toISOString() },
@@ -81,12 +82,14 @@ const resolvers = {
 
       const correctPw = await user.isCorrectPassword(password);
 
+      // Timing attack safe
       if (!user || !correctPw) {
         throw new GraphQLError("Incorrect credentials", {
           extensions: { code: "UNAUTHENTICATED" },
         });
       }
 
+      // Create token
       const token = signToken({
         username: user.username,
         email: user.email,
@@ -119,6 +122,7 @@ const resolvers = {
     ): Promise<IProject> => {
       if (context.user) {
         const validTitle = projectTitleSchema.parse(title);
+        // Description is optional
         const validDescription = description
           ? projectDescriptionSchema.parse(description)
           : undefined;
@@ -142,10 +146,12 @@ const resolvers = {
       if (context.user) {
         const validProjectId = mongoIdSchema.parse(projectId);
         const validTitle = projectTitleSchema.parse(title);
+        // Description is optional
         const validDescription = description
           ? projectDescriptionSchema.parse(description)
           : undefined;
 
+        // Update lastOpenedAt field to current date and time
         return await Project.findByIdAndUpdate(
           validProjectId,
           {
@@ -168,6 +174,7 @@ const resolvers = {
       if (context.user) {
         const validProjectId = mongoIdSchema.parse(projectId);
 
+        // Update lastOpenedAt field to current date and time
         const project = await Project.findByIdAndUpdate(
           validProjectId,
           { lastOpenedAt: new Date().toISOString() },
@@ -201,6 +208,7 @@ const resolvers = {
           projectId: validProjectId,
         });
 
+        // Add task to project's tasks array
         await Project.findByIdAndUpdate(
           validProjectId,
           { $push: { tasks: task._id } },
@@ -264,7 +272,6 @@ const resolvers = {
       // Send recovery email
       passwordRecover(validEmail, resetPIN);
 
-      // Return an object with success, message, and user
       return {
         success: true,
         message: "Recovery PIN sent successfully",
@@ -309,7 +316,7 @@ const resolvers = {
         });
       }
 
-      // Validate reset pin
+      // Validate reset pin and expiry
       if (
         user.resetPIN !== validPIN ||
         !user.resetPINExpiry ||

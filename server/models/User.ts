@@ -54,6 +54,7 @@ const userSchema = new Schema<IUser>(
 );
 
 userSchema.pre("save", async function () {
+  // Hash the password before saving the user model prevents re-hashing if not modified
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);

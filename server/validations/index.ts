@@ -2,11 +2,13 @@ import { z } from "zod";
 
 export const emailSchema = z.string().email().toLowerCase();
 
+// Password schema for existing users (e.g., login)
 export const passwordSchema = z
   .string()
   .min(1, "Password must be at least 8 characters long")
   .max(80, "Password is too long");
 
+// Password schema for new users
 export const newUserPasswordSchema = z
   .string()
   .min(8, "Password must be at least 8 characters long")
@@ -50,6 +52,7 @@ export const pinSchema = z
   .string()
   .regex(/^(\d{6})$/, "PIN must be a 6-digit number");
 
+// MongoDB ObjectId validation
 export const mongoIdSchema = z
   .string()
   .regex(/^[0-9a-fA-F]{24}$/, "Invalid ID format");
