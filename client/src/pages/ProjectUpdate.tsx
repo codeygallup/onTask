@@ -9,7 +9,7 @@ import type { ProjectInput } from "../types";
 const ProjectUpdate = () => {
   let { id } = useParams<{ id: string }>();
 
-  const { project } = useTask(id!);
+  const { project } = useTask(id!); // Non-null assertion since id is required here
 
   const [localProject, setLocalProject] = useState<ProjectInput>({
     projectId: id,
