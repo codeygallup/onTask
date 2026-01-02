@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { REMOVE_PROJECT } from "../utils/mutations";
 import type { DeleteProjectVariables } from "../types";
 
-export function useProject() {
+export const useProject = () => {
   const [removeProject] = useMutation<any, DeleteProjectVariables>(
     REMOVE_PROJECT
   );
@@ -24,4 +24,4 @@ export function useProject() {
   return {
     handleDeleteProject,
   };
-}
+};

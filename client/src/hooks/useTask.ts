@@ -12,7 +12,7 @@ import type {
   UpdateCompleteVariables,
 } from "../types";
 
-export function useTask(projectId: string) {
+export const useTask = (projectId: string) => {
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
   const [selectedOption, setSelectedOption] = useState<string>("allTasks");
 
@@ -86,4 +86,4 @@ export function useTask(projectId: string) {
     project: oneProject,
     filteredTasks,
   };
-}
+};
