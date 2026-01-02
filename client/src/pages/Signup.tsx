@@ -1,17 +1,8 @@
-import { useState } from "react";
-import type { LoginFormData } from "../types";
-import { useMutation } from "@apollo/client/react";
-import { ADD_USER } from "../utils/mutations";
 import LoginForm from "../components/LoginForm";
+import { useSignup } from "../hooks/useSignup";
 
 const Signup = () => {
-  const [formData, setFormData] = useState<LoginFormData>({
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const [addUser] = useMutation(ADD_USER);
+  const { addUser, formData, setFormData } = useSignup();
 
   return (
     <div className="login">
