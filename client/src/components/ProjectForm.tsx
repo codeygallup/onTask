@@ -1,3 +1,4 @@
+import { useProjectForm } from "../hooks/useProjectForm";
 import type { ProjectFormProps } from "../types";
 
 const ProjectForm = ({
@@ -6,25 +7,11 @@ const ProjectForm = ({
   project,
   setProject,
 }: ProjectFormProps) => {
-  const handleFormChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    const { name, value } = e.target;
-    setProject({ ...project, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
-
-    try {
-      await handleSub({
-        variables: { ...project },
-      });
-      window.location.replace("/");
-    } catch (err: any) {
-      console.log(err.message);
-    }
-  };
+  const { handleFormChange, handleSubmit } = useProjectForm({
+    handleSub,
+    project,
+    setProject,
+  });
 
   return (
     <div className="mx-10 my-40 flex items-center justify-center rounded-lg border-slate-300 bg-slate-50 px-4 shadow md:mx-auto md:mt-10 md:h-[calc(100vh-10rem)] md:min-h-0 md:w-1/2 md:border-2 md:p-10 md:shadow-none">
