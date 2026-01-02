@@ -88,7 +88,7 @@ export const useSessionManager = (warningTime: number = 30 * 1000) => {
         clearInterval(countDownIntervalRef.current);
       }
     };
-  }, [warningTime, showModal]);
+  }, [warningTime]);
 
   // Function to handle session extension via token refresh
   const handleExtendSession = async () => {
