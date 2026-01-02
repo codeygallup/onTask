@@ -1,52 +1,21 @@
 import { useQuery } from "@apollo/client/react";
 import { USER_PROJECTS } from "../utils/queries";
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import type { Project, Task, UserProjectsData } from "../types";
+import type { Project, UserProjectsData } from "../types";
+import {
+  calculateProjectProgress,
+  useProjectStats,
+} from "../hooks/useProjectStats";
 
 const Home = () => {
   const { loading, data } = useQuery<UserProjectsData>(USER_PROJECTS);
   const userProjects: Project[] = data?.userProjects || [];
 
-  // Calculate total tasks across all projects
-  const totalTasks = useMemo((): number => {
-    return userProjects.reduce((acc: number, project: Project) => {
-      return acc + (project.tasks?.length || 0);
-    }, 0);
-  }, [userProjects]);
-
-  // Calculate completed tasks across all projects
-  const completedTasks = useMemo((): number => {
-    return userProjects.reduce((acc: number, project: Project) => {
-      const completedInProject =
-        project.tasks?.filter((task: Task) => task.complete).length || 0;
-      return acc + completedInProject;
-    }, 0);
-  }, [userProjects]);
-
-  // Get the three most recently opened projects
-  const recentProjects = useMemo((): Project[] => {
-    return [...userProjects]
-      .sort((a: Project, b: Project) => {
-        // Handle both timestamp and date string formats for lastOpenedAt
-        const dateA: Date = a.lastOpenedAt
-          ? !isNaN(Number(a.lastOpenedAt))
-            ? new Date(Number(a.lastOpenedAt))
-            : new Date(a.lastOpenedAt)
-          : new Date(0);
-        const dateB: Date = b.lastOpenedAt
-          ? !isNaN(Number(b.lastOpenedAt))
-            ? new Date(Number(b.lastOpenedAt))
-            : new Date(b.lastOpenedAt)
-          : new Date(0);
-
-        return dateB.getTime() - dateA.getTime();
-      })
-      .slice(0, 3);
-  }, [userProjects]);
+  const { totalTasks, completedTasks, recentProjects, progressPercentage } =
+    useProjectStats(userProjects);
 
   if (loading)
     return (
@@ -107,10 +76,7 @@ const Home = () => {
                       Progress
                     </h3>
                     <h4 className="text-lg font-bold md:text-xl">
-                      {totalTasks > 0
-                        ? Math.round((completedTasks / totalTasks) * 100)
-                        : 0}
-                      %
+                      {progressPercentage}%
                     </h4>
                   </div>
                 </div>
@@ -122,73 +88,49 @@ const Home = () => {
                 </h2>
                 <div className="flex flex-1 flex-col justify-center gap-4 md:gap-8">
                   {recentProjects.length > 0 ? (
-                    recentProjects.map((project: Project) => (
-                      <Link
-                        to={`/project/${project._id}`}
-                        key={project._id}
-                        aria-label={`Open project ${project.title} - ${
-                          project.tasks?.length || 0
-                        } tasks`}
-                      >
-                        <div className="flex gap-4 rounded-lg border-0 bg-white p-4 shadow-md transition-all duration-200 hover:-translate-y-1 hover:border-teal-400 hover:bg-slate-200 hover:shadow-lg md:h-28 md:border-2 md:border-slate-300 md:bg-slate-100 md:shadow-none">
-                          <div className="flex-1">
-                            <h4 className="text-lg font-semibold">
-                              {project.title}
-                            </h4>
-                            <p className="text-slate-600">
-                              {project.tasks?.length || 0} Tasks
-                            </p>
-                          </div>
-                          <div className="flex w-32 flex-col justify-center">
-                            <div
-                              className="h-4 w-full rounded-xl bg-gray-300"
-                              role="progressbar"
-                              aria-valuenow={
-                                project.tasks?.length
-                                  ? Math.round(
-                                      (project.tasks.filter(
-                                        (t: Task) => t.complete
-                                      ).length /
-                                        project.tasks.length) *
-                                        100
-                                    )
-                                  : 0
-                              }
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                              aria-label="Project completion progress"
-                            >
-                              <div
-                                className="h-4 rounded-xl bg-teal-500 transition-all duration-300"
-                                style={{
-                                  width: `${
-                                    project.tasks?.length
-                                      ? (project.tasks.filter(
-                                          (t: Task) => t.complete
-                                        ).length /
-                                          project.tasks.length) *
-                                        100
-                                      : 0
-                                  }%`,
-                                }}
-                              ></div>
+                    recentProjects.map((project: Project) => {
+                      const progress = calculateProjectProgress(project);
+                      return (
+                        <Link
+                          to={`/project/${project._id}`}
+                          key={project._id}
+                          aria-label={`Open project ${project.title} - ${
+                            project.tasks?.length || 0
+                          } tasks`}
+                        >
+                          <div className="flex gap-4 rounded-lg border-0 bg-white p-4 shadow-md transition-all duration-200 hover:-translate-y-1 hover:border-teal-400 hover:bg-slate-200 hover:shadow-lg md:h-28 md:border-2 md:border-slate-300 md:bg-slate-100 md:shadow-none">
+                            <div className="flex-1">
+                              <h4 className="text-lg font-semibold">
+                                {project.title}
+                              </h4>
+                              <p className="text-slate-600">
+                                {project.tasks?.length || 0} Tasks
+                              </p>
                             </div>
-                            <p className="mt-1 text-center text-sm text-slate-600">
-                              {project.tasks?.length
-                                ? Math.round(
-                                    (project.tasks.filter(
-                                      (t: Task) => t.complete
-                                    ).length /
-                                      project.tasks.length) *
-                                      100
-                                  )
-                                : 0}
-                              % Complete
-                            </p>
+                            <div className="flex w-32 flex-col justify-center">
+                              <div
+                                className="h-4 w-full rounded-xl bg-gray-300"
+                                role="progressbar"
+                                aria-valuenow={progress}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                                aria-label="Project completion progress"
+                              >
+                                <div
+                                  className="h-4 rounded-xl bg-teal-500 transition-all duration-300"
+                                  style={{
+                                    width: `${progress}%`,
+                                  }}
+                                ></div>
+                              </div>
+                              <p className="mt-1 text-center text-sm text-slate-600">
+                                {progress}% Complete
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    ))
+                        </Link>
+                      );
+                    })
                   ) : (
                     <div className="text-center text-gray-500">
                       <p className="text-xl">No recent projects</p>

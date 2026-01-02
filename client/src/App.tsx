@@ -70,7 +70,6 @@ function App() {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Navbar />
-        // Show session warning 1 minute before expiration
         {Auth.loggedIn() && <SessionManager warningTime={1 * 60 * 1000} />}
         <Routes>
           <Route path="/" element={<Home />} />
