@@ -1,12 +1,18 @@
 <a name="readme-top"></a>
 
-# onTask [<img align="right" src="https://img.shields.io/badge/license-MIT-00beef"></img>](LICENSE) [<img align="right" src="https://img.shields.io/badge/version-2.0.1-14b8a6"></img>](#)
+# onTask [<img align="right" src="https://img.shields.io/badge/license-MIT-00beef"></img>](LICENSE) [<img align="right" src="https://img.shields.io/badge/version-2.1.0-14b8a6"></img>](#)
 
 ### Description
 
 A modern, mobile-first project management tool built with the MERN stack. OnTask helps users track project progress with an intuitive interface, task completion tracking, and real-time updates.
 
-**✨ New in v2.0:** Complete UI redesign with Tailwind CSS, mobile optimization, password recovery, and enhanced accessibility.
+✨ New in v2.1:
+- **Vite + TypeScript migration** – faster builds, better developer experience, and type-safe backend  
+- **Sliding sessions with session manager** – automatic token refresh and session expiration warnings  
+- **Improved authentication flows** – password strength feedback and validation  
+- **Reusable custom hooks** – cleaner state management across the app  
+- **GraphQL error handling and Zod schema validation** – more robust backend with clear errors  
+
 
   <p align="right"><a href="#readme-top">(Return to top)</a></p>
 
@@ -36,7 +42,7 @@ A modern, mobile-first project management tool built with the MERN stack. OnTask
   
 ### Installation
 
-**Prerequisites:** Node.js 16+ and MongoDB
+**Prerequisites:** Node.js 18+ and MongoDB
 
 1. Clone the repo using HTTPS:
 ```bash
@@ -108,10 +114,16 @@ Contributions are welcome! To contribute:
 
 ### Roadmap
 
-**v2.1.0** (Planned)
-- [ ] Migration to Vite
-- [ ] Sliding sessions
-- [ ] Create additional useContext hooks to simplify state management
+**v2.1.0** ✅ *Released January 2025*
+- [x] Migration to Vite
+- [x] Sliding sessions
+- [x] Create additional useContext hooks to simplify state management
+
+**v2.2.0** (Planned)
+- [ ] Accent color selector
+- [ ] Auto-focus "Try Again" button in error modals
+- [ ] Create @apply utilities for repeated Tailwind classes
+- [ ] Add "sandbox mode" for recruiters to test without signup
 
   <p align="right"><a href="#readme-top">(Return to top)</a></p>
 
