@@ -1,13 +1,13 @@
 {
   "name": "ontask",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "",
   "main": "server/server.js",
   "scripts": {
     "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm install && npm run build && cd ../server && npm install",
+    "build": "cd client && npm install && npm run build && cd ../server && npm install && npm run build",
     "start": "cd server && npm start"
   },
   "repository": {
@@ -18,9 +18,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^9.2.1"
   },
   "dependencies": {
-    "react": "^18.2.0"
+    "react": "^19.2.3"
   }
 }

@@ -4,3 +4,6 @@ node_modules
 package-lock.json
 .vscode
 
+# Build outputs
+server/dist/
+client/dist/
